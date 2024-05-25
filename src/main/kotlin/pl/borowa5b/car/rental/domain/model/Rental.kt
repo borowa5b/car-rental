@@ -11,5 +11,5 @@ data class Rental(
     val price: BigDecimal,
     val startDate: OffsetDateTime,
     val endDate: OffsetDateTime,
-    val version: Long
+    val version: Long = 0
 )

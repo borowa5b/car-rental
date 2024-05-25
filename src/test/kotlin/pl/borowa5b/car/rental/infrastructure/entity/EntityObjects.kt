@@ -16,7 +16,7 @@ object EntityObjects {
         status: RentalStatus = RentalStatus.IN_PROGRESS,
         price: BigDecimal = BigDecimal.TEN,
         startDate: OffsetDateTime = OffsetDateTime.parse("2022-01-01T12:00:00Z"),
-        endDate: OffsetDateTime = OffsetDateTime.parse("2022-01-02T12:00:00Z"),
+        endDate: OffsetDateTime = OffsetDateTime.parse("2022-01-02T12:00:00Z")
     ): RentalEntity = RentalEntity(
         id = id,
         carId = carId,
@@ -36,7 +36,7 @@ object EntityObjects {
         year: Int = 2022,
         color: String = "Blue",
         pricePerDay: Int = 200,
-        quantity: Int = 5,
+        quantity: Int = 5
     ): CarEntity = CarEntity(
         id = id,
         brand = brand,
@@ -56,7 +56,7 @@ object EntityObjects {
         email: String = "john.doe@example.com",
         phoneNumber: String = "+48123123123",
         address: String = "Warsaw",
-        documentNumber: String = "ABC123123123",
+        documentNumber: String = "ABC123123123"
     ): CustomerEntity = CustomerEntity(
         id = id,
         name = name,
