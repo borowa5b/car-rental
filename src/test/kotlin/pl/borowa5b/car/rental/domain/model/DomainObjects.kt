@@ -13,7 +13,7 @@ object DomainObjects {
         status: RentalStatus = RentalStatus.IN_PROGRESS,
         price: BigDecimal = BigDecimal.TEN,
         startDate: OffsetDateTime = OffsetDateTime.parse("2022-01-01T12:00:00Z"),
-        endDate: OffsetDateTime = OffsetDateTime.parse("2022-01-02T12:00:00Z"),
+        endDate: OffsetDateTime = OffsetDateTime.parse("2022-01-02T12:00:00Z")
     ): Rental = Rental(
         id = id,
         carId = carId,
@@ -33,7 +33,7 @@ object DomainObjects {
         year: Int = 2022,
         color: String = "Blue",
         pricePerDay: Int = 200,
-        quantity: Int = 5,
+        quantity: Int = 5
     ): Car = Car(
         id = id,
         brand = brand,
@@ -53,7 +53,7 @@ object DomainObjects {
         email: String = "john.doe@example.com",
         phoneNumber: String = "+48123123123",
         address: String = "Warsaw",
-        documentNumber: String = "ABC123123123",
+        documentNumber: String = "ABC123123123"
     ): Customer = Customer(
         id = id,
         name = name,
