@@ -12,6 +12,9 @@ import org.mockito.junit.jupiter.MockitoExtension
 import org.mockito.kotlin.any
 import org.mockito.kotlin.verify
 import pl.borowa5b.car.rental.domain.command.CommandObjects.makeRentalCommand
+import pl.borowa5b.car.rental.domain.exception.CarNotFoundException
+import pl.borowa5b.car.rental.domain.exception.CustomerHasActiveRentalsException
+import pl.borowa5b.car.rental.domain.exception.CustomerNotFoundException
 import pl.borowa5b.car.rental.domain.generator.RentalIdGenerator
 import pl.borowa5b.car.rental.domain.model.DomainObjects.carId
 import pl.borowa5b.car.rental.domain.model.DomainObjects.customerId
@@ -108,7 +111,7 @@ class RentalMakerTest {
         val result = catchThrowable { rentalMaker.make(command) }
 
         // then
-        assertThat(result).isExactlyInstanceOf(IllegalArgumentException::class.java)
+        assertThat(result).isExactlyInstanceOf(CarNotFoundException::class.java)
 
         verify(carRepository).exists(carId)
         verifyNoMoreInteractions(carRepository)
@@ -127,7 +130,7 @@ class RentalMakerTest {
         val result = catchThrowable { rentalMaker.make(command) }
 
         // then
-        assertThat(result).isExactlyInstanceOf(IllegalArgumentException::class.java)
+        assertThat(result).isExactlyInstanceOf(CustomerNotFoundException::class.java)
 
         verify(carRepository).exists(carId)
         verify(customerRepository).exists(customerId)
@@ -148,7 +151,7 @@ class RentalMakerTest {
         val result = catchThrowable { rentalMaker.make(command) }
 
         // then
-        assertThat(result).isExactlyInstanceOf(IllegalArgumentException::class.java)
+        assertThat(result).isExactlyInstanceOf(CustomerHasActiveRentalsException::class.java)
 
         verify(carRepository).exists(carId)
         verify(customerRepository).exists(customerId)

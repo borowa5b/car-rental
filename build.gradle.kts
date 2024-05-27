@@ -29,12 +29,16 @@ dependencies {
     // JACKSON
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 
-    // OTHERS
-    implementation("org.jetbrains.kotlin:kotlin-reflect")
-    implementation("io.viascom.nanoid:nanoid:1.0.1")
+    // EXCEPTIONS
+    implementation("org.zalando:problem:0.27.1")
+    implementation("org.zalando:jackson-datatype-problem:0.27.1")
 
     // DB
     implementation("com.h2database:h2:2.2.224")
+
+    // OTHERS
+    implementation("org.jetbrains.kotlin:kotlin-reflect")
+    implementation("io.viascom.nanoid:nanoid:1.0.1")
 
     // TESTS
     testImplementation("org.springframework.boot:spring-boot-starter-test")

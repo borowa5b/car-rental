@@ -10,13 +10,13 @@ import java.time.temporal.ChronoUnit
 object RequestObjects {
 
     fun makeRentalRequest(
-        carId: String = carId().value,
-        customerId: String = customerId().value,
-        startDate: String = OffsetDateTime.now(ZoneOffset.UTC)
+        carId: String? = carId().value,
+        customerId: String? = customerId().value,
+        startDate: String? = OffsetDateTime.now(ZoneOffset.UTC)
             .truncatedTo(ChronoUnit.MICROS)
             .plusDays(1)
             .format(DateTimeFormatter.ISO_DATE_TIME),
-        endDate: String = OffsetDateTime.now(ZoneOffset.UTC)
+        endDate: String? = OffsetDateTime.now(ZoneOffset.UTC)
             .truncatedTo(ChronoUnit.MICROS)
             .plusDays(2)
             .format(DateTimeFormatter.ISO_DATE_TIME)
