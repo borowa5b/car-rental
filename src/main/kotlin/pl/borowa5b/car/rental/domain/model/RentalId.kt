@@ -1,5 +1,10 @@
 package pl.borowa5b.car.rental.domain.model
 
+import pl.borowa5b.car.rental.domain.exception.ValidationErrorException
+import pl.borowa5b.car.rental.domain.exception.validation.ThrowingValidationExceptionHandler
+import pl.borowa5b.car.rental.domain.exception.validation.ValidationError
+import pl.borowa5b.car.rental.domain.exception.validation.ValidationExceptionHandler
+
 data class RentalId(val value: String) {
 
     init {
@@ -10,9 +15,20 @@ data class RentalId(val value: String) {
 
         const val PREFIX: String = "RNT"
 
-        fun validate(value: String) {
+        fun validate(
+            value: String,
+            fieldName: String = "rentalId",
+            validationExceptionHandler: ValidationExceptionHandler = ThrowingValidationExceptionHandler()
+        ) {
             if (!value.startsWith(PREFIX)) {
-                throw IllegalArgumentException("Rental id must start with $PREFIX")
+                validationExceptionHandler.handle(
+                    ValidationErrorException(
+                        ValidationError(
+                            "Field has invalid value",
+                            "Field `$fieldName` must start with `$PREFIX`"
+                        )
+                    )
+                )
             }
         }
     }

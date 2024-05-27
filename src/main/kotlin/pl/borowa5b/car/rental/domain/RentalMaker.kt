@@ -2,6 +2,9 @@ package pl.borowa5b.car.rental.domain
 
 import org.springframework.stereotype.Component
 import pl.borowa5b.car.rental.domain.command.MakeRentalCommand
+import pl.borowa5b.car.rental.domain.exception.CarNotFoundException
+import pl.borowa5b.car.rental.domain.exception.CustomerHasActiveRentalsException
+import pl.borowa5b.car.rental.domain.exception.CustomerNotFoundException
 import pl.borowa5b.car.rental.domain.generator.RentalIdGenerator
 import pl.borowa5b.car.rental.domain.model.Rental
 import pl.borowa5b.car.rental.domain.model.RentalId
@@ -40,13 +43,13 @@ class RentalMaker(
 
     private fun validate(command: MakeRentalCommand) {
         if (!carRepository.exists(command.carId)) {
-            throw IllegalArgumentException("Car with id ${command.carId} does not exist")
+            throw CarNotFoundException(command.carId)
         }
         if (!customerRepository.exists(command.customerId)) {
-            throw IllegalArgumentException("Customer with id ${command.customerId} does not exist")
+            throw CustomerNotFoundException(command.customerId)
         }
         if (rentalRepository.hasActiveRentals(command.customerId)) {
-            throw IllegalArgumentException("Customer with id ${command.customerId} already has rentals")
+            throw CustomerHasActiveRentalsException(command.customerId)
         }
     }
 }

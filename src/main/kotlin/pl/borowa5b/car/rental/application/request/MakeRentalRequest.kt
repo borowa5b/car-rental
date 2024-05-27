@@ -1,11 +1,12 @@
 package pl.borowa5b.car.rental.application.request
 
-import org.springframework.util.Assert.state
 import pl.borowa5b.car.rental.domain.command.MakeRentalCommand
+import pl.borowa5b.car.rental.domain.exception.ValidationException
+import pl.borowa5b.car.rental.domain.exception.validation.AggregatingValidationExceptionHandler
+import pl.borowa5b.car.rental.domain.exception.validation.Validator
 import pl.borowa5b.car.rental.domain.model.CarId
 import pl.borowa5b.car.rental.domain.model.CustomerId
 import java.time.OffsetDateTime
-import java.time.ZoneOffset
 
 data class MakeRentalRequest(
     val carId: String?,
@@ -15,28 +16,24 @@ data class MakeRentalRequest(
 ) {
 
     fun validate() {
+        val validationExceptionHandler = AggregatingValidationExceptionHandler()
+
+        Validator.isNotNullOrBlank(carId, "carId", validationExceptionHandler)
+        Validator.isNotNullOrBlank(customerId, "carId", validationExceptionHandler)
+        Validator.isInFuture(startDate, "startDate", validationExceptionHandler)
+        Validator.isAfter(endDate, startDate, "endDate", validationExceptionHandler)
+
+
         carId?.let {
-            state(it.isNotBlank()) { "Parameter `carId` must not be empty" }
+            CarId.validate(it, validationExceptionHandler = validationExceptionHandler)
         }
+
         customerId?.let {
-            state(it.isNotBlank()) { "Parameter `customerId` must not be empty" }
+            CustomerId.validate(it, validationExceptionHandler = validationExceptionHandler)
         }
-        startDate?.let {
-            state(it.isNotBlank()) { "Parameter `startDate` must not be empty" }
 
-            val startDateParsed = OffsetDateTime.parse(it)
-            state(
-                startDateParsed.isAfter(OffsetDateTime.now(ZoneOffset.UTC))
-            ) { "Parameter `startDate` must contain date time from future" }
-
-            endDate?.let {
-                state(endDate.isNotBlank()) { "Parameter `endDate` must not be empty" }
-
-                val endDateParsed = OffsetDateTime.parse(endDate)
-                state(
-                    endDateParsed.isAfter(startDateParsed)
-                ) { "Parameter `endDate` must contain date time after `startDate`" }
-            }
+        if (validationExceptionHandler.hasErrors()) {
+            throw ValidationException(validationExceptionHandler.errors)
         }
     }
 

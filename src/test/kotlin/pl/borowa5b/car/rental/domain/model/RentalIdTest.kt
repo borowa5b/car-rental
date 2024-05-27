@@ -3,6 +3,7 @@ package pl.borowa5b.car.rental.domain.model
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.catchThrowable
 import org.junit.jupiter.api.Test
+import pl.borowa5b.car.rental.domain.exception.ValidationErrorException
 
 class RentalIdTest {
 
@@ -25,6 +26,6 @@ class RentalIdTest {
         val result = catchThrowable { RentalId("123") }
 
         // then
-        assertThat(result).isExactlyInstanceOf(IllegalArgumentException::class.java)
+        assertThat(result).isExactlyInstanceOf(ValidationErrorException::class.java)
     }
 }
