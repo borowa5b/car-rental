@@ -6,6 +6,14 @@ import java.time.OffsetDateTime
 
 object CommandObjects {
 
+    fun calculateRentalCommand(
+        startDate: OffsetDateTime = OffsetDateTime.parse("2022-01-01T12:00:00Z"),
+        endDate: OffsetDateTime = OffsetDateTime.parse("2022-01-02T12:00:00Z")
+    ): CalculateRentalCommand = CalculateRentalCommand(
+        startDate = startDate,
+        endDate = endDate
+    )
+
     fun makeRentalCommand(
         carId: CarId,
         customerId: CustomerId,

@@ -3,17 +3,16 @@ package pl.borowa5b.car.rental.application.request
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.catchThrowable
 import org.junit.jupiter.api.Test
-import pl.borowa5b.car.rental.application.request.RequestObjects.makeRentalRequest
-import pl.borowa5b.car.rental.domain.command.MakeRentalCommand
+import pl.borowa5b.car.rental.application.request.RequestObjects.calculateRentalRequest
 import pl.borowa5b.car.rental.domain.exception.ValidationException
 import java.time.format.DateTimeFormatter
 
-class MakeRentalRequestTest {
+class CalculateRentalRequestTest {
 
     @Test
     fun `should validate request`() {
         // given
-        val request = makeRentalRequest()
+        val request = calculateRentalRequest()
 
         // when
         val result = catchThrowable { request.validate() }
@@ -25,11 +24,9 @@ class MakeRentalRequestTest {
     @Test
     fun `should not validate request`() {
         // given
-        val request = makeRentalRequest(
-            carId = null,
-            customerId = null,
-            startDate = null,
-            endDate = null
+        val request = calculateRentalRequest(
+            startDate = "2020-01-01T00:00:00",
+            endDate = ""
         )
 
         // when
@@ -39,21 +36,19 @@ class MakeRentalRequestTest {
         assertThat(result).isExactlyInstanceOf(ValidationException::class.java)
 
         val validationException = result as ValidationException
-        assertThat(validationException.errors).hasSize(4)
+        assertThat(validationException.errors).hasSize(2)
     }
 
     @Test
     fun `should convert to command`() {
         // given
-        val request = makeRentalRequest()
+        val request = calculateRentalRequest()
 
         // when
         val result = request.toCommand()
 
         // then
-        assertThat(result).isExactlyInstanceOf(MakeRentalCommand::class.java)
-        assertThat(result.carId.value).isEqualTo(request.carId)
-        assertThat(result.customerId.value).isEqualTo(request.customerId)
+        assertThat(result).isExactlyInstanceOf(pl.borowa5b.car.rental.domain.command.CalculateRentalCommand::class.java)
         assertThat(result.startDate.format(DateTimeFormatter.ISO_DATE_TIME)).isEqualTo(request.startDate)
         assertThat(result.endDate.format(DateTimeFormatter.ISO_DATE_TIME)).isEqualTo(request.endDate)
     }

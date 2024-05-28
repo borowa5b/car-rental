@@ -11,6 +11,7 @@ import org.mockito.Mockito.`when`
 import org.mockito.junit.jupiter.MockitoExtension
 import org.mockito.kotlin.any
 import org.mockito.kotlin.verify
+import pl.borowa5b.car.rental.domain.command.CommandObjects.calculateRentalCommand
 import pl.borowa5b.car.rental.domain.command.CommandObjects.makeRentalCommand
 import pl.borowa5b.car.rental.domain.exception.CarNotFoundException
 import pl.borowa5b.car.rental.domain.exception.CustomerHasActiveRentalsException
@@ -58,13 +59,15 @@ class RentalMakerTest {
     fun `should make new rental`() {
         // given
         val price = BigDecimal.TEN
-        val command =
-            makeRentalCommand(carId = carId, customerId = customerId, startDate = startDate, endDate = endDate)
+        val command = makeRentalCommand(
+            carId = carId, customerId = customerId, startDate = startDate, endDate = endDate
+        )
+        val calculateRentalCommand = calculateRentalCommand(startDate = startDate, endDate = endDate)
 
         `when`(carRepository.exists(carId)).thenReturn(true)
         `when`(customerRepository.exists(customerId)).thenReturn(true)
         `when`(rentalRepository.hasActiveRentals(customerId)).thenReturn(false)
-        `when`(rentalPriceCalculator.calculate(startDate, endDate)).thenReturn(price)
+        `when`(rentalPriceCalculator.calculate(calculateRentalCommand)).thenReturn(price)
         `when`(rentalIdGenerator.generate()).thenReturn(rentalId)
         `when`(rentalRepository.save(any())).thenReturn(
             rentalEntity(
@@ -87,7 +90,7 @@ class RentalMakerTest {
         verify(carRepository).exists(carId)
         verify(customerRepository).exists(customerId)
         verify(rentalRepository).hasActiveRentals(customerId)
-        verify(rentalPriceCalculator).calculate(startDate, endDate)
+        verify(rentalPriceCalculator).calculate(calculateRentalCommand)
         verify(rentalIdGenerator).generate()
         verify(rentalRepository).save(any())
         verifyNoMoreInteractions(

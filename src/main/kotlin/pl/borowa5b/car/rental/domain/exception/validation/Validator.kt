@@ -85,6 +85,10 @@ object Validator {
         isNotNullOrBlank(value, fieldName, validationExceptionHandler)
 
         value?.let {
+            if (it.isBlank()) {
+                return
+            }
+
             try {
                 OffsetDateTime.parse(value)
             } catch (exception: DateTimeParseException) {
