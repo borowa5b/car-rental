@@ -1,6 +1,7 @@
 package pl.borowa5b.car.rental.domain
 
 import org.springframework.stereotype.Component
+import pl.borowa5b.car.rental.domain.command.CalculateRentalCommand
 import pl.borowa5b.car.rental.domain.command.MakeRentalCommand
 import pl.borowa5b.car.rental.domain.exception.CarNotFoundException
 import pl.borowa5b.car.rental.domain.exception.CustomerHasActiveRentalsException
@@ -27,7 +28,8 @@ class RentalMaker(
 
         val startDate = command.startDate
         val endDate = command.endDate
-        val rentalPrice = rentalPriceCalculator.calculate(startDate, endDate)
+        val calculateRentalCommand = CalculateRentalCommand(startDate, endDate)
+        val rentalPrice = rentalPriceCalculator.calculate(calculateRentalCommand)
         val rental = Rental(
             id = rentalIdGenerator.generate(),
             carId = command.carId,
