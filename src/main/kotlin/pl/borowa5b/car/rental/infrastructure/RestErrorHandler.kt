@@ -59,7 +59,7 @@ class RestErrorHandler : ResponseEntityExceptionHandler() {
             .withType(URI.create("car-rental/business-error"))
             .withTitle("Business error")
             .withDetail(exception.message)
-            .withStatus(Status.CONFLICT)
+            .withStatus(exception.status)
             .build()
         return ResponseEntity.status(problem.status!!.statusCode).body(problem)
     }

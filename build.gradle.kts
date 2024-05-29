@@ -33,6 +33,9 @@ dependencies {
     implementation("org.zalando:problem:0.27.1")
     implementation("org.zalando:jackson-datatype-problem:0.27.1")
 
+    // SWAGGER
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0")
+
     // DB
     implementation("com.h2database:h2:2.2.224")
 

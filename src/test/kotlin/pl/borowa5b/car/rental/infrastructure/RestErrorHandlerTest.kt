@@ -3,6 +3,7 @@ package pl.borowa5b.car.rental.infrastructure
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.http.HttpStatus
+import org.zalando.problem.Status
 import pl.borowa5b.car.rental.domain.DomainException
 import pl.borowa5b.car.rental.domain.exception.ValidationErrorException
 import pl.borowa5b.car.rental.domain.exception.ValidationException
@@ -83,14 +84,15 @@ class RestErrorHandlerTest {
         // given
         val title = "Business error"
         val message = "Business error occurred"
-        val exception = DomainException(message)
+        val status = Status.INTERNAL_SERVER_ERROR
+        val exception = DomainException(status, message)
         val restErrorHandler = RestErrorHandler()
 
         // when
         val result = restErrorHandler.handle(exception)
 
         // then
-        assertThat(result.statusCode).isEqualTo(HttpStatus.CONFLICT)
+        assertThat(result.statusCode.value()).isEqualTo(status.statusCode)
 
         val problem = result.body!!
         assertThat(problem.status?.statusCode).isEqualTo(result.statusCode.value())
