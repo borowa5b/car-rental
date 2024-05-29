@@ -1,5 +1,11 @@
 package pl.borowa5b.car.rental.application.endpoint
 
+import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.media.Content
+import io.swagger.v3.oas.annotations.media.Schema
+import io.swagger.v3.oas.annotations.responses.ApiResponse
+import io.swagger.v3.oas.annotations.responses.ApiResponses
+import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -11,7 +17,16 @@ import pl.borowa5b.car.rental.domain.RentalPriceCalculator
 @RentalsEndpoint
 class CalculateRentalEndpoint(private val rentalPriceCalculator: RentalPriceCalculator) {
 
-    @PostMapping
+    @Operation(summary = "Calculates rental price")
+    @ApiResponses(
+        ApiResponse(
+            responseCode = "200",
+            description = "Rental price calculated",
+            content = [Content(schema = Schema(implementation = CalculateRentalResponse::class))]
+        ),
+        ApiResponse(responseCode = "400", description = "Request validation failed", content = [Content()])
+    )
+    @PostMapping(consumes = [MediaType.APPLICATION_JSON_VALUE], produces = [MediaType.APPLICATION_JSON_VALUE])
     fun calculate(@RequestBody request: CalculateRentalRequest): ResponseEntity<CalculateRentalResponse> {
         request.validate()
         val rentalPrice = rentalPriceCalculator.calculate(request.toCommand())

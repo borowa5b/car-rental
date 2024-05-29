@@ -1,3 +1,5 @@
 package pl.borowa5b.car.rental.domain
 
-open class DomainException(message: String) : RuntimeException(message)
+import org.zalando.problem.StatusType
+
+open class DomainException(val status: StatusType, message: String) : RuntimeException(message)

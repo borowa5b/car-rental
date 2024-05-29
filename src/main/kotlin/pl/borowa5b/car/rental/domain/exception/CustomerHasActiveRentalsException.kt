@@ -1,7 +1,8 @@
 package pl.borowa5b.car.rental.domain.exception
 
+import org.zalando.problem.Status
 import pl.borowa5b.car.rental.domain.DomainException
 import pl.borowa5b.car.rental.domain.model.CustomerId
 
 class CustomerHasActiveRentalsException(customerId: CustomerId) :
-    DomainException("Customer with id ${customerId.value} has active rentals")
+    DomainException(Status.CONFLICT, "Customer with id ${customerId.value} has active rentals")
