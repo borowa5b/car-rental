@@ -1,22 +1,29 @@
 package pl.borowa5b.car.rental.domain.repository
 
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
-import pl.borowa5b.car.rental.domain.model.CustomerId
 import pl.borowa5b.car.rental.domain.model.DomainObjects.rental
 import pl.borowa5b.car.rental.domain.model.Rental
-import pl.borowa5b.car.rental.domain.model.RentalId
-import pl.borowa5b.car.rental.domain.model.RentalStatus
+import pl.borowa5b.car.rental.domain.model.vo.CustomerId
+import pl.borowa5b.car.rental.domain.model.vo.RentalId
+import pl.borowa5b.car.rental.domain.model.vo.RentalStatus
 import pl.borowa5b.car.rental.infrastructure.entity.RentalEntity
 
 class RentalRepositoryTest {
 
+    private val rentalRepository: RentalRepository = TestRentalRepository()
+
+    @BeforeEach
+    fun `before each`() {
+        (rentalRepository as TestRentalRepository).deleteAll()
+    }
+
     @Test
     fun `should save rental`() {
         // given
-        val rentalRepository = TestRentalRepository()
         val rental = rental()
 
         // when
@@ -29,7 +36,6 @@ class RentalRepositoryTest {
     @Test
     fun `should find rental by id`() {
         // given
-        val rentalRepository = TestRentalRepository()
         val rental = rental()
         rentalRepository.save(rental)
 
@@ -43,8 +49,7 @@ class RentalRepositoryTest {
     @Test
     fun `should not find rental by id`() {
         // given
-        val rentalRepository = TestRentalRepository()
-        val rentalId = RentalId("RNT123")
+        val rentalId = RentalId("RNL123")
 
         // when
         val result = rentalRepository.findById(rentalId)
@@ -60,7 +65,6 @@ class RentalRepositoryTest {
     )
     fun `should check if customer has rentals`(customerId: String, expectedResult: Boolean) {
         // given
-        val rentalRepository = TestRentalRepository()
         val rental = rental(customerId = CustomerId("CTR1"), status = RentalStatus.IN_PROGRESS)
         rentalRepository.save(rental)
 
@@ -83,5 +87,7 @@ class RentalRepositoryTest {
 
         override fun hasActiveRentals(customerId: CustomerId): Boolean =
             rentals.any { it.customerId == customerId.value && it.status != RentalStatus.ENDED }
+
+        fun deleteAll() = rentals.clear()
     }
 }

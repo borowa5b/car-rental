@@ -1,9 +1,9 @@
 package pl.borowa5b.car.rental.infrastructure
 
 import org.springframework.http.ResponseEntity
+import org.springframework.web.HttpMediaTypeException
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler
 import org.zalando.problem.Problem
 import org.zalando.problem.ProblemBuilder
 import org.zalando.problem.Status
@@ -12,20 +12,23 @@ import pl.borowa5b.car.rental.domain.exception.ValidationErrorException
 import pl.borowa5b.car.rental.domain.exception.ValidationException
 import pl.borowa5b.car.rental.domain.exception.validation.ValidationError
 import java.net.URI
+import java.util.logging.Logger
 
 
 @ControllerAdvice
-class RestErrorHandler : ResponseEntityExceptionHandler() {
+class RestErrorHandler(private val logger: Logger = Logger.getLogger(RestErrorHandler::class.simpleName)) {
 
-    @ExceptionHandler(value = [RuntimeException::class])
-    fun handle(exception: RuntimeException): ResponseEntity<Problem> {
+    @ExceptionHandler(value = [Exception::class])
+    fun handle(exception: Exception): ResponseEntity<Problem> {
+        val status = resolveStatus(exception)
+        val message = resolveMessage(exception)
         val problem = Problem.builder()
             .withType(URI.create("car-rental/unexpected-error"))
             .withTitle("Unexpected error")
-            .withDetail("Unexpected error occurred")
-            .withStatus(Status.INTERNAL_SERVER_ERROR)
-            .with("stacktrace", exception)
+            .withDetail(message)
+            .withStatus(status)
             .build()
+        logger.warning("Unexpected error occurred: $exception")
         return ResponseEntity.status(problem.status!!.statusCode).body(problem)
     }
 
@@ -61,11 +64,22 @@ class RestErrorHandler : ResponseEntityExceptionHandler() {
             .withDetail(exception.message)
             .withStatus(exception.status)
             .build()
+        logger.warning("Business error occurred: $exception")
         return ResponseEntity.status(problem.status!!.statusCode).body(problem)
     }
 
-    fun ProblemBuilder.with(validationErrors: List<ValidationError>): ProblemBuilder {
+    private fun ProblemBuilder.with(validationErrors: List<ValidationError>): ProblemBuilder {
         with("errors", validationErrors)
         return this
+    }
+
+    private fun resolveMessage(exception: Exception): String? = when (exception) {
+        is HttpMediaTypeException -> exception.body.detail
+        else -> exception.message
+    }
+
+    private fun resolveStatus(exception: Exception): Status = when (exception) {
+        is HttpMediaTypeException -> Status.valueOf(exception.body.status)
+        else -> Status.INTERNAL_SERVER_ERROR
     }
 }

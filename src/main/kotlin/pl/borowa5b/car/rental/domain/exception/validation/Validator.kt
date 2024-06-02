@@ -7,9 +7,26 @@ import java.time.format.DateTimeParseException
 
 object Validator {
 
+    fun isNotNull(
+        value: Any?,
+        fieldName: String,
+        validationExceptionHandler: ValidationExceptionHandler = ThrowingValidationExceptionHandler()
+    ) {
+        if (value == null) {
+            validationExceptionHandler.handle(
+                ValidationErrorException(
+                    ValidationError(
+                        "Field is null",
+                        "Field $fieldName cannot be null"
+                    )
+                )
+            )
+        }
+    }
 
     fun isNotNullOrBlank(
-        value: String?, fieldName: String,
+        value: String?,
+        fieldName: String,
         validationExceptionHandler: ValidationExceptionHandler = ThrowingValidationExceptionHandler()
     ) {
         if (value.isNullOrBlank()) {
@@ -69,15 +86,7 @@ object Validator {
         }
     }
 
-    private fun parseOffsetDateTime(value: String?) = value?.let {
-        try {
-            OffsetDateTime.parse(value)
-        } catch (exception: DateTimeParseException) {
-            null
-        }
-    }
-
-    private fun isValidOffsetDateTime(
+    fun isValidOffsetDateTime(
         value: String?,
         fieldName: String,
         validationExceptionHandler: ValidationExceptionHandler = ThrowingValidationExceptionHandler()
@@ -101,6 +110,14 @@ object Validator {
                     )
                 )
             }
+        }
+    }
+
+    private fun parseOffsetDateTime(value: String?) = value?.let {
+        try {
+            OffsetDateTime.parse(value)
+        } catch (exception: DateTimeParseException) {
+            null
         }
     }
 }

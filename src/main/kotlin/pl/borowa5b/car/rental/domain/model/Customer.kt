@@ -1,5 +1,7 @@
 package pl.borowa5b.car.rental.domain.model
 
+import pl.borowa5b.car.rental.domain.model.vo.CustomerId
+
 data class Customer(
     val id: CustomerId,
     val name: String,

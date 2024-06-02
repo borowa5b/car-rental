@@ -13,6 +13,8 @@ import pl.borowa5b.car.rental.application.RentalsEndpoint
 import pl.borowa5b.car.rental.application.request.CalculateRentalRequest
 import pl.borowa5b.car.rental.application.response.CalculateRentalResponse
 import pl.borowa5b.car.rental.domain.RentalPriceCalculator
+import pl.borowa5b.car.rental.domain.exception.ValidationException
+import pl.borowa5b.car.rental.domain.exception.validation.AggregatingValidationExceptionHandler
 
 @RentalsEndpoint
 class CalculateRentalEndpoint(private val rentalPriceCalculator: RentalPriceCalculator) {
@@ -28,8 +30,18 @@ class CalculateRentalEndpoint(private val rentalPriceCalculator: RentalPriceCalc
     )
     @PostMapping(consumes = [MediaType.APPLICATION_JSON_VALUE], produces = [MediaType.APPLICATION_JSON_VALUE])
     fun calculate(@RequestBody request: CalculateRentalRequest): ResponseEntity<CalculateRentalResponse> {
-        request.validate()
+        validate(request)
         val rentalPrice = rentalPriceCalculator.calculate(request.toCommand())
         return ResponseEntity.ok(CalculateRentalResponse(rentalPrice))
+    }
+
+    private fun validate(request: CalculateRentalRequest) {
+        val validationExceptionHandler = AggregatingValidationExceptionHandler()
+
+        request.validate(validationExceptionHandler)
+
+        if (validationExceptionHandler.hasErrors()) {
+            throw ValidationException(validationExceptionHandler.errors)
+        }
     }
 }

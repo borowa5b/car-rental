@@ -3,7 +3,7 @@ package pl.borowa5b.car.rental.infrastructure.generator
 import org.springframework.stereotype.Component
 import pl.borowa5b.car.rental.domain.generator.CarIdGenerator
 import pl.borowa5b.car.rental.domain.generator.IdGenerator
-import pl.borowa5b.car.rental.domain.model.CarId
+import pl.borowa5b.car.rental.domain.model.vo.CarId
 
 @Component
 class DefaultCarIdGenerator(private val idGenerator: IdGenerator) : CarIdGenerator {

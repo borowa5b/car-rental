@@ -1,5 +1,6 @@
 package pl.borowa5b.car.rental.application.request
 
+import pl.borowa5b.car.rental.application.filter.GetRentalsFilter
 import pl.borowa5b.car.rental.domain.model.DomainObjects.carId
 import pl.borowa5b.car.rental.domain.model.DomainObjects.customerId
 import java.time.OffsetDateTime
@@ -39,5 +40,26 @@ object RequestObjects {
         customerId = customerId,
         startDate = startDate,
         endDate = endDate,
+    )
+
+    fun getRentalsFilter(
+        carId: String? = null,
+        customerId: String? = null,
+        startDateFrom: String? = null,
+        startDateTo: String? = null,
+        endDateFrom: String? = null,
+        endDateTo: String? = null
+    ): GetRentalsFilter = GetRentalsFilter(
+        carId = carId,
+        customerId = customerId,
+        startDateFrom = startDateFrom,
+        startDateTo = startDateTo,
+        endDateFrom = endDateFrom,
+        endDateTo = endDateTo
+    )
+
+    fun pageRequest(number: Int? = 1, size: Int? = 10): PageRequest = PageRequest(
+        number = number,
+        size = size
     )
 }

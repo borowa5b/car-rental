@@ -1,8 +1,10 @@
 package pl.borowa5b.car.rental.application.endpoint
 
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
+import pl.borowa5b.car.rental.Database
 import pl.borowa5b.car.rental.IntegrationTest
 import pl.borowa5b.car.rental.application.request.RequestObjects.calculateRentalRequest
 import pl.borowa5b.car.rental.domain.PriceConfiguration
@@ -14,10 +16,18 @@ import java.time.format.DateTimeFormatter
 class CalculateRentalEndpointIT {
 
     @Autowired
+    private lateinit var database: Database
+
+    @Autowired
     private lateinit var priceConfiguration: PriceConfiguration
 
     @Autowired
     private lateinit var endpoint: CalculateRentalEndpoint
+
+    @BeforeEach
+    fun `before each`() {
+        database.prepare()
+    }
 
     @Test
     fun `should calculate rental price`() {

@@ -5,7 +5,7 @@ import jakarta.persistence.Id
 import jakarta.persistence.PreUpdate
 import jakarta.persistence.Version
 import pl.borowa5b.car.rental.domain.model.Customer
-import pl.borowa5b.car.rental.domain.model.CustomerId
+import pl.borowa5b.car.rental.domain.model.vo.CustomerId
 import java.time.OffsetDateTime
 import java.time.ZoneOffset
 

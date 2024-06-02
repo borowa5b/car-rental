@@ -8,6 +8,19 @@ import pl.borowa5b.car.rental.domain.exception.ValidationErrorException
 class ValidatorTest {
 
     @Test
+    fun `should not validate if not null`() {
+        // given
+        val value = null
+        val fieldName = "fieldName"
+
+        // when
+        val result = catchThrowable { Validator.isNotNull(value, fieldName) }
+
+        // then
+        assertThat(result).isExactlyInstanceOf(ValidationErrorException::class.java)
+    }
+
+    @Test
     fun `should not validate if null or blank`() {
         // given
         val value = null
@@ -42,6 +55,19 @@ class ValidatorTest {
 
         // when
         val result = catchThrowable { Validator.isInFuture(value, fieldName) }
+
+        // then
+        assertThat(result).isExactlyInstanceOf(ValidationErrorException::class.java)
+    }
+
+    @Test
+    fun `should not validate if date time is not correctly formatted`() {
+        // given
+        val value = "2020-01-01Time00:00:00"
+        val fieldName = "fieldName"
+
+        // when
+        val result = catchThrowable { Validator.isValidOffsetDateTime(value, fieldName) }
 
         // then
         assertThat(result).isExactlyInstanceOf(ValidationErrorException::class.java)

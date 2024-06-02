@@ -1,11 +1,10 @@
 package pl.borowa5b.car.rental.application.request
 
 import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.catchThrowable
 import org.junit.jupiter.api.Test
 import pl.borowa5b.car.rental.application.request.RequestObjects.makeRentalRequest
 import pl.borowa5b.car.rental.domain.command.MakeRentalCommand
-import pl.borowa5b.car.rental.domain.exception.ValidationException
+import pl.borowa5b.car.rental.domain.exception.validation.AggregatingValidationExceptionHandler
 import java.time.format.DateTimeFormatter
 
 class MakeRentalRequestTest {
@@ -13,18 +12,20 @@ class MakeRentalRequestTest {
     @Test
     fun `should validate request`() {
         // given
+        val validationExceptionHandler = AggregatingValidationExceptionHandler()
         val request = makeRentalRequest()
 
         // when
-        val result = catchThrowable { request.validate() }
+        request.validate(validationExceptionHandler)
 
         // then
-        assertThat(result).isNull()
+        assertThat(validationExceptionHandler.hasErrors()).isFalse()
     }
 
     @Test
     fun `should not validate request`() {
         // given
+        val validationExceptionHandler = AggregatingValidationExceptionHandler()
         val request = makeRentalRequest(
             carId = null,
             customerId = null,
@@ -33,13 +34,11 @@ class MakeRentalRequestTest {
         )
 
         // when
-        val result = catchThrowable { request.validate() }
+        request.validate(validationExceptionHandler)
 
         // then
-        assertThat(result).isExactlyInstanceOf(ValidationException::class.java)
-
-        val validationException = result as ValidationException
-        assertThat(validationException.errors).hasSize(4)
+        assertThat(validationExceptionHandler.hasErrors()).isTrue()
+        assertThat(validationExceptionHandler.errors).hasSize(4)
     }
 
     @Test

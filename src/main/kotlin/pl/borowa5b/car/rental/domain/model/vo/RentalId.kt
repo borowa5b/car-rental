@@ -1,4 +1,4 @@
-package pl.borowa5b.car.rental.domain.model
+package pl.borowa5b.car.rental.domain.model.vo
 
 import pl.borowa5b.car.rental.domain.exception.ValidationErrorException
 import pl.borowa5b.car.rental.domain.exception.validation.ThrowingValidationExceptionHandler
@@ -13,7 +13,7 @@ data class RentalId(val value: String) {
 
     companion object {
 
-        const val PREFIX: String = "RNT"
+        const val PREFIX: String = "RNL"
 
         fun validate(
             value: String,

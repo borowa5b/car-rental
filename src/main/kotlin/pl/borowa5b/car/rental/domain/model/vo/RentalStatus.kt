@@ -1,4 +1,4 @@
-package pl.borowa5b.car.rental.domain.model
+package pl.borowa5b.car.rental.domain.model.vo
 
 enum class RentalStatus {
     NEW,

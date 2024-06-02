@@ -1,6 +1,6 @@
 package pl.borowa5b.car.rental.domain.repository
 
-import pl.borowa5b.car.rental.domain.model.CustomerId
+import pl.borowa5b.car.rental.domain.model.vo.CustomerId
 
 interface CustomerRepository {
 

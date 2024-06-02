@@ -3,6 +3,8 @@ package pl.borowa5b.car.rental.infrastructure
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.http.HttpStatus
+import org.springframework.http.MediaType
+import org.springframework.web.HttpMediaTypeNotSupportedException
 import org.zalando.problem.Status
 import pl.borowa5b.car.rental.domain.DomainException
 import pl.borowa5b.car.rental.domain.exception.ValidationErrorException
@@ -16,7 +18,7 @@ class RestErrorHandlerTest {
         // given
         val title = "Unexpected error"
         val message = "Unexpected error occurred"
-        val exception = RuntimeException("example exception")
+        val exception = RuntimeException(message)
         val restErrorHandler = RestErrorHandler()
 
         // when
@@ -29,6 +31,25 @@ class RestErrorHandlerTest {
         assertThat(problem.status?.statusCode).isEqualTo(result.statusCode.value())
         assertThat(problem.title).isEqualTo(title)
         assertThat(problem.detail).isEqualTo(message)
+    }
+
+    @Test
+    fun `should handle http media type exception`() {
+        // given
+        val title = "Unexpected error"
+        val exception = HttpMediaTypeNotSupportedException(MediaType.APPLICATION_ATOM_XML, listOf())
+        val restErrorHandler = RestErrorHandler()
+
+        // when
+        val result = restErrorHandler.handle(exception)
+
+        // then
+        assertThat(result.statusCode.value()).isEqualTo(exception.body.status)
+
+        val problem = result.body!!
+        assertThat(problem.status?.statusCode).isEqualTo(result.statusCode.value())
+        assertThat(problem.title).isEqualTo(title)
+        assertThat(problem.detail).isEqualTo(exception.body.detail)
     }
 
     @Test

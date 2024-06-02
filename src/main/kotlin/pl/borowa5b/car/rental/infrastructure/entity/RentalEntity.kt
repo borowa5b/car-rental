@@ -1,10 +1,11 @@
 package pl.borowa5b.car.rental.infrastructure.entity
 
-import jakarta.persistence.Entity
-import jakarta.persistence.Id
-import jakarta.persistence.PreUpdate
-import jakarta.persistence.Version
-import pl.borowa5b.car.rental.domain.model.*
+import jakarta.persistence.*
+import pl.borowa5b.car.rental.domain.model.Rental
+import pl.borowa5b.car.rental.domain.model.vo.CarId
+import pl.borowa5b.car.rental.domain.model.vo.CustomerId
+import pl.borowa5b.car.rental.domain.model.vo.RentalId
+import pl.borowa5b.car.rental.domain.model.vo.RentalStatus
 import java.math.BigDecimal
 import java.time.OffsetDateTime
 import java.time.ZoneOffset
@@ -15,6 +16,7 @@ data class RentalEntity(
     val id: String,
     val carId: String,
     val customerId: String,
+    @Enumerated(EnumType.STRING)
     val status: RentalStatus,
     val price: BigDecimal,
     val startDate: OffsetDateTime,

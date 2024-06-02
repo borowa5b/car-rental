@@ -14,6 +14,8 @@ import pl.borowa5b.car.rental.application.RentalsEndpoint
 import pl.borowa5b.car.rental.application.request.MakeRentalRequest
 import pl.borowa5b.car.rental.application.response.MakeRentalResponse
 import pl.borowa5b.car.rental.domain.RentalMaker
+import pl.borowa5b.car.rental.domain.exception.ValidationException
+import pl.borowa5b.car.rental.domain.exception.validation.AggregatingValidationExceptionHandler
 
 @RentalsEndpoint
 class MakeRentalEndpoint(private val rentalMaker: RentalMaker) {
@@ -31,8 +33,18 @@ class MakeRentalEndpoint(private val rentalMaker: RentalMaker) {
     )
     @PutMapping(consumes = [MediaType.APPLICATION_JSON_VALUE], produces = [MediaType.APPLICATION_JSON_VALUE])
     fun make(@RequestBody request: MakeRentalRequest): ResponseEntity<MakeRentalResponse> {
-        request.validate()
+        validate(request)
         val rentalId = rentalMaker.make(request.toCommand())
         return ResponseEntity.status(HttpStatus.CREATED).body(MakeRentalResponse(rentalId.value))
+    }
+
+    private fun validate(request: MakeRentalRequest) {
+        val validationExceptionHandler = AggregatingValidationExceptionHandler()
+
+        request.validate(validationExceptionHandler)
+
+        if (validationExceptionHandler.hasErrors()) {
+            throw ValidationException(validationExceptionHandler.errors)
+        }
     }
 }
