@@ -2,7 +2,7 @@ package pl.borowa5b.car.rental.infrastructure.entity
 
 import jakarta.persistence.*
 import pl.borowa5b.car.rental.domain.model.Car
-import pl.borowa5b.car.rental.domain.model.CarId
+import pl.borowa5b.car.rental.domain.model.vo.CarId
 import java.time.OffsetDateTime
 import java.time.ZoneOffset
 

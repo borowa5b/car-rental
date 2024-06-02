@@ -1,7 +1,7 @@
 package pl.borowa5b.car.rental.domain.command
 
-import pl.borowa5b.car.rental.domain.model.CarId
-import pl.borowa5b.car.rental.domain.model.CustomerId
+import pl.borowa5b.car.rental.domain.model.vo.CarId
+import pl.borowa5b.car.rental.domain.model.vo.CustomerId
 import java.time.OffsetDateTime
 
 data class MakeRentalCommand(

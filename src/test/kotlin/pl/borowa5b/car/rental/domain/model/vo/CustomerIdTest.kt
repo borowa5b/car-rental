@@ -1,4 +1,4 @@
-package pl.borowa5b.car.rental.domain.model
+package pl.borowa5b.car.rental.domain.model.vo
 
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.catchThrowable

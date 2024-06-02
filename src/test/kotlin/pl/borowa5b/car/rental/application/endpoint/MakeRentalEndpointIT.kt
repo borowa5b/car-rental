@@ -1,11 +1,13 @@
 package pl.borowa5b.car.rental.application.endpoint
 
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
+import pl.borowa5b.car.rental.Database
 import pl.borowa5b.car.rental.IntegrationTest
 import pl.borowa5b.car.rental.application.request.RequestObjects.makeRentalRequest
-import pl.borowa5b.car.rental.domain.model.RentalStatus
+import pl.borowa5b.car.rental.domain.model.vo.RentalStatus
 import pl.borowa5b.car.rental.infrastructure.entity.EntityObjects.carEntity
 import pl.borowa5b.car.rental.infrastructure.entity.EntityObjects.customerEntity
 import pl.borowa5b.car.rental.infrastructure.repository.SpringJpaCarRepository
@@ -18,6 +20,9 @@ import java.time.temporal.ChronoUnit
 class MakeRentalEndpointIT {
 
     @Autowired
+    private lateinit var database: Database
+
+    @Autowired
     private lateinit var endpoint: MakeRentalEndpoint
 
     @Autowired
@@ -28,6 +33,11 @@ class MakeRentalEndpointIT {
 
     @Autowired
     private lateinit var customerRepository: SpringJpaCustomerRepository
+
+    @BeforeEach
+    fun `before each`() {
+        database.prepare()
+    }
 
     @Test
     fun `should make rental`() {

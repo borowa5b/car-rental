@@ -4,10 +4,10 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Component
 import org.springframework.stereotype.Repository
-import pl.borowa5b.car.rental.domain.model.CustomerId
 import pl.borowa5b.car.rental.domain.model.Rental
-import pl.borowa5b.car.rental.domain.model.RentalId
-import pl.borowa5b.car.rental.domain.model.RentalStatus
+import pl.borowa5b.car.rental.domain.model.vo.CustomerId
+import pl.borowa5b.car.rental.domain.model.vo.RentalId
+import pl.borowa5b.car.rental.domain.model.vo.RentalStatus
 import pl.borowa5b.car.rental.domain.repository.RentalRepository
 import pl.borowa5b.car.rental.infrastructure.entity.RentalEntity
 import kotlin.jvm.optionals.getOrNull

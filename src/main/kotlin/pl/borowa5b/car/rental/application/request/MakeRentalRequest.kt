@@ -1,23 +1,25 @@
 package pl.borowa5b.car.rental.application.request
 
+import io.swagger.v3.oas.annotations.media.Schema
 import pl.borowa5b.car.rental.domain.command.MakeRentalCommand
-import pl.borowa5b.car.rental.domain.exception.ValidationException
 import pl.borowa5b.car.rental.domain.exception.validation.AggregatingValidationExceptionHandler
 import pl.borowa5b.car.rental.domain.exception.validation.Validator
-import pl.borowa5b.car.rental.domain.model.CarId
-import pl.borowa5b.car.rental.domain.model.CustomerId
+import pl.borowa5b.car.rental.domain.model.vo.CarId
+import pl.borowa5b.car.rental.domain.model.vo.CustomerId
 import java.time.OffsetDateTime
 
 data class MakeRentalRequest(
+    @Schema(type = "string", description = "Car identifier", example = "CAR25433432342234")
     val carId: String?,
+    @Schema(type = "string", description = "Customer identifier", example = "CTR25433432342234")
     val customerId: String?,
+    @Schema(type = "string", format = "date-time", description = "Rental start date", example = "2025-01-01T12:00:00Z")
     val startDate: String?,
+    @Schema(type = "string", format = "date-time", description = "Rental end date", example = "2025-01-02T12:00:00Z")
     val endDate: String?
 ) {
 
-    fun validate() {
-        val validationExceptionHandler = AggregatingValidationExceptionHandler()
-
+    fun validate(validationExceptionHandler: AggregatingValidationExceptionHandler) {
         Validator.isNotNullOrBlank(carId, "carId", validationExceptionHandler)
         Validator.isNotNullOrBlank(customerId, "carId", validationExceptionHandler)
         Validator.isInFuture(startDate, "startDate", validationExceptionHandler)
@@ -30,10 +32,6 @@ data class MakeRentalRequest(
 
         customerId?.let {
             CustomerId.validate(it, validationExceptionHandler = validationExceptionHandler)
-        }
-
-        if (validationExceptionHandler.hasErrors()) {
-            throw ValidationException(validationExceptionHandler.errors)
         }
     }
 

@@ -1,6 +1,6 @@
 package pl.borowa5b.car.rental.domain.generator
 
-import pl.borowa5b.car.rental.domain.model.CarId
+import pl.borowa5b.car.rental.domain.model.vo.CarId
 
 interface CarIdGenerator {
 

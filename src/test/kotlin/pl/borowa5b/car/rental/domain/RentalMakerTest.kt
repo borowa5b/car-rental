@@ -20,7 +20,7 @@ import pl.borowa5b.car.rental.domain.generator.RentalIdGenerator
 import pl.borowa5b.car.rental.domain.model.DomainObjects.carId
 import pl.borowa5b.car.rental.domain.model.DomainObjects.customerId
 import pl.borowa5b.car.rental.domain.model.DomainObjects.rentalId
-import pl.borowa5b.car.rental.domain.model.RentalStatus
+import pl.borowa5b.car.rental.domain.model.vo.RentalStatus
 import pl.borowa5b.car.rental.domain.repository.CarRepository
 import pl.borowa5b.car.rental.domain.repository.CustomerRepository
 import pl.borowa5b.car.rental.domain.repository.RentalRepository

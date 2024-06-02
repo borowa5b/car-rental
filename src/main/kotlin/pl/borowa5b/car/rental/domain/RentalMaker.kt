@@ -8,8 +8,8 @@ import pl.borowa5b.car.rental.domain.exception.CustomerHasActiveRentalsException
 import pl.borowa5b.car.rental.domain.exception.CustomerNotFoundException
 import pl.borowa5b.car.rental.domain.generator.RentalIdGenerator
 import pl.borowa5b.car.rental.domain.model.Rental
-import pl.borowa5b.car.rental.domain.model.RentalId
-import pl.borowa5b.car.rental.domain.model.RentalStatus
+import pl.borowa5b.car.rental.domain.model.vo.RentalId
+import pl.borowa5b.car.rental.domain.model.vo.RentalStatus
 import pl.borowa5b.car.rental.domain.repository.CarRepository
 import pl.borowa5b.car.rental.domain.repository.CustomerRepository
 import pl.borowa5b.car.rental.domain.repository.RentalRepository

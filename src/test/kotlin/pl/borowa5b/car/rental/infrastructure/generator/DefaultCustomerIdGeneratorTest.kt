@@ -2,7 +2,7 @@ package pl.borowa5b.car.rental.infrastructure.generator
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import pl.borowa5b.car.rental.domain.model.CustomerId
+import pl.borowa5b.car.rental.domain.model.vo.CustomerId
 
 class DefaultCustomerIdGeneratorTest {
 
