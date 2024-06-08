@@ -13,8 +13,8 @@ class OffsetDateTimeConverterTest {
     fun `should convert from offset date time to local date time`() {
         // given
         val offsetDateTime = OffsetDateTime.now(ZoneOffset.UTC)
-        val converter = OffsetDateTimeConverter()
         val expectedLocalDateTime = offsetDateTime.truncatedTo(ChronoUnit.MICROS).toLocalDateTime()
+        val converter = OffsetDateTimeConverter()
 
         // when
         val result = converter.convertToDatabaseColumn(offsetDateTime)
@@ -24,16 +24,42 @@ class OffsetDateTimeConverterTest {
     }
 
     @Test
+    fun `should convert from offset date time to local date time when offset date time is null`() {
+        // given
+        val offsetDateTime = null
+        val converter = OffsetDateTimeConverter()
+
+        // when
+        val result = converter.convertToDatabaseColumn(offsetDateTime)
+
+        // then
+        assertThat(result).isNull()
+    }
+
+    @Test
     fun `should convert from local date time to offset date time`() {
         // given
         val localDateTime = LocalDateTime.now()
-        val converter = OffsetDateTimeConverter()
         val expectedOffsetDateTime = localDateTime.atOffset(ZoneOffset.UTC)
+        val converter = OffsetDateTimeConverter()
 
         // when
         val result = converter.convertToEntityAttribute(localDateTime)
 
         // then
         assertThat(result).isEqualTo(expectedOffsetDateTime)
+    }
+
+    @Test
+    fun `should convert from local date time to offset date time when local date time is null`() {
+        // given
+        val localDateTime = null
+        val converter = OffsetDateTimeConverter()
+
+        // when
+        val result = converter.convertToEntityAttribute(localDateTime)
+
+        // then
+        assertThat(result).isNull()
     }
 }

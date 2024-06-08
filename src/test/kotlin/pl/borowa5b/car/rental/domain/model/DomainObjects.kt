@@ -2,10 +2,7 @@ package pl.borowa5b.car.rental.domain.model
 
 import org.springframework.data.domain.Sort
 import org.springframework.data.domain.Sort.Direction
-import pl.borowa5b.car.rental.domain.model.vo.CarId
-import pl.borowa5b.car.rental.domain.model.vo.CustomerId
-import pl.borowa5b.car.rental.domain.model.vo.RentalId
-import pl.borowa5b.car.rental.domain.model.vo.RentalStatus
+import pl.borowa5b.car.rental.domain.model.vo.*
 import pl.borowa5b.car.rental.domain.model.vo.pagination.Page
 import pl.borowa5b.car.rental.domain.repository.read.RentalDetails
 import pl.borowa5b.car.rental.domain.repository.read.RentalQuery
@@ -80,6 +77,12 @@ object DomainObjects {
 
     fun customerId(): CustomerId = CustomerId("${CustomerId.PREFIX}${Random.nextInt(1000000, 9999999)}")
 
+    fun externalEventId(): ExternalEventId =
+        ExternalEventId("${ExternalEventId.PREFIX}${Random.nextInt(1000000, 9999999)}")
+
+    fun applicationEventId(): ApplicationEventId =
+        ApplicationEventId("${ApplicationEventId.PREFIX}${Random.nextInt(1000000, 9999999)}")
+
     fun order(
         direction: Direction = Direction.DESC,
         property: String = "id"
@@ -129,6 +132,44 @@ object DomainObjects {
         endDate = endDate,
         creationDate = OffsetDateTime.parse("2022-01-01T12:00:00Z"),
         modificationDate = OffsetDateTime.parse("2022-01-01T12:00:00Z"),
+        entityVersion = 0
+    )
+
+    fun externalEvent(
+        id: String = externalEventId().value,
+        type: String = "CustomerCreated",
+        version: String = "1.0",
+        status: ExternalEventStatus = ExternalEventStatus.NEW,
+        payload: String = "{}",
+        errorMessage: String? = null,
+        creationDate: OffsetDateTime = OffsetDateTime.parse("2022-01-01T12:00:00Z"),
+        processedOnDate: OffsetDateTime? = null
+    ): ExternalEvent = ExternalEvent(
+        id = ExternalEventId(id),
+        type = type,
+        version = version,
+        status = status,
+        payload = payload,
+        errorMessage = errorMessage,
+        creationDate = creationDate,
+        processedOnDate = processedOnDate,
+        entityVersion = 0
+    )
+
+    fun applicationEvent(
+        id: String = applicationEventId().value,
+        type: String = "RentalMade",
+        version: String = "1.0",
+        status: ApplicationEventStatus = ApplicationEventStatus.NEW,
+        payload: String = "{}",
+        publishedOnDate: OffsetDateTime? = null
+    ): ApplicationEvent = ApplicationEvent(
+        id = ApplicationEventId(id),
+        type = type,
+        version = version,
+        status = status,
+        payload = payload,
+        publishedOnDate = publishedOnDate,
         entityVersion = 0
     )
 }

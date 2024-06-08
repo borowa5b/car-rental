@@ -1,5 +1,6 @@
 package pl.borowa5b.car.rental.domain.command
 
+import pl.borowa5b.car.rental.domain.model.DomainObjects.customerId
 import pl.borowa5b.car.rental.domain.model.vo.CarId
 import pl.borowa5b.car.rental.domain.model.vo.CustomerId
 import java.time.OffsetDateTime
@@ -24,5 +25,23 @@ object CommandObjects {
         customerId = customerId,
         startDate = startDate,
         endDate = endDate
+    )
+
+    fun saveCustomerCommand(
+        id: CustomerId = customerId(),
+        name: String = "Joe",
+        surname: String = "Doe",
+        email: String = "joe.doe@email.com",
+        phone: String = "952123531",
+        address: String = "Kwiatkowa 9, 00-000 Warszawa",
+        documentNumber: String = "FAE124532"
+    ): SaveCustomerCommand = SaveCustomerCommand(
+        id = id.value,
+        name = name,
+        surname = surname,
+        email = email,
+        phone = phone,
+        address = address,
+        documentNumber = documentNumber
     )
 }

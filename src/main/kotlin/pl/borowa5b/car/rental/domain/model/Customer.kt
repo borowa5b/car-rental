@@ -10,5 +10,5 @@ data class Customer(
     val phoneNumber: String,
     val address: String,
     val documentNumber: String,
-    val version: Long
+    val version: Long = 0
 )

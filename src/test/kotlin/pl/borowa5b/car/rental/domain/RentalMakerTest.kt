@@ -11,8 +11,10 @@ import org.mockito.Mockito.`when`
 import org.mockito.junit.jupiter.MockitoExtension
 import org.mockito.kotlin.any
 import org.mockito.kotlin.verify
+import org.mockito.kotlin.verifyNoInteractions
 import pl.borowa5b.car.rental.domain.command.CommandObjects.calculateRentalCommand
 import pl.borowa5b.car.rental.domain.command.CommandObjects.makeRentalCommand
+import pl.borowa5b.car.rental.domain.event.RentalMadeEvent
 import pl.borowa5b.car.rental.domain.exception.CarNotFoundException
 import pl.borowa5b.car.rental.domain.exception.CustomerHasActiveRentalsException
 import pl.borowa5b.car.rental.domain.exception.CustomerNotFoundException
@@ -45,6 +47,9 @@ class RentalMakerTest {
 
     @Mock
     private lateinit var customerRepository: CustomerRepository
+
+    @Mock
+    private lateinit var applicationEventPublisher: ApplicationEventPublisher
 
     @InjectMocks
     private lateinit var rentalMaker: RentalMaker
@@ -93,12 +98,14 @@ class RentalMakerTest {
         verify(rentalPriceCalculator).calculate(calculateRentalCommand)
         verify(rentalIdGenerator).generate()
         verify(rentalRepository).save(any())
+        verify(applicationEventPublisher).publish(any<RentalMadeEvent>())
         verifyNoMoreInteractions(
             carRepository,
             customerRepository,
             rentalPriceCalculator,
             rentalIdGenerator,
-            rentalRepository
+            rentalRepository,
+            applicationEventPublisher
         )
     }
 
@@ -118,6 +125,13 @@ class RentalMakerTest {
 
         verify(carRepository).exists(carId)
         verifyNoMoreInteractions(carRepository)
+        verifyNoInteractions(
+            customerRepository,
+            rentalPriceCalculator,
+            rentalIdGenerator,
+            rentalRepository,
+            applicationEventPublisher
+        )
     }
 
     @Test
@@ -138,6 +152,7 @@ class RentalMakerTest {
         verify(carRepository).exists(carId)
         verify(customerRepository).exists(customerId)
         verifyNoMoreInteractions(carRepository, customerRepository)
+        verifyNoInteractions(rentalPriceCalculator, rentalIdGenerator, rentalRepository, applicationEventPublisher)
     }
 
     @Test
@@ -160,5 +175,6 @@ class RentalMakerTest {
         verify(customerRepository).exists(customerId)
         verify(rentalRepository).hasActiveRentals(customerId)
         verifyNoMoreInteractions(carRepository, customerRepository, rentalRepository)
+        verifyNoInteractions(rentalPriceCalculator, rentalIdGenerator, applicationEventPublisher)
     }
 }

@@ -8,11 +8,11 @@ import java.time.ZoneOffset
 import java.time.temporal.ChronoUnit
 
 @Converter(autoApply = true)
-class OffsetDateTimeConverter : AttributeConverter<OffsetDateTime, LocalDateTime> {
+class OffsetDateTimeConverter : AttributeConverter<OffsetDateTime?, LocalDateTime?> {
 
-    override fun convertToDatabaseColumn(offsetDateTime: OffsetDateTime): LocalDateTime =
-        offsetDateTime.truncatedTo(ChronoUnit.MICROS).toLocalDateTime()
+    override fun convertToDatabaseColumn(offsetDateTime: OffsetDateTime?): LocalDateTime? =
+        offsetDateTime?.truncatedTo(ChronoUnit.MICROS)?.toLocalDateTime()
 
-    override fun convertToEntityAttribute(localDateTime: LocalDateTime): OffsetDateTime =
-        localDateTime.atOffset(ZoneOffset.UTC)
+    override fun convertToEntityAttribute(localDateTime: LocalDateTime?): OffsetDateTime? =
+        localDateTime?.atOffset(ZoneOffset.UTC)
 }

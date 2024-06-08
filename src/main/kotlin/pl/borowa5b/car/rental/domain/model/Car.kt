@@ -11,5 +11,5 @@ data class Car(
     val color: String,
     val pricePerDay: Int,
     val quantity: Int,
-    val version: Long
+    val version: Long = 0
 )
