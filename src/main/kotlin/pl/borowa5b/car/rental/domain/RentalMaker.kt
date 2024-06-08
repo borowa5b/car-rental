@@ -3,6 +3,7 @@ package pl.borowa5b.car.rental.domain
 import org.springframework.stereotype.Component
 import pl.borowa5b.car.rental.domain.command.CalculateRentalCommand
 import pl.borowa5b.car.rental.domain.command.MakeRentalCommand
+import pl.borowa5b.car.rental.domain.event.RentalMadeEvent
 import pl.borowa5b.car.rental.domain.exception.CarNotFoundException
 import pl.borowa5b.car.rental.domain.exception.CustomerHasActiveRentalsException
 import pl.borowa5b.car.rental.domain.exception.CustomerNotFoundException
@@ -20,7 +21,8 @@ class RentalMaker(
     private val rentalPriceCalculator: RentalPriceCalculator,
     private val rentalRepository: RentalRepository,
     private val carRepository: CarRepository,
-    private val customerRepository: CustomerRepository
+    private val customerRepository: CustomerRepository,
+    private val applicationEventPublisher: ApplicationEventPublisher
 ) {
 
     fun make(command: MakeRentalCommand): RentalId {
@@ -40,6 +42,7 @@ class RentalMaker(
             status = RentalStatus.NEW
         )
         val rentalEntity = rentalRepository.save(rental)
+        applicationEventPublisher.publish(RentalMadeEvent(rental))
         return RentalId(rentalEntity.id)
     }
 

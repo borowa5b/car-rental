@@ -2,6 +2,7 @@ package pl.borowa5b.car.rental.domain.repository
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 import pl.borowa5b.car.rental.domain.model.Customer
@@ -26,7 +27,7 @@ class CustomerRepositoryTest {
     fun `should check if customer exists`(customerId: String, expectedResult: Boolean) {
         // given
         val customer = customer(id = CustomerId("CTR1"))
-        (customerRepository as TestCustomerRepository).save(customer)
+        customerRepository.save(customer)
 
         // when
         val result = customerRepository.exists(CustomerId(customerId))
@@ -35,12 +36,30 @@ class CustomerRepositoryTest {
         assertThat(result).isEqualTo(expectedResult)
     }
 
+    @Test
+    fun `should save customer`() {
+        // given
+        val customer = customer()
+
+        // when
+        val result = customerRepository.save(customer)
+
+        // then
+        assertThat(result.id).isEqualTo(customer.id.value)
+    }
+
     private class TestCustomerRepository(private val customers: ArrayList<CustomerEntity> = ArrayList()) :
         CustomerRepository {
 
         override fun exists(customerId: CustomerId): Boolean = customers.any { it.id == customerId.value }
 
-        fun save(customer: Customer) = customers.add(CustomerEntity.fromDomain(customer))
+        override fun save(customer: Customer): CustomerEntity {
+            val entity = CustomerEntity.fromDomain(customer)
+            customers.add(entity)
+            return entity
+        }
+
+        override fun findById(id: CustomerId): Customer? = customers.find { it.id == id.value }?.toDomain()
 
         fun deleteAll() = customers.clear()
     }

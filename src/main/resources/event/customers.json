@@ -1,0 +1,9 @@
+[
+  {
+    "id": "EXT543654233453453",
+    "type": "CustomerCreated",
+    "version": "1.0",
+    "payload": "{\"id\": \"CTR543654233453453\", \"name\": \"John\", \"surname\": \"Doe\", \"email\": \"john.doe@gmail.com\", \"phone\": \"123456789\", \"address\": \"Zielona Góra, Podgórna 1z/3\", \"documentNumber\": \"ABC123456\"}",
+    "creationDate": "2024-01-01T12:00:00Z"
+  }
+]

@@ -7,9 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired
 import pl.borowa5b.car.rental.Database
 import pl.borowa5b.car.rental.IntegrationTest
 import pl.borowa5b.car.rental.application.request.RequestObjects.makeRentalRequest
+import pl.borowa5b.car.rental.domain.model.vo.ApplicationEventStatus
 import pl.borowa5b.car.rental.domain.model.vo.RentalStatus
 import pl.borowa5b.car.rental.infrastructure.entity.EntityObjects.carEntity
 import pl.borowa5b.car.rental.infrastructure.entity.EntityObjects.customerEntity
+import pl.borowa5b.car.rental.infrastructure.repository.SpringJpaApplicationEventRepository
 import pl.borowa5b.car.rental.infrastructure.repository.SpringJpaCarRepository
 import pl.borowa5b.car.rental.infrastructure.repository.SpringJpaCustomerRepository
 import pl.borowa5b.car.rental.infrastructure.repository.SpringJpaRentalRepository
@@ -33,6 +35,9 @@ class MakeRentalEndpointIT {
 
     @Autowired
     private lateinit var customerRepository: SpringJpaCustomerRepository
+
+    @Autowired
+    private lateinit var applicationEventRepository: SpringJpaApplicationEventRepository
 
     @BeforeEach
     fun `before each`() {
@@ -66,5 +71,12 @@ class MakeRentalEndpointIT {
         )
         assertThat(createdRental.status).isEqualTo(RentalStatus.NEW)
         assertThat(createdRental.entityVersion).isEqualTo(0L)
+
+        val eventsPublished = applicationEventRepository.findAll()
+        assertThat(eventsPublished).hasSize(1)
+
+        val eventPublished = eventsPublished[0]
+        assertThat(eventPublished.type).isEqualTo("RentalMade")
+        assertThat(eventPublished.status).isEqualTo(ApplicationEventStatus.NEW)
     }
 }
