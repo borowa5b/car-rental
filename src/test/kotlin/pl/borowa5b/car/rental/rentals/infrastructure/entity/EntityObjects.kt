@@ -13,7 +13,7 @@ object EntityObjects {
         id: String = rentalId().value,
         carId: String = carId().value,
         customerId: String = customerId().value,
-        status: RentalStatus = RentalStatus.IN_PROGRESS,
+        status: RentalStatus = RentalStatus.STARTED,
         price: BigDecimal = BigDecimal.TEN,
         startDate: OffsetDateTime = OffsetDateTime.parse("2022-01-01T12:00:00Z"),
         endDate: OffsetDateTime = OffsetDateTime.parse("2022-01-02T12:00:00Z")

@@ -10,6 +10,8 @@ import pl.borowa5b.car.rental.rentals.domain.model.DomainObjects.rental
 import pl.borowa5b.car.rental.rentals.domain.model.Rental
 import pl.borowa5b.car.rental.rentals.domain.vo.RentalId
 import pl.borowa5b.car.rental.rentals.domain.vo.RentalStatus
+import java.time.OffsetDateTime
+import java.time.ZoneOffset
 
 class RentalRepositoryTest {
 
@@ -64,7 +66,7 @@ class RentalRepositoryTest {
     )
     fun `should check if customer has rentals`(customerId: String, expectedResult: Boolean) {
         // given
-        val rental = rental(customerId = CustomerId("CTR1"), status = RentalStatus.IN_PROGRESS)
+        val rental = rental(customerId = CustomerId("CTR1"), status = RentalStatus.STARTED)
         rentalRepository.save(rental)
 
         // when
@@ -72,6 +74,32 @@ class RentalRepositoryTest {
 
         // then
         assertThat(result).isEqualTo(expectedResult)
+    }
+
+    @Test
+    fun `should find rental to start`() {
+        // given
+        val rental = rental(status = RentalStatus.NEW)
+        rentalRepository.save(rental)
+
+        // when
+        val result = rentalRepository.findToStart(OffsetDateTime.now(ZoneOffset.UTC))
+
+        // then
+        assertThat(result).isEqualTo(rental.id)
+    }
+
+    @Test
+    fun `should find rental to end`() {
+        // given
+        val rental = rental(status = RentalStatus.STARTED)
+        rentalRepository.save(rental)
+
+        // when
+        val result = rentalRepository.findToEnd(OffsetDateTime.now(ZoneOffset.UTC))
+
+        // then
+        assertThat(result).isEqualTo(rental.id)
     }
 
     private class TestRentalRepository(private val rentals: ArrayList<Rental> = ArrayList()) : RentalRepository {
@@ -85,6 +113,12 @@ class RentalRepositoryTest {
 
         override fun hasActiveRentals(customerId: CustomerId): Boolean =
             rentals.any { it.customerId == customerId && it.status != RentalStatus.ENDED }
+
+        override fun findToStart(currentDate: OffsetDateTime): RentalId? =
+            rentals.firstOrNull { it.status === RentalStatus.NEW && currentDate >= it.startDate }?.id
+
+        override fun findToEnd(currentDate: OffsetDateTime): RentalId? =
+            rentals.firstOrNull { it.status === RentalStatus.STARTED && currentDate >= it.endDate }?.id
 
         fun deleteAll() = rentals.clear()
     }
