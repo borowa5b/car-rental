@@ -7,17 +7,17 @@ import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.Mockito.verifyNoMoreInteractions
-import org.mockito.Mockito.`when`
 import org.mockito.junit.jupiter.MockitoExtension
 import org.mockito.kotlin.any
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.verifyNoInteractions
-import pl.borowa5b.car.rental.cars.domain.shared.repository.CarRepository
+import org.mockito.kotlin.whenever
 import pl.borowa5b.car.rental.cars.domain.shared.exception.CarNotFoundException
+import pl.borowa5b.car.rental.cars.domain.shared.repository.CarRepository
 import pl.borowa5b.car.rental.cars.domain.shared.vo.ValueObjects.carId
 import pl.borowa5b.car.rental.customers.domain.shared.exception.CustomerNotFoundException
-import pl.borowa5b.car.rental.customers.domain.shared.vo.ValueObjects.customerId
 import pl.borowa5b.car.rental.customers.domain.shared.repository.CustomerRepository
+import pl.borowa5b.car.rental.customers.domain.shared.vo.ValueObjects.customerId
 import pl.borowa5b.car.rental.events.domain.shared.ApplicationEventPublisher
 import pl.borowa5b.car.rental.rentals.domain.command.CommandObjects.calculateRentalCommand
 import pl.borowa5b.car.rental.rentals.domain.command.CommandObjects.makeRentalCommand
@@ -26,8 +26,8 @@ import pl.borowa5b.car.rental.rentals.domain.exception.CustomerHasActiveRentalsE
 import pl.borowa5b.car.rental.rentals.domain.generator.RentalIdGenerator
 import pl.borowa5b.car.rental.rentals.domain.model.DomainObjects.rental
 import pl.borowa5b.car.rental.rentals.domain.model.DomainObjects.rentalId
-import pl.borowa5b.car.rental.rentals.domain.vo.RentalStatus
 import pl.borowa5b.car.rental.rentals.domain.repository.RentalRepository
+import pl.borowa5b.car.rental.rentals.domain.vo.RentalStatus
 import java.math.BigDecimal
 import java.time.OffsetDateTime
 
@@ -70,12 +70,12 @@ class RentalMakerTest {
         )
         val calculateRentalCommand = calculateRentalCommand(startDate = startDate, endDate = endDate)
 
-        `when`(carRepository.exists(carId)).thenReturn(true)
-        `when`(customerRepository.exists(customerId)).thenReturn(true)
-        `when`(rentalRepository.hasActiveRentals(customerId)).thenReturn(false)
-        `when`(rentalPriceCalculator.calculate(calculateRentalCommand)).thenReturn(price)
-        `when`(rentalIdGenerator.generate()).thenReturn(rentalId)
-        `when`(rentalRepository.save(any())).thenReturn(
+        whenever(carRepository.exists(carId)).thenReturn(true)
+        whenever(customerRepository.exists(customerId)).thenReturn(true)
+        whenever(rentalRepository.hasActiveRentals(customerId)).thenReturn(false)
+        whenever(rentalPriceCalculator.calculate(calculateRentalCommand)).thenReturn(price)
+        whenever(rentalIdGenerator.generate()).thenReturn(rentalId)
+        whenever(rentalRepository.save(any())).thenReturn(
             rental(
                 id = rentalId,
                 carId = carId,
@@ -116,7 +116,7 @@ class RentalMakerTest {
         val command =
             makeRentalCommand(carId = carId, customerId = customerId, startDate = startDate, endDate = endDate)
 
-        `when`(carRepository.exists(carId)).thenReturn(false)
+        whenever(carRepository.exists(carId)).thenReturn(false)
 
         // when
         val result = catchThrowable { rentalMaker.make(command) }
@@ -141,8 +141,8 @@ class RentalMakerTest {
         val command =
             makeRentalCommand(carId = carId, customerId = customerId, startDate = startDate, endDate = endDate)
 
-        `when`(carRepository.exists(carId)).thenReturn(true)
-        `when`(customerRepository.exists(customerId)).thenReturn(false)
+        whenever(carRepository.exists(carId)).thenReturn(true)
+        whenever(customerRepository.exists(customerId)).thenReturn(false)
 
         // when
         val result = catchThrowable { rentalMaker.make(command) }
@@ -162,9 +162,9 @@ class RentalMakerTest {
         val command =
             makeRentalCommand(carId = carId, customerId = customerId, startDate = startDate, endDate = endDate)
 
-        `when`(carRepository.exists(carId)).thenReturn(true)
-        `when`(customerRepository.exists(customerId)).thenReturn(true)
-        `when`(rentalRepository.hasActiveRentals(customerId)).thenReturn(true)
+        whenever(carRepository.exists(carId)).thenReturn(true)
+        whenever(customerRepository.exists(customerId)).thenReturn(true)
+        whenever(rentalRepository.hasActiveRentals(customerId)).thenReturn(true)
 
         // when
         val result = catchThrowable { rentalMaker.make(command) }

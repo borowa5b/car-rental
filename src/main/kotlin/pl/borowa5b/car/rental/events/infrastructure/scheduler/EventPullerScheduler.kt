@@ -9,7 +9,7 @@ import pl.borowa5b.car.rental.events.domain.EventPuller
 @ConditionalOnProperty(prefix = "car-rental", name = ["scheduler-event-puller-enabled"], havingValue = "true")
 class EventPullerScheduler(private val eventPuller: EventPuller) {
 
-    @Scheduled(cron = "\${car-rental.scheduler-event-puller-cron}")
+    @Scheduled(cron = "\${car-rental.scheduler-event-puller-cron}", zone = "UTC")
     fun pullEvents() {
         eventPuller.pull()
     }

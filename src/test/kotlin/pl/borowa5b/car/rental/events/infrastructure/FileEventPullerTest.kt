@@ -6,10 +6,10 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.InjectMocks
 import org.mockito.Mock
-import org.mockito.Mockito.`when`
 import org.mockito.junit.jupiter.MockitoExtension
 import org.mockito.kotlin.any
 import org.mockito.kotlin.verify
+import org.mockito.kotlin.whenever
 import pl.borowa5b.car.rental.events.domain.model.DomainObjects.externalEvent
 import pl.borowa5b.car.rental.events.domain.model.ExternalEvent
 
@@ -28,7 +28,7 @@ class FileEventPullerTest {
     @Test
     fun `should pull events from file`() {
         // given
-        `when`(objectMapper.readValue(any<String>(), any<TypeReference<List<ExternalEvent>>>())).thenReturn(
+        whenever(objectMapper.readValue(any<String>(), any<TypeReference<List<ExternalEvent>>>())).thenReturn(
             listOf(
                 externalEvent()
             )

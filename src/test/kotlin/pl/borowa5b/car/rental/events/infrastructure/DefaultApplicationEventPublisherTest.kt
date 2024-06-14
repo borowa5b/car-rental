@@ -5,11 +5,11 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.InjectMocks
 import org.mockito.Mock
-import org.mockito.Mockito.`when`
 import org.mockito.junit.jupiter.MockitoExtension
 import org.mockito.kotlin.any
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.verifyNoMoreInteractions
+import org.mockito.kotlin.whenever
 import pl.borowa5b.car.rental.events.domain.DomainEvent
 import pl.borowa5b.car.rental.events.domain.generator.ApplicationEventIdGenerator
 import pl.borowa5b.car.rental.events.domain.model.DomainObjects.applicationEventId
@@ -38,8 +38,8 @@ class DefaultApplicationEventPublisherTest {
             override fun getType(): String = "ApplicationEvent"
             override fun getVersion(): String = "1.0"
         }
-        `when`(objectMapper.writeValueAsString(event)).thenReturn("")
-        `when`(applicationEventIdGenerator.generate()).thenReturn(applicationEventId())
+        whenever(objectMapper.writeValueAsString(event)).thenReturn("")
+        whenever(applicationEventIdGenerator.generate()).thenReturn(applicationEventId())
 
         // when
         defaultApplicationEventPublisher.publish(event)
