@@ -115,10 +115,10 @@ class RentalRepositoryTest {
             rentals.any { it.customerId == customerId && it.status != RentalStatus.ENDED }
 
         override fun findToStart(currentDate: OffsetDateTime): RentalId? =
-            rentals.firstOrNull { it.status === RentalStatus.NEW && currentDate >= it.startDate }?.id
+            rentals.firstOrNull { it.status == RentalStatus.NEW && currentDate >= it.startDate }?.id
 
         override fun findToEnd(currentDate: OffsetDateTime): RentalId? =
-            rentals.firstOrNull { it.status === RentalStatus.STARTED && currentDate >= it.endDate }?.id
+            rentals.firstOrNull { it.status == RentalStatus.STARTED && currentDate >= it.endDate }?.id
 
         fun deleteAll() = rentals.clear()
     }

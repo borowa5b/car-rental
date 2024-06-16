@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.responses.ApiResponses
+import jakarta.annotation.security.RolesAllowed
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
@@ -15,10 +16,12 @@ import pl.borowa5b.car.rental.rentals.application.response.MakeRentalResponse
 import pl.borowa5b.car.rental.rentals.domain.RentalMaker
 import pl.borowa5b.car.rental.shared.domain.exception.ValidationException
 import pl.borowa5b.car.rental.shared.domain.exception.validation.AggregatingValidationExceptionHandler
+import pl.borowa5b.car.rental.shared.domain.vo.Role
 
 @RentalsEndpoint
 class MakeRentalEndpoint(private val rentalMaker: RentalMaker) {
 
+    @RolesAllowed(value = [Role.USER])
     @Operation(summary = "Makes new rental")
     @ApiResponses(
         ApiResponse(

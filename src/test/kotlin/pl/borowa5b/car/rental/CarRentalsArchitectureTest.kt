@@ -19,7 +19,7 @@ class CarRentalsArchitectureTest {
         private const val DOMAIN_PACKAGES = "..domain.."
         private const val INFRASTRUCTURE_PACKAGES = "..infrastructure.."
         private const val SHARED_PACKAGES = "..shared.."
-        private const val LIBRARY_PACKAGES = "[java..|jakarta..|com..|org..|kotlin..|io..]"
+        private const val LIBRARY_PACKAGES = "[java..|jakarta..|com..|org..|kotlin..|io..|nl..]"
     }
 
     @ArchTest

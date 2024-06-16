@@ -4,8 +4,10 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.security.test.context.support.WithMockUser
 import pl.borowa5b.car.rental.rentals.application.request.RequestObjects.calculateRentalRequest
 import pl.borowa5b.car.rental.rentals.domain.PriceConfiguration
+import pl.borowa5b.car.rental.shared.domain.vo.Role
 import pl.borowa5b.car.rental.shared.helper.Database
 import pl.borowa5b.car.rental.shared.helper.IntegrationTest
 import java.time.OffsetDateTime
@@ -30,6 +32,7 @@ class CalculateRentalEndpointIT {
     }
 
     @Test
+    @WithMockUser(roles = [Role.USER])
     fun `should calculate rental price`() {
         // given
         val request = calculateRentalRequest(

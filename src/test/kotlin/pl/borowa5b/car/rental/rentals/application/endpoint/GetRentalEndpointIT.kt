@@ -5,10 +5,12 @@ import org.assertj.core.api.Assertions.catchThrowable
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.security.test.context.support.WithMockUser
 import pl.borowa5b.car.rental.rentals.domain.exception.RentalNotFoundException
 import pl.borowa5b.car.rental.rentals.domain.model.DomainObjects.rentalId
 import pl.borowa5b.car.rental.rentals.infrastructure.entity.EntityObjects.rentalEntity
 import pl.borowa5b.car.rental.rentals.infrastructure.repository.SpringJpaRentalRepository
+import pl.borowa5b.car.rental.shared.domain.vo.Role
 import pl.borowa5b.car.rental.shared.helper.Database
 import pl.borowa5b.car.rental.shared.helper.IntegrationTest
 import java.time.temporal.ChronoUnit
@@ -31,6 +33,7 @@ class GetRentalEndpointIT {
     }
 
     @Test
+    @WithMockUser(roles = [Role.USER])
     fun `should get rental`() {
         // given
         val rentalEntity = rentalEntity()
@@ -51,6 +54,7 @@ class GetRentalEndpointIT {
     }
 
     @Test
+    @WithMockUser(roles = [Role.USER])
     fun `should throw exception when rental not found`() {
         // given
         val rentalId = rentalId()

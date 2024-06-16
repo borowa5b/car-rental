@@ -4,9 +4,9 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
+import org.springframework.security.access.AccessDeniedException
 import org.springframework.web.HttpMediaTypeNotSupportedException
 import org.zalando.problem.Status
-import pl.borowa5b.car.rental.shared.infrastructure.RestErrorHandler
 import pl.borowa5b.car.rental.shared.domain.DomainException
 import pl.borowa5b.car.rental.shared.domain.exception.ValidationErrorException
 import pl.borowa5b.car.rental.shared.domain.exception.ValidationException
@@ -108,6 +108,27 @@ class RestErrorHandlerTest {
         val message = "Business error occurred"
         val status = Status.INTERNAL_SERVER_ERROR
         val exception = DomainException(status, message)
+        val restErrorHandler = RestErrorHandler()
+
+        // when
+        val result = restErrorHandler.handle(exception)
+
+        // then
+        assertThat(result.statusCode.value()).isEqualTo(status.statusCode)
+
+        val problem = result.body!!
+        assertThat(problem.status?.statusCode).isEqualTo(result.statusCode.value())
+        assertThat(problem.title).isEqualTo(title)
+        assertThat(problem.detail).isEqualTo(message)
+    }
+
+    @Test
+    fun `should handle access denied exception`() {
+        // given
+        val title = "Forbidden"
+        val message = "Access denied"
+        val status = Status.FORBIDDEN
+        val exception = AccessDeniedException(message)
         val restErrorHandler = RestErrorHandler()
 
         // when

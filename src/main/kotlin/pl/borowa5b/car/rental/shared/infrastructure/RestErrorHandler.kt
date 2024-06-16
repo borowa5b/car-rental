@@ -1,6 +1,7 @@
 package pl.borowa5b.car.rental.shared.infrastructure
 
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.AccessDeniedException
 import org.springframework.web.HttpMediaTypeException
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
@@ -16,7 +17,11 @@ import java.util.logging.Logger
 
 
 @ControllerAdvice
-class RestErrorHandler(private val logger: Logger = Logger.getLogger(RestErrorHandler::class.simpleName)) {
+class RestErrorHandler {
+
+    companion object {
+        private val LOGGER = Logger.getLogger(RestErrorHandler::class.simpleName)
+    }
 
     @ExceptionHandler(value = [Exception::class])
     fun handle(exception: Exception): ResponseEntity<Problem> {
@@ -28,7 +33,7 @@ class RestErrorHandler(private val logger: Logger = Logger.getLogger(RestErrorHa
             .withDetail(message)
             .withStatus(status)
             .build()
-        logger.warning("Unexpected error occurred: $exception")
+        LOGGER.warning("Unexpected error occurred: $exception")
         return ResponseEntity.status(problem.status!!.statusCode).body(problem)
     }
 
@@ -64,7 +69,18 @@ class RestErrorHandler(private val logger: Logger = Logger.getLogger(RestErrorHa
             .withDetail(exception.message)
             .withStatus(exception.status)
             .build()
-        logger.warning("Business error occurred: $exception")
+        LOGGER.warning("Business error occurred: $exception")
+        return ResponseEntity.status(problem.status!!.statusCode).body(problem)
+    }
+
+    @ExceptionHandler(value = [AccessDeniedException::class])
+    fun handle(exception: AccessDeniedException): ResponseEntity<Problem> {
+        val problem = Problem.builder()
+            .withType(URI.create("car-rental/forbidden"))
+            .withTitle("Forbidden")
+            .withDetail(exception.message)
+            .withStatus(Status.FORBIDDEN)
+            .build()
         return ResponseEntity.status(problem.status!!.statusCode).body(problem)
     }
 
