@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test
 import org.springframework.mock.web.MockFilterChain
 import org.springframework.mock.web.MockHttpServletRequest
 import org.springframework.mock.web.MockHttpServletResponse
-import pl.borowa5b.car.rental.shared.infrastructure.filter.TrailingSlashRedirectFilter
 
 class TrailingSlashRedirectFilterTest {
 

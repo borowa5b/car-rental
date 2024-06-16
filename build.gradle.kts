@@ -25,6 +25,7 @@ dependencies {
     // SPRING
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-jooq")
 
     // JACKSON
@@ -46,8 +47,10 @@ dependencies {
 
     // TESTS
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.springframework.security:spring-security-test")
     testImplementation("org.mockito.kotlin:mockito-kotlin:5.3.1")
     testImplementation("com.tngtech.archunit:archunit-junit5:1.3.0")
+    testImplementation("io.github.hakky54:logcaptor:2.9.2")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 

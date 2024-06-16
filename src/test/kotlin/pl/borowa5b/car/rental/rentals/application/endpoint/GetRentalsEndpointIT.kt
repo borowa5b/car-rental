@@ -4,11 +4,13 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.security.test.context.support.WithMockUser
 import pl.borowa5b.car.rental.customers.domain.shared.vo.ValueObjects.customerId
 import pl.borowa5b.car.rental.rentals.application.filter.FilterObjects.getRentalsFilter
 import pl.borowa5b.car.rental.rentals.infrastructure.entity.EntityObjects.rentalEntity
 import pl.borowa5b.car.rental.rentals.infrastructure.repository.SpringJpaRentalRepository
 import pl.borowa5b.car.rental.shared.application.request.RequestObjects.pageRequest
+import pl.borowa5b.car.rental.shared.domain.vo.Role
 import pl.borowa5b.car.rental.shared.helper.Database
 import pl.borowa5b.car.rental.shared.helper.IntegrationTest
 
@@ -30,6 +32,7 @@ class GetRentalsEndpointIT {
     }
 
     @Test
+    @WithMockUser(roles = [Role.USER])
     fun `should get rentals`() {
         // given
         val customerId = customerId().value
@@ -53,7 +56,8 @@ class GetRentalsEndpointIT {
     }
 
     @Test
-    fun `should get rentals by page`() {
+    @WithMockUser(roles = [Role.USER])
+    fun `should get rentals another page`() {
         // given
         val customerId = customerId().value
         val rentalEntity1 = rentalEntity(customerId = customerId)

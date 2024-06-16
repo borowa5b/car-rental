@@ -18,7 +18,9 @@ class DefaultApplicationEventPublisher(
     private val objectMapper: ObjectMapper
 ) : ApplicationEventPublisher {
 
-    private val logger = Logger.getLogger(DefaultApplicationEventPublisher::class.simpleName)
+    companion object {
+        private val LOGGER = Logger.getLogger(DefaultApplicationEventPublisher::class.simpleName)
+    }
 
     override fun publish(event: DomainEvent) {
         val payload = convertToPayload(event)
@@ -36,7 +38,7 @@ class DefaultApplicationEventPublisher(
     private fun convertToPayload(event: DomainEvent): String? = try {
         objectMapper.writeValueAsString(event)
     } catch (exception: JsonProcessingException) {
-        logger.warning(
+        LOGGER.warning(
             "Could not process application with type ${event.getType()} " +
                     "and version ${event.getVersion()} because it has invalid payload"
         )

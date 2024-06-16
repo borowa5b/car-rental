@@ -4,6 +4,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.security.test.context.support.WithMockUser
 import pl.borowa5b.car.rental.cars.domain.shared.model.DomainObjects.car
 import pl.borowa5b.car.rental.cars.domain.shared.repository.CarRepository
 import pl.borowa5b.car.rental.cars.domain.shared.vo.CarId
@@ -16,6 +17,7 @@ import pl.borowa5b.car.rental.rentals.application.request.RequestObjects.makeRen
 import pl.borowa5b.car.rental.rentals.domain.repository.RentalRepository
 import pl.borowa5b.car.rental.rentals.domain.vo.RentalId
 import pl.borowa5b.car.rental.rentals.domain.vo.RentalStatus
+import pl.borowa5b.car.rental.shared.domain.vo.Role
 import pl.borowa5b.car.rental.shared.helper.Database
 import pl.borowa5b.car.rental.shared.helper.IntegrationTest
 import java.time.OffsetDateTime
@@ -48,6 +50,7 @@ class MakeRentalEndpointIT {
     }
 
     @Test
+    @WithMockUser(roles = [Role.USER])
     fun `should make rental`() {
         // given
         val request = makeRentalRequest()

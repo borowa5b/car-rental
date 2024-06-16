@@ -16,7 +16,10 @@ class ExternalEventProcessor(
     private val eventPublisher: ApplicationEventPublisher
 ) {
 
-    private val logger = Logger.getLogger(ExternalEventProcessor::class.simpleName)
+    companion object {
+
+        private val LOGGER = Logger.getLogger(ExternalEventProcessor::class.simpleName)
+    }
 
     fun process(externalEvent: ExternalEvent) {
         externalEvent.markAsProcessing()
@@ -25,7 +28,7 @@ class ExternalEventProcessor(
         try {
             val supportedEvent = getSupportedEvent(externalEvent) ?: return
             if (externalEventRepository.exists(externalEvent.id)) {
-                logger.warning("Skipping event with id ${externalEvent.id.value} because it is already processed")
+                LOGGER.warning("Skipping event with id ${externalEvent.id.value} because it is already processed")
                 return
             }
 
