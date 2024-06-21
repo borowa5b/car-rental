@@ -2,8 +2,8 @@ package pl.borowa5b.car.rental.events.infrastructure.entity
 
 import jakarta.persistence.*
 import pl.borowa5b.car.rental.events.domain.model.ExternalEvent
-import pl.borowa5b.car.rental.events.domain.shared.vo.ExternalEventId
-import pl.borowa5b.car.rental.events.domain.shared.vo.ExternalEventStatus
+import pl.borowa5b.car.rental.events.domain.vo.ExternalEventId
+import pl.borowa5b.car.rental.events.domain.vo.ExternalEventStatus
 import java.time.OffsetDateTime
 
 @Entity(name = "external_event")

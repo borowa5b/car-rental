@@ -5,10 +5,10 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.stereotype.Component
 import pl.borowa5b.car.rental.events.domain.DomainEvent
 import pl.borowa5b.car.rental.events.domain.generator.ApplicationEventIdGenerator
+import pl.borowa5b.car.rental.events.domain.model.ApplicationEvent
+import pl.borowa5b.car.rental.events.domain.repository.ApplicationEventRepository
 import pl.borowa5b.car.rental.events.domain.shared.ApplicationEventPublisher
-import pl.borowa5b.car.rental.events.domain.shared.model.ApplicationEvent
-import pl.borowa5b.car.rental.events.domain.shared.repository.ApplicationEventRepository
-import pl.borowa5b.car.rental.events.domain.shared.vo.ApplicationEventStatus
+import pl.borowa5b.car.rental.events.domain.vo.ApplicationEventStatus
 import java.util.logging.Logger
 
 @Component

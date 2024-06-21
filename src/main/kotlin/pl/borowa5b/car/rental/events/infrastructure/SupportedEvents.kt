@@ -1,6 +1,6 @@
 package pl.borowa5b.car.rental.events.infrastructure
 
-import pl.borowa5b.car.rental.events.domain.shared.vo.SupportedEvent
+import pl.borowa5b.car.rental.events.domain.vo.SupportedEvent
 import pl.borowa5b.car.rental.customers.infrastructure.event.pull.CustomerCreatedEvent
 
 object SupportedEvents {

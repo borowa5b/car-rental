@@ -5,7 +5,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import pl.borowa5b.car.rental.events.domain.model.DomainObjects.externalEvent
 import pl.borowa5b.car.rental.events.domain.model.ExternalEvent
-import pl.borowa5b.car.rental.events.domain.shared.vo.ExternalEventId
+import pl.borowa5b.car.rental.events.domain.vo.ExternalEventId
 
 class ExternalEventRepositoryTest {
 

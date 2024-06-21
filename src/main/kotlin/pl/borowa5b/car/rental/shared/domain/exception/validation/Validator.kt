@@ -4,6 +4,7 @@ import pl.borowa5b.car.rental.shared.domain.exception.ValidationErrorException
 import java.time.OffsetDateTime
 import java.time.ZoneOffset
 import java.time.format.DateTimeParseException
+import kotlin.enums.enumEntries
 
 object Validator {
 
@@ -110,6 +111,25 @@ object Validator {
                     )
                 )
             }
+        }
+    }
+
+    inline fun <reified E : Enum<E>> isValidEnumValue(
+        value: String,
+        fieldName: String,
+        validationExceptionHandler: ValidationExceptionHandler = ThrowingValidationExceptionHandler()
+    ) {
+        val enumEntries = enumEntries<E>()
+        val enumValue = enumEntries.firstOrNull { it.name == value.uppercase() }
+        if (enumValue == null) {
+            validationExceptionHandler.handle(
+                ValidationErrorException(
+                    ValidationError(
+                        "Field has invalid value",
+                        "Field $fieldName has invalid value. Allowed value ${enumEntries.joinToString(", ")}"
+                    )
+                )
+            )
         }
     }
 

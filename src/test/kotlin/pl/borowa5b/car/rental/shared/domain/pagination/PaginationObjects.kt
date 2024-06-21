@@ -2,7 +2,6 @@ package pl.borowa5b.car.rental.shared.domain.pagination
 
 import org.springframework.data.domain.Sort
 import org.springframework.data.domain.Sort.Direction
-import pl.borowa5b.car.rental.shared.domain.pagination.Page
 
 object PaginationObjects {
 

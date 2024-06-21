@@ -1,6 +1,6 @@
-package pl.borowa5b.car.rental.events.domain.shared.repository
+package pl.borowa5b.car.rental.events.domain.repository
 
-import pl.borowa5b.car.rental.events.domain.shared.model.ApplicationEvent
+import pl.borowa5b.car.rental.events.domain.model.ApplicationEvent
 
 interface ApplicationEventRepository {
 

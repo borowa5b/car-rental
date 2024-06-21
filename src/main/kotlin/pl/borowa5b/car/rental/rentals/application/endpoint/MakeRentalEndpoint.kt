@@ -21,7 +21,7 @@ import pl.borowa5b.car.rental.shared.domain.vo.Role
 @RentalsEndpoint
 class MakeRentalEndpoint(private val rentalMaker: RentalMaker) {
 
-    @RolesAllowed(value = [Role.USER])
+    @RolesAllowed(Role.USER)
     @Operation(summary = "Makes new rental")
     @ApiResponses(
         ApiResponse(

@@ -1,6 +1,6 @@
 package pl.borowa5b.car.rental.events.domain.generator
 
-import pl.borowa5b.car.rental.events.domain.shared.vo.ApplicationEventId
+import pl.borowa5b.car.rental.events.domain.vo.ApplicationEventId
 
 interface ApplicationEventIdGenerator {
 

@@ -12,9 +12,9 @@ import org.mockito.kotlin.verifyNoMoreInteractions
 import org.mockito.kotlin.whenever
 import pl.borowa5b.car.rental.events.domain.DomainEvent
 import pl.borowa5b.car.rental.events.domain.generator.ApplicationEventIdGenerator
-import pl.borowa5b.car.rental.events.domain.model.DomainObjects.applicationEventId
-import pl.borowa5b.car.rental.events.domain.shared.model.ApplicationEvent
-import pl.borowa5b.car.rental.events.domain.shared.repository.ApplicationEventRepository
+import pl.borowa5b.car.rental.events.domain.model.ApplicationEvent
+import pl.borowa5b.car.rental.events.domain.repository.ApplicationEventRepository
+import pl.borowa5b.car.rental.events.domain.vo.ValueObjects.applicationEventId
 
 @ExtendWith(MockitoExtension::class)
 class DefaultApplicationEventPublisherTest {

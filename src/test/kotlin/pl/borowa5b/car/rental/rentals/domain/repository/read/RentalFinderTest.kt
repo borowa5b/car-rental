@@ -3,8 +3,8 @@ package pl.borowa5b.car.rental.rentals.domain.repository.read
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import pl.borowa5b.car.rental.customers.domain.shared.vo.ValueObjects.customerId
-import pl.borowa5b.car.rental.rentals.domain.model.DomainObjects.rentalDetails
-import pl.borowa5b.car.rental.rentals.domain.model.DomainObjects.rentalQuery
+import pl.borowa5b.car.rental.rentals.domain.repository.read.ReadObjects.rentalDetails
+import pl.borowa5b.car.rental.rentals.domain.repository.read.ReadObjects.rentalQuery
 import pl.borowa5b.car.rental.rentals.domain.vo.RentalId
 import pl.borowa5b.car.rental.shared.domain.pagination.Page
 import pl.borowa5b.car.rental.shared.domain.pagination.Pageable

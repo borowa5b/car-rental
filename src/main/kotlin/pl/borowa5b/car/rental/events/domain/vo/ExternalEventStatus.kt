@@ -1,4 +1,4 @@
-package pl.borowa5b.car.rental.events.domain.shared.vo
+package pl.borowa5b.car.rental.events.domain.vo
 
 enum class ExternalEventStatus {
     NEW,

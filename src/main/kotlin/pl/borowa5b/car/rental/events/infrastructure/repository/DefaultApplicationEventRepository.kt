@@ -3,8 +3,8 @@ package pl.borowa5b.car.rental.events.infrastructure.repository
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Component
 import org.springframework.stereotype.Repository
-import pl.borowa5b.car.rental.events.domain.shared.model.ApplicationEvent
-import pl.borowa5b.car.rental.events.domain.shared.repository.ApplicationEventRepository
+import pl.borowa5b.car.rental.events.domain.model.ApplicationEvent
+import pl.borowa5b.car.rental.events.domain.repository.ApplicationEventRepository
 import pl.borowa5b.car.rental.events.infrastructure.entity.ApplicationEventEntity
 
 @Component

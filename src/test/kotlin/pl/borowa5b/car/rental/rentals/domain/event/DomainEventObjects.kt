@@ -1,12 +1,11 @@
-package pl.borowa5b.car.rental.rentals.domain
+package pl.borowa5b.car.rental.rentals.domain.event
 
 import pl.borowa5b.car.rental.cars.domain.shared.vo.CarId
 import pl.borowa5b.car.rental.cars.domain.shared.vo.ValueObjects.carId
 import pl.borowa5b.car.rental.customers.domain.shared.vo.CustomerId
 import pl.borowa5b.car.rental.customers.domain.shared.vo.ValueObjects.customerId
-import pl.borowa5b.car.rental.rentals.domain.event.RentalMadeEvent
-import pl.borowa5b.car.rental.rentals.domain.model.DomainObjects.rentalId
 import pl.borowa5b.car.rental.rentals.domain.vo.RentalId
+import pl.borowa5b.car.rental.rentals.domain.vo.ValueObjects.rentalId
 import java.math.BigDecimal
 import java.time.OffsetDateTime
 

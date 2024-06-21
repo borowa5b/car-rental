@@ -25,9 +25,10 @@ import pl.borowa5b.car.rental.rentals.domain.event.RentalMadeEvent
 import pl.borowa5b.car.rental.rentals.domain.exception.CustomerHasActiveRentalsException
 import pl.borowa5b.car.rental.rentals.domain.generator.RentalIdGenerator
 import pl.borowa5b.car.rental.rentals.domain.model.DomainObjects.rental
-import pl.borowa5b.car.rental.rentals.domain.model.DomainObjects.rentalId
+import pl.borowa5b.car.rental.rentals.domain.model.Rental
 import pl.borowa5b.car.rental.rentals.domain.repository.RentalRepository
 import pl.borowa5b.car.rental.rentals.domain.vo.RentalStatus
+import pl.borowa5b.car.rental.rentals.domain.vo.ValueObjects.rentalId
 import java.math.BigDecimal
 import java.time.OffsetDateTime
 
@@ -70,12 +71,12 @@ class RentalMakerTest {
         )
         val calculateRentalCommand = calculateRentalCommand(startDate = startDate, endDate = endDate)
 
-        whenever(carRepository.exists(carId)).thenReturn(true)
+        whenever(carRepository.existsBy(carId)).thenReturn(true)
         whenever(customerRepository.exists(customerId)).thenReturn(true)
         whenever(rentalRepository.hasActiveRentals(customerId)).thenReturn(false)
         whenever(rentalPriceCalculator.calculate(calculateRentalCommand)).thenReturn(price)
         whenever(rentalIdGenerator.generate()).thenReturn(rentalId)
-        whenever(rentalRepository.save(any())).thenReturn(
+        whenever(rentalRepository.save(any<Rental>())).thenReturn(
             rental(
                 id = rentalId,
                 carId = carId,
@@ -93,12 +94,12 @@ class RentalMakerTest {
         // then
         assertThat(result).isEqualTo(rentalId)
 
-        verify(carRepository).exists(carId)
+        verify(carRepository).existsBy(carId)
         verify(customerRepository).exists(customerId)
         verify(rentalRepository).hasActiveRentals(customerId)
         verify(rentalPriceCalculator).calculate(calculateRentalCommand)
         verify(rentalIdGenerator).generate()
-        verify(rentalRepository).save(any())
+        verify(rentalRepository).save(any<Rental>())
         verify(applicationEventPublisher).publish(any<RentalMadeEvent>())
         verifyNoMoreInteractions(
             carRepository,
@@ -116,7 +117,7 @@ class RentalMakerTest {
         val command =
             makeRentalCommand(carId = carId, customerId = customerId, startDate = startDate, endDate = endDate)
 
-        whenever(carRepository.exists(carId)).thenReturn(false)
+        whenever(carRepository.existsBy(carId)).thenReturn(false)
 
         // when
         val result = catchThrowable { rentalMaker.make(command) }
@@ -124,7 +125,7 @@ class RentalMakerTest {
         // then
         assertThat(result).isExactlyInstanceOf(CarNotFoundException::class.java)
 
-        verify(carRepository).exists(carId)
+        verify(carRepository).existsBy(carId)
         verifyNoMoreInteractions(carRepository)
         verifyNoInteractions(
             customerRepository,
@@ -141,7 +142,7 @@ class RentalMakerTest {
         val command =
             makeRentalCommand(carId = carId, customerId = customerId, startDate = startDate, endDate = endDate)
 
-        whenever(carRepository.exists(carId)).thenReturn(true)
+        whenever(carRepository.existsBy(carId)).thenReturn(true)
         whenever(customerRepository.exists(customerId)).thenReturn(false)
 
         // when
@@ -150,7 +151,7 @@ class RentalMakerTest {
         // then
         assertThat(result).isExactlyInstanceOf(CustomerNotFoundException::class.java)
 
-        verify(carRepository).exists(carId)
+        verify(carRepository).existsBy(carId)
         verify(customerRepository).exists(customerId)
         verifyNoMoreInteractions(carRepository, customerRepository)
         verifyNoInteractions(rentalPriceCalculator, rentalIdGenerator, rentalRepository, applicationEventPublisher)
@@ -162,7 +163,7 @@ class RentalMakerTest {
         val command =
             makeRentalCommand(carId = carId, customerId = customerId, startDate = startDate, endDate = endDate)
 
-        whenever(carRepository.exists(carId)).thenReturn(true)
+        whenever(carRepository.existsBy(carId)).thenReturn(true)
         whenever(customerRepository.exists(customerId)).thenReturn(true)
         whenever(rentalRepository.hasActiveRentals(customerId)).thenReturn(true)
 
@@ -172,7 +173,7 @@ class RentalMakerTest {
         // then
         assertThat(result).isExactlyInstanceOf(CustomerHasActiveRentalsException::class.java)
 
-        verify(carRepository).exists(carId)
+        verify(carRepository).existsBy(carId)
         verify(customerRepository).exists(customerId)
         verify(rentalRepository).hasActiveRentals(customerId)
         verifyNoMoreInteractions(carRepository, customerRepository, rentalRepository)

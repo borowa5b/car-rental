@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.test.context.support.WithMockUser
 import pl.borowa5b.car.rental.rentals.domain.exception.RentalNotFoundException
-import pl.borowa5b.car.rental.rentals.domain.model.DomainObjects.rentalId
+import pl.borowa5b.car.rental.rentals.domain.vo.ValueObjects.rentalId
 import pl.borowa5b.car.rental.rentals.infrastructure.entity.EntityObjects.rentalEntity
 import pl.borowa5b.car.rental.rentals.infrastructure.repository.SpringJpaRentalRepository
 import pl.borowa5b.car.rental.shared.domain.vo.Role

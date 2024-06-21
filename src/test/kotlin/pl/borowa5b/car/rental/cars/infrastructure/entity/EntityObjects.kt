@@ -1,17 +1,19 @@
 package pl.borowa5b.car.rental.cars.infrastructure.entity
 
 import pl.borowa5b.car.rental.cars.domain.shared.vo.ValueObjects.carId
+import pl.borowa5b.car.rental.cars.domain.vo.Brand
+import java.math.BigDecimal
 
 object EntityObjects {
 
     fun carEntity(
         id: String = carId().value,
-        brand: String = "Toyota",
+        brand: Brand = Brand.TOYOTA,
         model: String = "Corolla",
         generation: String = "LE",
         year: Int = 2022,
         color: String = "Blue",
-        pricePerDay: Int = 200,
+        pricePerDay: BigDecimal = BigDecimal("200"),
         quantity: Int = 5
     ): CarEntity = CarEntity(
         id = id,

@@ -3,6 +3,8 @@ package pl.borowa5b.car.rental.cars.infrastructure.entity
 import jakarta.persistence.*
 import pl.borowa5b.car.rental.cars.domain.model.Car
 import pl.borowa5b.car.rental.cars.domain.shared.vo.CarId
+import pl.borowa5b.car.rental.cars.domain.vo.Brand
+import java.math.BigDecimal
 import java.time.OffsetDateTime
 import java.time.ZoneOffset
 
@@ -10,13 +12,14 @@ import java.time.ZoneOffset
 data class CarEntity(
     @Id
     val id: String,
-    val brand: String,
+    @Enumerated(EnumType.STRING)
+    val brand: Brand,
     val model: String,
     val generation: String,
     @Column(name = "`year`")
     val year: Int,
     val color: String,
-    val pricePerDay: Int,
+    val pricePerDay: BigDecimal,
     val quantity: Int,
 
     @Version

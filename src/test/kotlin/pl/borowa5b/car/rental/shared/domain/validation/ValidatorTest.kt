@@ -73,4 +73,21 @@ class ValidatorTest {
         // then
         assertThat(result).isExactlyInstanceOf(ValidationErrorException::class.java)
     }
+
+    @Test
+    fun `should not validate if value is not from enum`() {
+        // given
+        val value = "value"
+        val fieldName = "fieldName"
+
+        // when
+        val result = catchThrowable { Validator.isValidEnumValue<TestEnum>(value, fieldName) }
+
+        // then
+        assertThat(result).isExactlyInstanceOf(ValidationErrorException::class.java)
+    }
+
+    private enum class TestEnum {
+        TEST_VALUE
+    }
 }
