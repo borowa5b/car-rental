@@ -1,20 +1,14 @@
 package pl.borowa5b.car.rental.events.domain.model
 
-import pl.borowa5b.car.rental.events.domain.shared.model.ApplicationEvent
-import pl.borowa5b.car.rental.events.domain.shared.vo.ApplicationEventId
-import pl.borowa5b.car.rental.events.domain.shared.vo.ApplicationEventStatus
-import pl.borowa5b.car.rental.events.domain.shared.vo.ExternalEventId
-import pl.borowa5b.car.rental.events.domain.shared.vo.ExternalEventStatus
+import pl.borowa5b.car.rental.events.domain.vo.ApplicationEventId
+import pl.borowa5b.car.rental.events.domain.vo.ApplicationEventStatus
+import pl.borowa5b.car.rental.events.domain.vo.ExternalEventId
+import pl.borowa5b.car.rental.events.domain.vo.ExternalEventStatus
+import pl.borowa5b.car.rental.events.domain.vo.ValueObjects.applicationEventId
+import pl.borowa5b.car.rental.events.domain.vo.ValueObjects.externalEventId
 import java.time.OffsetDateTime
-import kotlin.random.Random
 
 object DomainObjects {
-
-    fun externalEventId(): ExternalEventId =
-        ExternalEventId("${ExternalEventId.PREFIX}${Random.nextInt(1000000, 9999999)}")
-
-    fun applicationEventId(): ApplicationEventId =
-        ApplicationEventId("${ApplicationEventId.PREFIX}${Random.nextInt(1000000, 9999999)}")
 
     fun externalEvent(
         id: String = externalEventId().value,

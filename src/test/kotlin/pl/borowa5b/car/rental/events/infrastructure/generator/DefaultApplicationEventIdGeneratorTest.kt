@@ -2,7 +2,7 @@ package pl.borowa5b.car.rental.events.infrastructure.generator
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import pl.borowa5b.car.rental.events.domain.shared.vo.ApplicationEventId
+import pl.borowa5b.car.rental.events.domain.vo.ApplicationEventId
 import pl.borowa5b.car.rental.shared.infrastructure.generator.DefaultIdGenerator
 
 class DefaultApplicationEventIdGeneratorTest {

@@ -18,7 +18,7 @@ import pl.borowa5b.car.rental.shared.domain.vo.Role
 @RentalsEndpoint
 class GetRentalEndpoint(private val finder: RentalFinder) {
 
-    @RolesAllowed(value = [Role.USER])
+    @RolesAllowed(Role.USER)
     @Operation(summary = "Get rental")
     @ApiResponses(
         ApiResponse(

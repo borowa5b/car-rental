@@ -1,8 +1,8 @@
 package pl.borowa5b.car.rental.events.domain.model
 
 import com.fasterxml.jackson.annotation.JsonCreator
-import pl.borowa5b.car.rental.events.domain.shared.vo.ExternalEventId
-import pl.borowa5b.car.rental.events.domain.shared.vo.ExternalEventStatus
+import pl.borowa5b.car.rental.events.domain.vo.ExternalEventId
+import pl.borowa5b.car.rental.events.domain.vo.ExternalEventStatus
 import java.time.OffsetDateTime
 import java.time.ZoneOffset
 

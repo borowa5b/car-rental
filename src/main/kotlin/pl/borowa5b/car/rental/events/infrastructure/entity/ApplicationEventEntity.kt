@@ -1,9 +1,9 @@
 package pl.borowa5b.car.rental.events.infrastructure.entity
 
 import jakarta.persistence.*
-import pl.borowa5b.car.rental.events.domain.shared.model.ApplicationEvent
-import pl.borowa5b.car.rental.events.domain.shared.vo.ApplicationEventId
-import pl.borowa5b.car.rental.events.domain.shared.vo.ApplicationEventStatus
+import pl.borowa5b.car.rental.events.domain.model.ApplicationEvent
+import pl.borowa5b.car.rental.events.domain.vo.ApplicationEventId
+import pl.borowa5b.car.rental.events.domain.vo.ApplicationEventStatus
 import java.time.OffsetDateTime
 import java.time.ZoneOffset
 

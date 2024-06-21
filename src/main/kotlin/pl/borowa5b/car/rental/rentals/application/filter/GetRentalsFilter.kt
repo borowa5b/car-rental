@@ -1,13 +1,12 @@
 package pl.borowa5b.car.rental.rentals.application.filter
 
 import io.swagger.v3.oas.annotations.Parameter
-import io.swagger.v3.oas.annotations.media.Schema
 import org.springdoc.core.annotations.ParameterObject
-import pl.borowa5b.car.rental.shared.domain.exception.validation.ValidationExceptionHandler
-import pl.borowa5b.car.rental.shared.domain.exception.validation.Validator
 import pl.borowa5b.car.rental.cars.domain.shared.vo.CarId
 import pl.borowa5b.car.rental.customers.domain.shared.vo.CustomerId
 import pl.borowa5b.car.rental.rentals.domain.repository.read.RentalQuery
+import pl.borowa5b.car.rental.shared.domain.exception.validation.ValidationExceptionHandler
+import pl.borowa5b.car.rental.shared.domain.exception.validation.Validator
 import java.time.OffsetDateTime
 
 @ParameterObject
@@ -27,7 +26,7 @@ data class GetRentalsFilter(
     @Parameter(description = "Rental end date from", example = "2022-01-01T12:00:00Z")
     val endDateFrom: String? = null,
 
-    @Schema(description = "Rental end date to", example = "2022-01-01T12:00:00Z")
+    @Parameter(description = "Rental end date to", example = "2022-01-01T12:00:00Z")
     val endDateTo: String? = null
 ) {
 

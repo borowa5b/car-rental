@@ -2,8 +2,8 @@ package pl.borowa5b.car.rental.rentals.infrastructure.entity
 
 import pl.borowa5b.car.rental.cars.domain.shared.vo.ValueObjects.carId
 import pl.borowa5b.car.rental.customers.domain.shared.vo.ValueObjects.customerId
-import pl.borowa5b.car.rental.rentals.domain.model.DomainObjects.rentalId
 import pl.borowa5b.car.rental.rentals.domain.vo.RentalStatus
+import pl.borowa5b.car.rental.rentals.domain.vo.ValueObjects.rentalId
 import java.math.BigDecimal
 import java.time.OffsetDateTime
 

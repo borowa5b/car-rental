@@ -2,7 +2,7 @@ package pl.borowa5b.car.rental.rentals.application.response
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import pl.borowa5b.car.rental.rentals.domain.model.DomainObjects.rentalDetails
+import pl.borowa5b.car.rental.rentals.domain.repository.read.ReadObjects.rentalDetails
 
 class RentalResponseTest {
 

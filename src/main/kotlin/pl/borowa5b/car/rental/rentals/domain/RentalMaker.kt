@@ -1,8 +1,8 @@
 package pl.borowa5b.car.rental.rentals.domain
 
 import org.springframework.stereotype.Component
-import pl.borowa5b.car.rental.cars.domain.shared.repository.CarRepository
 import pl.borowa5b.car.rental.cars.domain.shared.exception.CarNotFoundException
+import pl.borowa5b.car.rental.cars.domain.shared.repository.CarRepository
 import pl.borowa5b.car.rental.customers.domain.shared.exception.CustomerNotFoundException
 import pl.borowa5b.car.rental.customers.domain.shared.repository.CustomerRepository
 import pl.borowa5b.car.rental.events.domain.shared.ApplicationEventPublisher
@@ -12,9 +12,9 @@ import pl.borowa5b.car.rental.rentals.domain.event.RentalMadeEvent
 import pl.borowa5b.car.rental.rentals.domain.exception.CustomerHasActiveRentalsException
 import pl.borowa5b.car.rental.rentals.domain.generator.RentalIdGenerator
 import pl.borowa5b.car.rental.rentals.domain.model.Rental
+import pl.borowa5b.car.rental.rentals.domain.repository.RentalRepository
 import pl.borowa5b.car.rental.rentals.domain.vo.RentalId
 import pl.borowa5b.car.rental.rentals.domain.vo.RentalStatus
-import pl.borowa5b.car.rental.rentals.domain.repository.RentalRepository
 
 @Component
 class RentalMaker(
@@ -48,7 +48,7 @@ class RentalMaker(
     }
 
     private fun validate(command: MakeRentalCommand) {
-        if (!carRepository.exists(command.carId)) {
+        if (!carRepository.existsBy(command.carId)) {
             throw CarNotFoundException(command.carId)
         }
         if (!customerRepository.exists(command.customerId)) {

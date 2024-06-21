@@ -1,10 +1,10 @@
-package pl.borowa5b.car.rental.events.domain.shared.repository
+package pl.borowa5b.car.rental.events.domain.repository
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import pl.borowa5b.car.rental.events.domain.model.ApplicationEvent
 import pl.borowa5b.car.rental.events.domain.model.DomainObjects.applicationEvent
-import pl.borowa5b.car.rental.events.domain.shared.model.ApplicationEvent
 
 class ApplicationEventRepositoryTest {
 

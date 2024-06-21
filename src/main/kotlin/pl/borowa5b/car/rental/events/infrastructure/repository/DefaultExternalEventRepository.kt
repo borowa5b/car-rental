@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component
 import org.springframework.stereotype.Repository
 import pl.borowa5b.car.rental.events.domain.model.ExternalEvent
 import pl.borowa5b.car.rental.events.domain.repository.ExternalEventRepository
-import pl.borowa5b.car.rental.events.domain.shared.vo.ExternalEventId
+import pl.borowa5b.car.rental.events.domain.vo.ExternalEventId
 import pl.borowa5b.car.rental.events.infrastructure.entity.ExternalEventEntity
 
 @Component

@@ -6,7 +6,7 @@ import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Component
 import pl.borowa5b.car.rental.events.domain.model.ExternalEvent
 import pl.borowa5b.car.rental.events.domain.repository.ExternalEventRepository
-import pl.borowa5b.car.rental.events.domain.shared.vo.SupportedEvent
+import pl.borowa5b.car.rental.events.domain.vo.SupportedEvent
 import java.util.logging.Logger
 
 @Component

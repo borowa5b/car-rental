@@ -1,9 +1,9 @@
 package pl.borowa5b.car.rental.events.infrastructure.entity
 
-import pl.borowa5b.car.rental.events.domain.model.DomainObjects.applicationEventId
-import pl.borowa5b.car.rental.events.domain.model.DomainObjects.externalEventId
-import pl.borowa5b.car.rental.events.domain.shared.vo.ApplicationEventStatus
-import pl.borowa5b.car.rental.events.domain.shared.vo.ExternalEventStatus
+import pl.borowa5b.car.rental.events.domain.vo.ApplicationEventStatus
+import pl.borowa5b.car.rental.events.domain.vo.ExternalEventStatus
+import pl.borowa5b.car.rental.events.domain.vo.ValueObjects.applicationEventId
+import pl.borowa5b.car.rental.events.domain.vo.ValueObjects.externalEventId
 import java.time.OffsetDateTime
 
 object EntityObjects {

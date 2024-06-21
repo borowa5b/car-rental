@@ -5,7 +5,7 @@ import org.jooq.impl.DSL.field
 import org.junit.jupiter.api.Test
 import pl.borowa5b.car.rental.cars.domain.shared.vo.ValueObjects.carId
 import pl.borowa5b.car.rental.customers.domain.shared.vo.ValueObjects.customerId
-import pl.borowa5b.car.rental.rentals.domain.model.DomainObjects.rentalQuery
+import pl.borowa5b.car.rental.rentals.domain.repository.read.ReadObjects.rentalQuery
 import pl.borowa5b.car.rental.rentals.infrastructure.repository.read.RentalTableDefinition.Column
 import java.time.OffsetDateTime
 import java.time.ZoneOffset
