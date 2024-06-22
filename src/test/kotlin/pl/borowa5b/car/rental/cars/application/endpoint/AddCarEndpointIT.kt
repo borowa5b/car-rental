@@ -41,10 +41,10 @@ class AddCarEndpointIT {
         // then
         val addedCar = carRepository.findById(result.body!!.carId).orElse(null)
         assertThat(addedCar.brand.name).isEqualTo(request.brand)
-        assertThat(addedCar.model).isEqualTo(request.model)
-        assertThat(addedCar.generation).isEqualTo(request.generation)
+        assertThat(addedCar.model).isEqualTo(request.model!!.lowercase())
+        assertThat(addedCar.generation).isEqualTo(request.generation!!.lowercase())
         assertThat(addedCar.year).isEqualTo(request.year)
-        assertThat(addedCar.color).isEqualTo(request.color)
+        assertThat(addedCar.color).isEqualTo(request.color!!.lowercase())
         assertThat(addedCar.pricePerDay.intValueExact()).isEqualTo(request.pricePerDay!!.intValueExact())
         assertThat(addedCar.quantity).isEqualTo(request.quantity)
         assertThat(addedCar.entityVersion).isEqualTo(0L)

@@ -4,9 +4,10 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Component
 import org.springframework.stereotype.Repository
+import pl.borowa5b.car.rental.cars.domain.shared.vo.CarId
 import pl.borowa5b.car.rental.customers.domain.shared.vo.CustomerId
 import pl.borowa5b.car.rental.rentals.domain.model.Rental
-import pl.borowa5b.car.rental.rentals.domain.repository.RentalRepository
+import pl.borowa5b.car.rental.rentals.domain.shared.repository.RentalRepository
 import pl.borowa5b.car.rental.rentals.domain.vo.RentalId
 import pl.borowa5b.car.rental.rentals.domain.vo.RentalStatus
 import pl.borowa5b.car.rental.rentals.infrastructure.entity.RentalEntity
@@ -22,6 +23,9 @@ class DefaultRentalRepository(private val repository: SpringJpaRentalRepository)
 
     override fun hasActiveRentals(customerId: CustomerId): Boolean =
         repository.existsByCustomerIdAndNotInStatus(customerId.value, RentalStatus.ENDED)
+
+    override fun hasActiveRentals(carId: CarId): Boolean =
+        repository.existsByCarIdAndNotInStatus(carId.value, RentalStatus.ENDED)
 
     override fun findToStart(currentDate: OffsetDateTime): RentalId? =
         repository.findByStartDateGreaterThanEqualAndStatus(currentDate, RentalStatus.NEW).first()
@@ -44,6 +48,18 @@ interface SpringJpaRentalRepository : JpaRepository<RentalEntity, String> {
         """
     )
     fun existsByCustomerIdAndNotInStatus(customerId: String, status: RentalStatus): Boolean
+
+    @Query(
+        """
+            SELECT exists(
+                SELECT r 
+                FROM rental r
+                WHERE r.carId = :carId
+                AND r.status != :status
+            )
+        """
+    )
+    fun existsByCarIdAndNotInStatus(carId: String, status: RentalStatus): Boolean
 
     @Query(
         """

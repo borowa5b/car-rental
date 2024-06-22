@@ -35,6 +35,19 @@ class ValidatorTest {
     }
 
     @Test
+    fun `should not validate if blank`() {
+        // given
+        val value = ""
+        val fieldName = "fieldName"
+
+        // when
+        val result = catchThrowable { Validator.isNotBlank(value, fieldName) }
+
+        // then
+        assertThat(result).isExactlyInstanceOf(ValidationErrorException::class.java)
+    }
+
+    @Test
     fun `should not validate if date time is not after other date time`() {
         // given
         val value = "2020-01-01T00:00:00"
@@ -69,6 +82,20 @@ class ValidatorTest {
 
         // when
         val result = catchThrowable { Validator.isValidOffsetDateTime(value, fieldName) }
+
+        // then
+        assertThat(result).isExactlyInstanceOf(ValidationErrorException::class.java)
+    }
+
+    @Test
+    fun `should not validate if number is not greater than`() {
+        // given
+        val value = 1.50
+        val greaterThan = 2.50
+        val fieldName = "fieldName"
+
+        // when
+        val result = catchThrowable { Validator.isGreaterThan(value, greaterThan, fieldName) }
 
         // then
         assertThat(result).isExactlyInstanceOf(ValidationErrorException::class.java)

@@ -36,14 +36,18 @@ data class AddCarRequest(
         brand?.let {
             Validator.isValidEnumValue<Brand>(it, "brand", validationExceptionHandler)
         }
+
+        quantity?.let {
+            Validator.isGreaterThan(it, 1, "quantity", validationExceptionHandler)
+        }
     }
 
     fun toCommand(): AddCarCommand = AddCarCommand(
         brand = Brand.valueOf(brand!!),
-        model = model!!,
-        generation = generation!!,
+        model = model!!.lowercase(),
+        generation = generation!!.lowercase(),
         year = year!!,
-        color = color!!,
+        color = color!!.lowercase(),
         pricePerDay = pricePerDay!!,
         quantity = quantity!!
     )

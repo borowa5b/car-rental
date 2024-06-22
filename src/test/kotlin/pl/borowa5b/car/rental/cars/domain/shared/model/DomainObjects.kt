@@ -11,10 +11,10 @@ object DomainObjects {
     fun car(
         id: CarId = carId(),
         brand: Brand = Brand.TOYOTA,
-        model: String = "Corolla",
-        generation: String = "LE",
+        model: String = "orolla",
+        generation: String = "le",
         year: Int = 2022,
-        color: String = "Blue",
+        color: String = "blue",
         pricePerDay: BigDecimal = BigDecimal(200),
         quantity: Int = 5
     ): Car = Car(

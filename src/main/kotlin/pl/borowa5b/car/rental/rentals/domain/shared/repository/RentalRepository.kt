@@ -1,5 +1,6 @@
-package pl.borowa5b.car.rental.rentals.domain.repository
+package pl.borowa5b.car.rental.rentals.domain.shared.repository
 
+import pl.borowa5b.car.rental.cars.domain.shared.vo.CarId
 import pl.borowa5b.car.rental.customers.domain.shared.vo.CustomerId
 import pl.borowa5b.car.rental.rentals.domain.model.Rental
 import pl.borowa5b.car.rental.rentals.domain.vo.RentalId
@@ -12,6 +13,8 @@ interface RentalRepository {
     fun findById(id: RentalId): Rental?
 
     fun hasActiveRentals(customerId: CustomerId): Boolean
+
+    fun hasActiveRentals(carId: CarId): Boolean
 
     fun findToStart(currentDate: OffsetDateTime): RentalId?
 

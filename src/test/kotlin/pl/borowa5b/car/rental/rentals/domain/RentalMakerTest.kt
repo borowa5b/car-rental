@@ -26,7 +26,7 @@ import pl.borowa5b.car.rental.rentals.domain.exception.CustomerHasActiveRentalsE
 import pl.borowa5b.car.rental.rentals.domain.generator.RentalIdGenerator
 import pl.borowa5b.car.rental.rentals.domain.model.DomainObjects.rental
 import pl.borowa5b.car.rental.rentals.domain.model.Rental
-import pl.borowa5b.car.rental.rentals.domain.repository.RentalRepository
+import pl.borowa5b.car.rental.rentals.domain.shared.repository.RentalRepository
 import pl.borowa5b.car.rental.rentals.domain.vo.RentalStatus
 import pl.borowa5b.car.rental.rentals.domain.vo.ValueObjects.rentalId
 import java.math.BigDecimal

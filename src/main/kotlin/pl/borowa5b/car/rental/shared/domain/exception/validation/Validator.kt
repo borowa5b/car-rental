@@ -42,6 +42,23 @@ object Validator {
         }
     }
 
+    fun isNotBlank(
+        value: String,
+        fieldName: String,
+        validationExceptionHandler: ValidationExceptionHandler = ThrowingValidationExceptionHandler()
+    ) {
+        if (value.isBlank()) {
+            validationExceptionHandler.handle(
+                ValidationErrorException(
+                    ValidationError(
+                        "Field is blank",
+                        "Field $fieldName cannot be blank"
+                    )
+                )
+            )
+        }
+    }
+
     fun isAfter(
         value: String?,
         beforeDateTime: String?,
@@ -111,6 +128,24 @@ object Validator {
                     )
                 )
             }
+        }
+    }
+
+    fun isGreaterThan(
+        value: Number,
+        greaterThan: Number,
+        fieldName: String,
+        validationExceptionHandler: ValidationExceptionHandler = ThrowingValidationExceptionHandler()
+    ) {
+        if (value.toDouble() <= greaterThan.toDouble()) {
+            validationExceptionHandler.handle(
+                ValidationErrorException(
+                    ValidationError(
+                        "Field has invalid value",
+                        "Field $fieldName must be greater than $greaterThan"
+                    )
+                )
+            )
         }
     }
 

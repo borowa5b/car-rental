@@ -8,7 +8,7 @@ import org.mockito.Mock
 import org.mockito.junit.jupiter.MockitoExtension
 import org.mockito.kotlin.*
 import pl.borowa5b.car.rental.rentals.domain.model.DomainObjects.rental
-import pl.borowa5b.car.rental.rentals.domain.repository.RentalRepository
+import pl.borowa5b.car.rental.rentals.domain.shared.repository.RentalRepository
 import pl.borowa5b.car.rental.rentals.domain.vo.RentalStatus
 import java.time.OffsetDateTime
 
