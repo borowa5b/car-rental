@@ -1,10 +1,11 @@
-package pl.borowa5b.car.rental.rentals.domain.repository
+package pl.borowa5b.car.rental.rentals.domain.shared.repository
 
 import  org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
+import pl.borowa5b.car.rental.cars.domain.shared.vo.CarId
 import pl.borowa5b.car.rental.customers.domain.shared.vo.CustomerId
 import pl.borowa5b.car.rental.rentals.domain.model.DomainObjects.rental
 import pl.borowa5b.car.rental.rentals.domain.model.Rental
@@ -76,6 +77,23 @@ class RentalRepositoryTest {
         assertThat(result).isEqualTo(expectedResult)
     }
 
+    @ParameterizedTest
+    @CsvSource(
+        "CAR1, true",
+        "CAR2, false"
+    )
+    fun `should check if car has rentals`(carId: String, expectedResult: Boolean) {
+        // given
+        val rental = rental(carId = CarId("CAR1"), status = RentalStatus.STARTED)
+        rentalRepository.save(rental)
+
+        // when
+        val result = rentalRepository.hasActiveRentals(CarId(carId))
+
+        // then
+        assertThat(result).isEqualTo(expectedResult)
+    }
+
     @Test
     fun `should find rental to start`() {
         // given
@@ -113,6 +131,9 @@ class RentalRepositoryTest {
 
         override fun hasActiveRentals(customerId: CustomerId): Boolean =
             rentals.any { it.customerId == customerId && it.status != RentalStatus.ENDED }
+
+        override fun hasActiveRentals(carId: CarId): Boolean =
+            rentals.any { it.carId == carId && it.status != RentalStatus.ENDED }
 
         override fun findToStart(currentDate: OffsetDateTime): RentalId? =
             rentals.firstOrNull { it.status == RentalStatus.NEW && currentDate >= it.startDate }?.id

@@ -27,7 +27,7 @@ class CarRepositoryTest {
     fun `should check if car exists`(carId: String, expectedResult: Boolean) {
         // given
         val car = car(id = CarId("CAR1"))
-        (carRepository as TestCarRepository).save(car)
+        carRepository.save(car)
 
         // when
         val result = carRepository.existsBy(CarId(carId))
@@ -51,7 +51,7 @@ class CarRepositoryTest {
     ) {
         // given
         val car = car(brand = Brand.TOYOTA, model = "Corolla", generation = "1", year = 1997, color = "black")
-        (carRepository as TestCarRepository).save(car)
+        carRepository.save(car)
 
         // when
         val result = carRepository.existsBy(brand, model, generation, year, color)
@@ -72,6 +72,19 @@ class CarRepositoryTest {
         assertThat(result.id).isEqualTo(car.id)
     }
 
+    @Test
+    fun `should find car by id`() {
+        // given
+        val car = car()
+        carRepository.save(car)
+
+        // when
+        val result = carRepository.findBy(car.id)
+
+        // then
+        assertThat(result).isEqualTo(car)
+    }
+
     private class TestCarRepository(private val cars: ArrayList<Car> = ArrayList()) : CarRepository {
 
         override fun existsBy(carId: CarId): Boolean = cars.any { it.id == carId }
@@ -83,6 +96,8 @@ class CarRepositoryTest {
             cars.add(car)
             return car
         }
+
+        override fun findBy(carId: CarId): Car? = cars.firstOrNull { it.id == carId }
 
         fun deleteAll() = cars.clear()
     }

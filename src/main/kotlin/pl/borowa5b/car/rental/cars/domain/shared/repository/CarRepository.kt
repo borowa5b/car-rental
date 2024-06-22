@@ -11,4 +11,6 @@ interface CarRepository {
     fun existsBy(brand: Brand, model: String, generation: String, year: Int, color: String): Boolean
 
     fun save(car: Car): Car
+
+    fun findBy(carId: CarId): Car?
 }

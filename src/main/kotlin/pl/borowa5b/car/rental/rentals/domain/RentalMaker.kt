@@ -12,7 +12,7 @@ import pl.borowa5b.car.rental.rentals.domain.event.RentalMadeEvent
 import pl.borowa5b.car.rental.rentals.domain.exception.CustomerHasActiveRentalsException
 import pl.borowa5b.car.rental.rentals.domain.generator.RentalIdGenerator
 import pl.borowa5b.car.rental.rentals.domain.model.Rental
-import pl.borowa5b.car.rental.rentals.domain.repository.RentalRepository
+import pl.borowa5b.car.rental.rentals.domain.shared.repository.RentalRepository
 import pl.borowa5b.car.rental.rentals.domain.vo.RentalId
 import pl.borowa5b.car.rental.rentals.domain.vo.RentalStatus
 

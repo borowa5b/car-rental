@@ -18,6 +18,8 @@ class DefaultCarRepository(private val repository: SpringJpaCarRepository) : Car
         repository.existsByBrandAndModelAndGenerationAndYearAndColor(brand, model, generation, year, color)
 
     override fun save(car: Car): Car = repository.save(CarEntity.fromDomain(car)).toDomain()
+
+    override fun findBy(carId: CarId): Car? = repository.findById(carId.value).map { it.toDomain() }.orElse(null)
 }
 
 @Repository
