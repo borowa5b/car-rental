@@ -1,6 +1,7 @@
 package pl.borowa5b.car.rental.cars.domain.model
 
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.catchThrowable
 import org.junit.jupiter.api.Test
 import pl.borowa5b.car.rental.cars.domain.command.EditCarCommand
 import pl.borowa5b.car.rental.cars.domain.shared.model.DomainObjects.car
@@ -48,5 +49,41 @@ class CarTest {
 
         // then
         assertThat(result).isTrue()
+    }
+
+    @Test
+    fun `should increase quantity`() {
+        // given
+        val car = car(quantity = 10)
+
+        // when
+        car.increaseQuantity()
+
+        // then
+        assertThat(car.quantity).isEqualTo(11)
+    }
+
+    @Test
+    fun `should decrease quantity`() {
+        // given
+        val car = car(quantity = 10)
+
+        // when
+        car.decreaseQuantity()
+
+        // then
+        assertThat(car.quantity).isEqualTo(9)
+    }
+
+    @Test
+    fun `should throw exception when decrease quantity below 0`() {
+        // given
+        val car = car(quantity = 0)
+
+        // when
+        val result = catchThrowable { car.decreaseQuantity() }
+
+        // then
+        assertThat(result).isInstanceOf(IllegalStateException::class.java).hasMessage("Quantity cannot be less than 0.")
     }
 }

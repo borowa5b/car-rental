@@ -7,9 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.test.context.support.WithMockUser
 import pl.borowa5b.car.rental.cars.application.request.RequestObjects.addCarRequest
 import pl.borowa5b.car.rental.shared.domain.vo.Role
-import pl.borowa5b.car.rental.shared.helper.ApplicationEventAssertions.assertApplicationEvents
 import pl.borowa5b.car.rental.shared.helper.Database
 import pl.borowa5b.car.rental.shared.helper.IntegrationTest
+import pl.borowa5b.car.rental.shared.helper.IntegrationTestAssertions.assertApplicationEvents
 import pl.borowa5b.car.rental.shared.helper.TestSpringCarRepository
 
 @IntegrationTest

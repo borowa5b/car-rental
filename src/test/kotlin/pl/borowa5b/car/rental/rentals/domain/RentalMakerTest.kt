@@ -12,6 +12,7 @@ import org.mockito.kotlin.any
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.verifyNoInteractions
 import org.mockito.kotlin.whenever
+import pl.borowa5b.car.rental.cars.domain.shared.CarQuantityUpdater
 import pl.borowa5b.car.rental.cars.domain.shared.exception.CarNotFoundException
 import pl.borowa5b.car.rental.cars.domain.shared.repository.CarRepository
 import pl.borowa5b.car.rental.cars.domain.shared.vo.ValueObjects.carId
@@ -52,6 +53,9 @@ class RentalMakerTest {
 
     @Mock
     private lateinit var applicationEventPublisher: ApplicationEventPublisher
+
+    @Mock
+    private lateinit var carQuantityUpdater: CarQuantityUpdater
 
     @InjectMocks
     private lateinit var rentalMaker: RentalMaker
@@ -99,6 +103,7 @@ class RentalMakerTest {
         verify(rentalRepository).hasActiveRentals(customerId)
         verify(rentalPriceCalculator).calculate(calculateRentalCommand)
         verify(rentalIdGenerator).generate()
+        verify(carQuantityUpdater).decrease(carId)
         verify(rentalRepository).save(any<Rental>())
         verify(applicationEventPublisher).publish(any<RentalMadeEvent>())
         verifyNoMoreInteractions(
@@ -132,6 +137,7 @@ class RentalMakerTest {
             rentalPriceCalculator,
             rentalIdGenerator,
             rentalRepository,
+            carQuantityUpdater,
             applicationEventPublisher
         )
     }
@@ -154,7 +160,13 @@ class RentalMakerTest {
         verify(carRepository).existsBy(carId)
         verify(customerRepository).exists(customerId)
         verifyNoMoreInteractions(carRepository, customerRepository)
-        verifyNoInteractions(rentalPriceCalculator, rentalIdGenerator, rentalRepository, applicationEventPublisher)
+        verifyNoInteractions(
+            rentalPriceCalculator,
+            rentalIdGenerator,
+            rentalRepository,
+            carQuantityUpdater,
+            applicationEventPublisher
+        )
     }
 
     @Test
@@ -177,6 +189,6 @@ class RentalMakerTest {
         verify(customerRepository).exists(customerId)
         verify(rentalRepository).hasActiveRentals(customerId)
         verifyNoMoreInteractions(carRepository, customerRepository, rentalRepository)
-        verifyNoInteractions(rentalPriceCalculator, rentalIdGenerator, applicationEventPublisher)
+        verifyNoInteractions(rentalPriceCalculator, rentalIdGenerator, carQuantityUpdater, applicationEventPublisher)
     }
 }

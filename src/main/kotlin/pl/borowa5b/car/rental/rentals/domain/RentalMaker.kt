@@ -1,6 +1,8 @@
 package pl.borowa5b.car.rental.rentals.domain
 
 import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Transactional
+import pl.borowa5b.car.rental.cars.domain.shared.CarQuantityUpdater
 import pl.borowa5b.car.rental.cars.domain.shared.exception.CarNotFoundException
 import pl.borowa5b.car.rental.cars.domain.shared.repository.CarRepository
 import pl.borowa5b.car.rental.customers.domain.shared.exception.CustomerNotFoundException
@@ -23,9 +25,11 @@ class RentalMaker(
     private val rentalRepository: RentalRepository,
     private val carRepository: CarRepository,
     private val customerRepository: CustomerRepository,
+    private val carQuantityUpdater: CarQuantityUpdater,
     private val applicationEventPublisher: ApplicationEventPublisher
 ) {
 
+    @Transactional
     fun make(command: MakeRentalCommand): RentalId {
         validate(command)
 
@@ -42,6 +46,7 @@ class RentalMaker(
             price = rentalPrice,
             status = RentalStatus.NEW
         )
+        carQuantityUpdater.decrease(command.carId)
         rentalRepository.save(rental)
         applicationEventPublisher.publish(RentalMadeEvent(rental))
         return rental.id

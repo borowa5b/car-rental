@@ -29,6 +29,17 @@ data class Car(
         return edited.any { it }
     }
 
+    fun increaseQuantity() {
+        quantity++
+    }
+
+    fun decreaseQuantity() {
+        if (quantity == 0) {
+            throw IllegalStateException("Quantity cannot be less than 0.")
+        }
+        quantity--
+    }
+
     private fun update(oldValue: Any, newValue: Any, function: () -> Unit): Boolean {
         return if (oldValue != newValue) {
             function()
