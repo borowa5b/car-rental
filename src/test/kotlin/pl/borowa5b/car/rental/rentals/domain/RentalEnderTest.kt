@@ -7,6 +7,7 @@ import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.junit.jupiter.MockitoExtension
 import org.mockito.kotlin.*
+import pl.borowa5b.car.rental.cars.domain.shared.CarQuantityUpdater
 import pl.borowa5b.car.rental.rentals.domain.model.DomainObjects.rental
 import pl.borowa5b.car.rental.rentals.domain.shared.repository.RentalRepository
 import pl.borowa5b.car.rental.rentals.domain.vo.RentalStatus
@@ -17,6 +18,9 @@ class RentalEnderTest {
 
     @Mock
     private lateinit var rentalRepository: RentalRepository
+
+    @Mock
+    private lateinit var carQuantityUpdater: CarQuantityUpdater
 
     @InjectMocks
     private lateinit var rentalEnder: RentalEnder
@@ -36,7 +40,8 @@ class RentalEnderTest {
 
         verify(rentalRepository, times(2)).findToEnd(any<OffsetDateTime>())
         verify(rentalRepository).findById(rental.id)
+        verify(carQuantityUpdater).increase(rental.carId)
         verify(rentalRepository).save(rental)
-        verifyNoMoreInteractions(rentalRepository)
+        verifyNoMoreInteractions(rentalRepository, carQuantityUpdater)
     }
 }

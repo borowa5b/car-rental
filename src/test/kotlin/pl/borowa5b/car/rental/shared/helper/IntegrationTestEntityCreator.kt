@@ -8,8 +8,8 @@ object IntegrationTestEntityCreator {
     private val carRepository = IntegrationTestEnvironment.getBean(TestSpringCarRepository::class.java)
     private val customerRepository = IntegrationTestEnvironment.getBean(TestSpringCustomerRepository::class.java)
 
-    fun createCarEntity(id: String) {
-        carRepository.save(carEntity(id = id))
+    fun createCarEntity(id: String, quantity: Int = 10) {
+        carRepository.save(carEntity(id = id, quantity = quantity))
     }
 
     fun createCustomerEntity(id: String) {

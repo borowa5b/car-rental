@@ -74,7 +74,7 @@ class CarEditorTest {
 
         // then
         assertThat(result).isInstanceOf(CarNotFoundException::class.java)
-            .hasMessage("Car with id ${command.carId.value} not found")
+            .hasMessage("Car with id ${command.carId.value} not found.")
 
         verify(carRepository).existsBy(command.carId)
         verifyNoMoreInteractions(carRepository)
