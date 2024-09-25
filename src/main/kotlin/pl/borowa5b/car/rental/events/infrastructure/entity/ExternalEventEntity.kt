@@ -15,6 +15,7 @@ data class ExternalEventEntity(
     @Enumerated(EnumType.STRING)
     val status: ExternalEventStatus,
     val payload: String,
+    @Column(length = 1024)
     val errorMessage: String?,
     val creationDate: OffsetDateTime,
     var processedOnDate: OffsetDateTime? = null,
