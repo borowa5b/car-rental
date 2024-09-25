@@ -4,8 +4,10 @@ import com.fasterxml.jackson.core.JacksonException
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Transactional
 import pl.borowa5b.car.rental.events.domain.model.ExternalEvent
 import pl.borowa5b.car.rental.events.domain.repository.ExternalEventRepository
+import pl.borowa5b.car.rental.events.domain.vo.ExternalEventStatus
 import pl.borowa5b.car.rental.events.domain.vo.SupportedEvent
 import java.util.logging.Logger
 
@@ -21,27 +23,26 @@ class ExternalEventProcessor(
         private val LOGGER = Logger.getLogger(ExternalEventProcessor::class.simpleName)
     }
 
+    @Transactional
     fun process(externalEvent: ExternalEvent) {
+        val supportedEvent = getSupportedEvent(externalEvent) ?: return
+        if (externalEventRepository.existsInStatus(externalEvent.id, ExternalEventStatus.PROCESSED)) {
+            LOGGER.warning("Skipping event with id ${externalEvent.id.value} because it is already processed")
+            return
+        }
         externalEvent.markAsProcessing()
-        externalEventRepository.save(externalEvent)
 
         try {
-            val supportedEvent = getSupportedEvent(externalEvent) ?: return
-            if (externalEventRepository.exists(externalEvent.id)) {
-                LOGGER.warning("Skipping event with id ${externalEvent.id.value} because it is already processed")
-                return
-            }
-
             val event = objectMapper.readValue(externalEvent.payload, supportedEvent.payloadClass)
-            eventPublisher.publishEvent(event)
             externalEvent.markAsProcessed()
             externalEventRepository.save(externalEvent)
+            eventPublisher.publishEvent(event)
         } catch (exception: JacksonException) {
             externalEvent.markAsFailed(exception.message)
             externalEventRepository.save(externalEvent)
         }
     }
 
-    private fun getSupportedEvent(it: ExternalEvent): SupportedEvent? = SupportedEvents.list()
-        .firstOrNull { supportedEvent -> supportedEvent.type == it.type && supportedEvent.version == it.version }
+    private fun getSupportedEvent(externalEvent: ExternalEvent): SupportedEvent? = SupportedEvents.list()
+        .firstOrNull { supportedEvent -> supportedEvent.type == externalEvent.type && supportedEvent.version == externalEvent.version }
 }

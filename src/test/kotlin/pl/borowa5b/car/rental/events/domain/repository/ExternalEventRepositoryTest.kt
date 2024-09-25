@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test
 import pl.borowa5b.car.rental.events.domain.model.DomainObjects.externalEvent
 import pl.borowa5b.car.rental.events.domain.model.ExternalEvent
 import pl.borowa5b.car.rental.events.domain.vo.ExternalEventId
+import pl.borowa5b.car.rental.events.domain.vo.ExternalEventStatus
 
 class ExternalEventRepositoryTest {
 
@@ -29,13 +30,13 @@ class ExternalEventRepositoryTest {
     }
 
     @Test
-    fun `should find check if external event exists`() {
+    fun `should find check if external event exists in status`() {
         // given
         val externalEvent = externalEvent()
         externalEventRepository.save(externalEvent)
 
         // when
-        val result = externalEventRepository.exists(externalEvent.id)
+        val result = externalEventRepository.existsInStatus(externalEvent.id, externalEvent.status)
 
         // then
         assertThat(result).isTrue()
@@ -49,8 +50,9 @@ class ExternalEventRepositoryTest {
             return externalEvent
         }
 
-        override fun exists(id: ExternalEventId): Boolean = externalEvents.any { it.id == id }
+        override fun existsInStatus(id: ExternalEventId, status: ExternalEventStatus): Boolean =
+            externalEvents.any { it.id == id && it.status == status }
 
-        fun deleteAll() = externalEvents.clear();
+        fun deleteAll() = externalEvents.clear()
     }
 }
