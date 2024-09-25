@@ -22,8 +22,6 @@ class SecurityConfiguration(
     @Bean
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
         return http
-            .csrf { it.disable() }
-            .cors { it.disable() }
             .addFilterBefore(authorizationFilter, UsernamePasswordAuthenticationFilter::class.java)
             .authorizeHttpRequests { httpsRequests ->
                 httpsRequests
