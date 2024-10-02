@@ -53,6 +53,9 @@ class RentalFinderTest {
         override fun findBy(query: RentalQuery, page: Page): Pageable<RentalDetails> =
             Pageable.of(rentals.filter { rental ->
                 var condition = true
+                query.id?.let {
+                    condition = condition && it.value == rental.id
+                }
                 query.carId?.let {
                     condition = condition && it.value == rental.carId
                 }

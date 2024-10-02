@@ -10,23 +10,23 @@ import pl.borowa5b.car.rental.shared.domain.pagination.Page
 @ParameterObject
 data class PageRequest(
     @Parameter(description = "Page number (default: 1", example = "1")
-    val number: Int? = 1,
+    val pageNumber: Int? = 1,
 
     @Parameter(description = "Page size (default: 100)", example = "100")
-    val size: Int? = 100,
+    val pageSize: Int? = 100,
 
     @Parameter(example = "creationDate,DESC", description = "Page order (default: creationDate,DESC)")
     val order: String? = "creationDate,DESC"
 ) {
 
     fun validate(validationExceptionHandler: ValidationExceptionHandler) {
-        Validator.isNotNull(number, "number", validationExceptionHandler)
-        Validator.isNotNull(size, "size", validationExceptionHandler)
+        Validator.isNotNull(pageNumber, "pageNumber", validationExceptionHandler)
+        Validator.isNotNull(pageSize, "pageSize", validationExceptionHandler)
         Validator.isNotNullOrBlank(order, "order", validationExceptionHandler)
 
-        Page.validate(number, size, validationExceptionHandler)
+        Page.validate(pageNumber, pageSize, validationExceptionHandler)
         OrderParser.validate(order, "order", validationExceptionHandler)
     }
 
-    fun toPage(): Page = Page(number!!, size!!, OrderParser.parse(order!!))
+    fun toPage(): Page = Page(pageNumber!!, pageSize!!, OrderParser.parse(order!!))
 }

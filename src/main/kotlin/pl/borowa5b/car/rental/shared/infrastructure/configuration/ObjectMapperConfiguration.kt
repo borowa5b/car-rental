@@ -1,6 +1,7 @@
 package pl.borowa5b.car.rental.shared.infrastructure.configuration
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import org.springframework.context.annotation.Bean
@@ -16,6 +17,6 @@ class ObjectMapperConfiguration {
             KotlinModule.Builder().build(),
             JavaTimeModule(),
             ProblemModule()
-        )
+        ).configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
     }
 }

@@ -11,6 +11,9 @@ object RentalConditionsBuilder {
         val conditions = mutableListOf<Condition>()
 
         with(query) {
+            id?.let {
+                conditions.add(field(Column.ID).eq(it.value))
+            }
             carId?.let {
                 conditions.add(field(Column.CAR_ID).eq(it.value))
             }

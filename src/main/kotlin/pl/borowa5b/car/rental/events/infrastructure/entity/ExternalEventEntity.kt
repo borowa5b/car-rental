@@ -14,6 +14,7 @@ data class ExternalEventEntity(
     val version: String,
     @Enumerated(EnumType.STRING)
     val status: ExternalEventStatus,
+    @Column(length = 1024)
     val payload: String,
     @Column(length = 1024)
     val errorMessage: String?,
