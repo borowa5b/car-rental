@@ -3,7 +3,6 @@ package pl.borowa5b.car.rental.shared.application.request
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import pl.borowa5b.car.rental.shared.domain.exception.validation.AggregatingValidationExceptionHandler
-import pl.borowa5b.car.rental.shared.application.request.PageRequest
 
 class PageRequestTest {
 
@@ -12,8 +11,8 @@ class PageRequestTest {
         // given
         val validationExceptionHandler = AggregatingValidationExceptionHandler()
         val pageRequest = PageRequest(
-            number = 1,
-            size = 100,
+            pageNumber = 1,
+            pageSize = 100,
             order = "creationDate,DESC"
         )
 
@@ -29,8 +28,8 @@ class PageRequestTest {
         // given
         val validationExceptionHandler = AggregatingValidationExceptionHandler()
         val pageRequest = PageRequest(
-            number = null,
-            size = null,
+            pageNumber = null,
+            pageSize = null,
             order = null
         )
 

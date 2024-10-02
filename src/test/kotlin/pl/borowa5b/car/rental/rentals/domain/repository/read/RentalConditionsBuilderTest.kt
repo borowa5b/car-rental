@@ -6,11 +6,24 @@ import org.junit.jupiter.api.Test
 import pl.borowa5b.car.rental.cars.domain.shared.vo.ValueObjects.carId
 import pl.borowa5b.car.rental.customers.domain.shared.vo.ValueObjects.customerId
 import pl.borowa5b.car.rental.rentals.domain.repository.read.ReadObjects.rentalQuery
+import pl.borowa5b.car.rental.rentals.domain.vo.ValueObjects.rentalId
 import pl.borowa5b.car.rental.rentals.infrastructure.repository.read.RentalTableDefinition.Column
 import java.time.OffsetDateTime
 import java.time.ZoneOffset
 
 class RentalConditionsBuilderTest {
+    @Test
+    fun `should build rental id condition`() {
+        // given
+        val query = rentalQuery(id = rentalId())
+        val expectedCondition = field(Column.ID).eq(query.id?.value)
+
+        // when
+        val result = RentalConditionsBuilder.build(query)
+
+        // then
+        assertThat(result).isEqualTo(expectedCondition)
+    }
 
     @Test
     fun `should build car id rental condition`() {

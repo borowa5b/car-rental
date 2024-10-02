@@ -44,7 +44,7 @@ interface SpringJpaRentalRepository : JpaRepository<RentalEntity, String> {
                 FROM rental r
                 WHERE r.customerId = :customerId
                 AND r.status != :status
-            )
+            ) 
         """
     )
     fun existsByCustomerIdAndNotInStatus(customerId: String, status: RentalStatus): Boolean

@@ -15,6 +15,7 @@ data class ApplicationEventEntity(
     val version: String,
     @Enumerated(EnumType.STRING)
     val status: ApplicationEventStatus,
+    @Column(length = 1024)
     val payload: String?,
     val publishedOnDate: OffsetDateTime? = null,
 

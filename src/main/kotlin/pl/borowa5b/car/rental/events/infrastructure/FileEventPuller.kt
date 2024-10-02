@@ -20,7 +20,7 @@ class FileEventPuller(
         val typeReference = object : TypeReference<List<ExternalEvent>>() {}
         val events = try {
             objectMapper.readValue(eventsString, typeReference)
-        } catch (exception: JacksonException) {
+        } catch (_: JacksonException) {
             listOf()
         }
         events.forEach { externalEventProcessor.process(it) }

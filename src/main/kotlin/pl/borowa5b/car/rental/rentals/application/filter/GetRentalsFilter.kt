@@ -5,12 +5,16 @@ import org.springdoc.core.annotations.ParameterObject
 import pl.borowa5b.car.rental.cars.domain.shared.vo.CarId
 import pl.borowa5b.car.rental.customers.domain.shared.vo.CustomerId
 import pl.borowa5b.car.rental.rentals.domain.repository.read.RentalQuery
+import pl.borowa5b.car.rental.rentals.domain.vo.RentalId
 import pl.borowa5b.car.rental.shared.domain.exception.validation.ValidationExceptionHandler
 import pl.borowa5b.car.rental.shared.domain.exception.validation.Validator
 import java.time.OffsetDateTime
 
 @ParameterObject
 data class GetRentalsFilter(
+    @Parameter(description = "Rental identifier", example = "RNL1214242443242")
+    val id: String? = null,
+
     @Parameter(description = "Car identifier", example = "CAR1214242443242")
     val carId: String? = null,
 
@@ -31,6 +35,9 @@ data class GetRentalsFilter(
 ) {
 
     fun validate(validationExceptionHandler: ValidationExceptionHandler) {
+        id?.let {
+            RentalId.validate(it, "id", validationExceptionHandler)
+        }
         carId?.let {
             CarId.validate(it, "carId", validationExceptionHandler)
         }
@@ -52,6 +59,7 @@ data class GetRentalsFilter(
     }
 
     fun toQuery(): RentalQuery = RentalQuery(
+        id = id?.let { RentalId(it) },
         carId = carId?.let { CarId(it) },
         customerId = customerId?.let { CustomerId(it) },
         startDateFrom = startDateFrom?.let { OffsetDateTime.parse(it) },

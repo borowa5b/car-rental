@@ -34,6 +34,7 @@ object ReadObjects {
     )
 
     fun rentalQuery(
+        id: RentalId? = null,
         carId: CarId? = null,
         customerId: CustomerId? = null,
         startDateFrom: OffsetDateTime? = null,
@@ -41,6 +42,7 @@ object ReadObjects {
         endDateFrom: OffsetDateTime? = null,
         endDateTo: OffsetDateTime? = null,
     ): RentalQuery = RentalQuery(
+        id = id,
         carId = carId,
         customerId = customerId,
         startDateFrom = startDateFrom,
