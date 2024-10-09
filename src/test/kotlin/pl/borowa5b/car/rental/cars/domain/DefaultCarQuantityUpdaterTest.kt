@@ -53,7 +53,7 @@ class DefaultCarQuantityUpdaterTest {
 
         // then
         assertThat(result).isExactlyInstanceOf(CarNotFoundException::class.java)
-            .hasMessage("Car with id ${carId.value} not found.")
+            .hasMessage("Car with id ${carId.value} not found")
 
         verify(carRepository).findBy(carId)
         verifyNoMoreInteractions(carRepository)
@@ -88,7 +88,7 @@ class DefaultCarQuantityUpdaterTest {
 
         // then
         assertThat(result).isExactlyInstanceOf(CarNotFoundException::class.java)
-            .hasMessage("Car with id ${carId.value} not found.")
+            .hasMessage("Car with id ${carId.value} not found")
 
         verify(carRepository).findBy(carId)
         verifyNoMoreInteractions(carRepository)

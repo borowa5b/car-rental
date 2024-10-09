@@ -22,8 +22,8 @@ data class EditCarRequest(
     val model: String?,
     @Schema(type = "string", description = "Model generation", example = "MK3")
     val generation: String?,
-    @Schema(type = "number", description = "Car year", example = "2006")
-    val year: Int?,
+    @Schema(type = "number", description = "Car production year", example = "2006")
+    val productionYear: Int?,
     @Schema(type = "string", description = "Car color", example = "Black metallic")
     val color: String?,
     @Schema(type = "number", description = "Rental price per day", example = "100")
@@ -51,8 +51,8 @@ data class EditCarRequest(
             Validator.isNotBlank(it, "generation", validationExceptionHandler)
         }
 
-        year?.let {
-            Validator.isGreaterThan(it, 1900, "year", validationExceptionHandler)
+        productionYear?.let {
+            Validator.isGreaterThan(it, 1900, "productionYear", validationExceptionHandler)
         }
 
         color?.let {
@@ -71,10 +71,10 @@ data class EditCarRequest(
     fun toCommand(): EditCarCommand = EditCarCommand(
         carId = CarId(carId!!),
         brand = brand?.let { Brand.valueOf(it) },
-        model = model?.lowercase(),
-        generation = generation?.lowercase(),
-        year = year,
-        color = color?.lowercase(),
+        model = model,
+        generation = generation,
+        productionYear = productionYear,
+        color = color,
         pricePerDay = pricePerDay,
         quantity = quantity
     )

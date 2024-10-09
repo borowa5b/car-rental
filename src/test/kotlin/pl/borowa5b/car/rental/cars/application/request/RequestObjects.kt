@@ -10,7 +10,7 @@ object RequestObjects {
         brand: String? = Brand.TOYOTA.name,
         model: String? = "Corolla",
         generation: String? = "3",
-        year: Int? = 2004,
+        productionYear: Int? = 2004,
         color: String? = "Silver",
         pricePerDay: BigDecimal? = BigDecimal(50),
         quantity: Int? = 10
@@ -18,7 +18,7 @@ object RequestObjects {
         brand = brand,
         model = model,
         generation = generation,
-        year = year,
+        productionYear = productionYear,
         color = color,
         pricePerDay = pricePerDay,
         quantity = quantity
@@ -29,7 +29,7 @@ object RequestObjects {
         brand: String? = null,
         model: String? = null,
         generation: String? = null,
-        year: Int? = null,
+        productionYear: Int? = null,
         color: String? = null,
         pricePerDay: BigDecimal? = null,
         quantity: Int? = null
@@ -38,7 +38,7 @@ object RequestObjects {
         brand = brand,
         model = model,
         generation = generation,
-        year = year,
+        productionYear = productionYear,
         color = color,
         pricePerDay = pricePerDay,
         quantity = quantity

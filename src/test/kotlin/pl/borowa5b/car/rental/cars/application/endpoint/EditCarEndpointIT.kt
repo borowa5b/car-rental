@@ -42,7 +42,7 @@ class EditCarEndpointIT {
             brand = Brand.VOLVO.name,
             model = "new model",
             generation = "new generation",
-            year = 2021,
+            productionYear = 2021,
             color = "new color",
             pricePerDay = BigDecimal("123"),
             quantity = 123
@@ -61,7 +61,7 @@ class EditCarEndpointIT {
         assertThat(editedCar.brand.name).isEqualTo(request.brand)
         assertThat(editedCar.model).isEqualTo(request.model)
         assertThat(editedCar.generation).isEqualTo(request.generation)
-        assertThat(editedCar.year).isEqualTo(request.year)
+        assertThat(editedCar.productionYear).isEqualTo(request.productionYear)
         assertThat(editedCar.color).isEqualTo(request.color)
         assertThat(editedCar.pricePerDay.intValueExact()).isEqualTo(request.pricePerDay!!.intValueExact())
         assertThat(editedCar.quantity).isEqualTo(request.quantity)

@@ -41,20 +41,20 @@ class CarRepositoryTest {
         "TOYOTA, Corolla, 1, 1997, black, true",
         "FORD, Mondeo, MK3, 2006, blue, false",
     )
-    fun `should check if car exists by brand, model, generation, year and color`(
+    fun `should check if car exists by brand, model, generation, productionYear and color`(
         brand: Brand,
         model: String,
         generation: String,
-        year: Int,
+        productionYear: Int,
         color: String,
         expectedResult: Boolean
     ) {
         // given
-        val car = car(brand = Brand.TOYOTA, model = "Corolla", generation = "1", year = 1997, color = "black")
+        val car = car(brand = Brand.TOYOTA, model = "Corolla", generation = "1", productionYear = 1997, color = "black")
         carRepository.save(car)
 
         // when
-        val result = carRepository.existsBy(brand, model, generation, year, color)
+        val result = carRepository.existsBy(brand, model, generation, productionYear, color)
 
         // then
         assertThat(result).isEqualTo(expectedResult)
@@ -89,8 +89,14 @@ class CarRepositoryTest {
 
         override fun existsBy(carId: CarId): Boolean = cars.any { it.id == carId }
 
-        override fun existsBy(brand: Brand, model: String, generation: String, year: Int, color: String): Boolean =
-            cars.any { it.brand == brand && it.model == model && it.year == year && it.generation == generation && it.color == color }
+        override fun existsBy(
+            brand: Brand,
+            model: String,
+            generation: String,
+            productionYear: Int,
+            color: String
+        ): Boolean =
+            cars.any { it.brand == brand && it.model == model && it.productionYear == productionYear && it.generation == generation && it.color == color }
 
         override fun save(car: Car): Car {
             cars.add(car)

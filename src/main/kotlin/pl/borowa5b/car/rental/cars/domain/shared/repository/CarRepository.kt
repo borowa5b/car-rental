@@ -8,7 +8,7 @@ interface CarRepository {
 
     fun existsBy(carId: CarId): Boolean
 
-    fun existsBy(brand: Brand, model: String, generation: String, year: Int, color: String): Boolean
+    fun existsBy(brand: Brand, model: String, generation: String, productionYear: Int, color: String): Boolean
 
     fun save(car: Car): Car
 

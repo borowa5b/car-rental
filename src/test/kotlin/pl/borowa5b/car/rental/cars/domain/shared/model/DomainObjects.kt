@@ -13,7 +13,7 @@ object DomainObjects {
         brand: Brand = Brand.TOYOTA,
         model: String = "orolla",
         generation: String = "le",
-        year: Int = 2022,
+        productionYear: Int = 2022,
         color: String = "blue",
         pricePerDay: BigDecimal = BigDecimal(200),
         quantity: Int = 5
@@ -22,7 +22,7 @@ object DomainObjects {
         brand = brand,
         model = model,
         generation = generation,
-        year = year,
+        productionYear = productionYear,
         color = color,
         pricePerDay = pricePerDay,
         quantity = quantity,

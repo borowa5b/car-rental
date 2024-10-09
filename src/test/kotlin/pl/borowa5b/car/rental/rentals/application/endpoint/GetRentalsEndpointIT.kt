@@ -76,5 +76,9 @@ class GetRentalsEndpointIT {
         val data = result.data
         assertThat(data).hasSize(1)
         assertThat(data[0].id).isEqualTo(rentalEntity1.id)
+
+        val pagination = result.pagination
+        assertThat(pagination.number).isEqualTo(2)
+        assertThat(pagination.size).isEqualTo(2)
     }
 }

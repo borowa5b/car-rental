@@ -48,10 +48,10 @@ class CarEditorTest {
 
         // then
         assertThat(car.brand).isEqualTo(command.brand)
-        assertThat(car.model).isEqualTo(command.model)
-        assertThat(car.generation).isEqualTo(command.generation)
-        assertThat(car.year).isEqualTo(command.year)
-        assertThat(car.color).isEqualTo(command.color)
+        assertThat(car.model).isEqualTo(command.getModel())
+        assertThat(car.generation).isEqualTo(command.getGeneration())
+        assertThat(car.productionYear).isEqualTo(command.productionYear)
+        assertThat(car.color).isEqualTo(command.getColor())
         assertThat(car.pricePerDay).isEqualTo(command.pricePerDay)
         assertThat(car.quantity).isEqualTo(command.quantity)
 
@@ -74,7 +74,7 @@ class CarEditorTest {
 
         // then
         assertThat(result).isInstanceOf(CarNotFoundException::class.java)
-            .hasMessage("Car with id ${command.carId.value} not found.")
+            .hasMessage("Car with id ${command.carId.value} not found")
 
         verify(carRepository).existsBy(command.carId)
         verifyNoMoreInteractions(carRepository)

@@ -14,8 +14,8 @@ data class AddCarRequest(
     val model: String?,
     @Schema(type = "string", description = "Model generation", example = "MK3")
     val generation: String?,
-    @Schema(type = "number", description = "Car year", example = "2006")
-    val year: Int?,
+    @Schema(type = "number", description = "Car production year", example = "2006")
+    val productionYear: Int?,
     @Schema(type = "string", description = "Car color", example = "Black metallic")
     val color: String?,
     @Schema(type = "number", description = "Rental price per day", example = "100")
@@ -28,7 +28,7 @@ data class AddCarRequest(
         Validator.isNotNullOrBlank(brand, "brand", validationExceptionHandler)
         Validator.isNotNullOrBlank(model, "model", validationExceptionHandler)
         Validator.isNotNullOrBlank(generation, "generation", validationExceptionHandler)
-        Validator.isNotNull(year, "year", validationExceptionHandler)
+        Validator.isNotNull(productionYear, "productionYear", validationExceptionHandler)
         Validator.isNotNullOrBlank(color, "color", validationExceptionHandler)
         Validator.isNotNull(pricePerDay, "pricePerDay", validationExceptionHandler)
         Validator.isNotNull(quantity, "quantity", validationExceptionHandler)
@@ -44,10 +44,10 @@ data class AddCarRequest(
 
     fun toCommand(): AddCarCommand = AddCarCommand(
         brand = Brand.valueOf(brand!!),
-        model = model!!.lowercase(),
-        generation = generation!!.lowercase(),
-        year = year!!,
-        color = color!!.lowercase(),
+        model = model!!,
+        generation = generation!!,
+        productionYear = productionYear!!,
+        color = color!!,
         pricePerDay = pricePerDay!!,
         quantity = quantity!!
     )

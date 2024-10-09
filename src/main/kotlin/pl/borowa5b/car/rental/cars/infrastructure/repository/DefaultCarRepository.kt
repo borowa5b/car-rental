@@ -14,8 +14,20 @@ class DefaultCarRepository(private val repository: SpringJpaCarRepository) : Car
 
     override fun existsBy(carId: CarId): Boolean = repository.existsById(carId.value)
 
-    override fun existsBy(brand: Brand, model: String, generation: String, year: Int, color: String): Boolean =
-        repository.existsByBrandAndModelAndGenerationAndYearAndColor(brand, model, generation, year, color)
+    override fun existsBy(
+        brand: Brand,
+        model: String,
+        generation: String,
+        productionYear: Int,
+        color: String
+    ): Boolean =
+        repository.existsByBrandAndModelAndGenerationAndProductionYearAndColor(
+            brand,
+            model,
+            generation,
+            productionYear,
+            color
+        )
 
     override fun save(car: Car): Car = repository.save(CarEntity.fromDomain(car)).toDomain()
 
@@ -25,11 +37,11 @@ class DefaultCarRepository(private val repository: SpringJpaCarRepository) : Car
 @Repository
 interface SpringJpaCarRepository : JpaRepository<CarEntity, String> {
 
-    fun existsByBrandAndModelAndGenerationAndYearAndColor(
+    fun existsByBrandAndModelAndGenerationAndProductionYearAndColor(
         brand: Brand,
         model: String,
         generation: String,
-        year: Int,
+        productionYear: Int,
         color: String
     ): Boolean
 }

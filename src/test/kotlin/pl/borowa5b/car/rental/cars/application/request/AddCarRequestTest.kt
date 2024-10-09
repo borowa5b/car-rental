@@ -29,7 +29,7 @@ class AddCarRequestTest {
             brand = "",
             model = "",
             generation = "",
-            year = null,
+            productionYear = null,
             color = "",
             pricePerDay = null,
             quantity = null
@@ -54,10 +54,10 @@ class AddCarRequestTest {
         // then
         assertThat(result).isExactlyInstanceOf(AddCarCommand::class.java)
         assertThat(result.brand.name).isEqualTo(request.brand)
-        assertThat(result.model).isEqualTo(request.model!!.lowercase())
-        assertThat(result.generation).isEqualTo(request.generation!!.lowercase())
-        assertThat(result.year).isEqualTo(request.year)
-        assertThat(result.color).isEqualTo(request.color!!.lowercase())
+        assertThat(result.getModel()).isEqualTo(request.model!!.lowercase())
+        assertThat(result.getGeneration()).isEqualTo(request.generation!!.lowercase())
+        assertThat(result.productionYear).isEqualTo(request.productionYear)
+        assertThat(result.getColor()).isEqualTo(request.color!!.lowercase())
         assertThat(result.pricePerDay).isEqualTo(request.pricePerDay)
         assertThat(result.quantity).isEqualTo(request.quantity)
     }

@@ -23,10 +23,10 @@ class CarAdder(
         val car = Car(
             id = carIdGenerator.generate(),
             brand = command.brand,
-            model = command.model,
-            generation = command.generation,
-            year = command.year,
-            color = command.color,
+            model = command.getModel(),
+            generation = command.getGeneration(),
+            productionYear = command.productionYear,
+            color = command.getColor(),
             pricePerDay = command.pricePerDay,
             quantity = command.quantity
         )
@@ -36,8 +36,20 @@ class CarAdder(
     }
 
     private fun validate(command: AddCarCommand) {
-        if (carRepository.existsBy(command.brand, command.model, command.generation, command.year, command.color)) {
-            throw CarAlreadyExistsException(command.brand, command.model, command.year, command.color)
+        if (carRepository.existsBy(
+                command.brand,
+                command.getModel(),
+                command.getGeneration(),
+                command.productionYear,
+                command.getColor()
+            )
+        ) {
+            throw CarAlreadyExistsException(
+                command.brand,
+                command.getModel(),
+                command.productionYear,
+                command.getColor()
+            )
         }
     }
 }

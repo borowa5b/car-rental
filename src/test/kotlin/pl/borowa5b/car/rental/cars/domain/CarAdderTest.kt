@@ -41,10 +41,10 @@ class CarAdderTest {
         whenever(
             carRepository.existsBy(
                 command.brand,
-                command.model,
-                command.generation,
-                command.year,
-                command.color
+                command.getModel(),
+                command.getGeneration(),
+                command.productionYear,
+                command.getColor()
             )
         ).thenReturn(false)
         whenever(carIdGenerator.generate()).thenReturn(carId)
@@ -58,10 +58,10 @@ class CarAdderTest {
 
         verify(carRepository).existsBy(
             command.brand,
-            command.model,
-            command.generation,
-            command.year,
-            command.color
+            command.getModel(),
+            command.getGeneration(),
+            command.productionYear,
+            command.getColor()
         )
         verify(carIdGenerator).generate()
         verify(carRepository).save(any<Car>())
@@ -76,10 +76,10 @@ class CarAdderTest {
         whenever(
             carRepository.existsBy(
                 command.brand,
-                command.model,
-                command.generation,
-                command.year,
-                command.color
+                command.getModel(),
+                command.getGeneration(),
+                command.productionYear,
+                command.getColor()
             )
         ).thenReturn(true)
 
@@ -88,14 +88,14 @@ class CarAdderTest {
 
         // then
         assertThat(result).isExactlyInstanceOf(CarAlreadyExistsException::class.java)
-            .hasMessage("Car ${command.brand} ${command.model} ${command.color} from ${command.year} already exists.")
+            .hasMessage("Car ${command.brand} ${command.getModel()} ${command.getColor()} from ${command.productionYear} already exists.")
 
         verify(carRepository).existsBy(
             command.brand,
-            command.model,
-            command.generation,
-            command.year,
-            command.color
+            command.getModel(),
+            command.getGeneration(),
+            command.productionYear,
+            command.getColor()
         )
         verifyNoMoreInteractions(carRepository)
         verifyNoInteractions(carIdGenerator, applicationEventPublished)
