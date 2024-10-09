@@ -18,7 +18,7 @@ class CarTest {
             brand = car.brand,
             model = car.model,
             generation = car.generation,
-            year = car.year,
+            productionYear = car.productionYear,
             color = car.color,
             pricePerDay = car.pricePerDay,
             quantity = car.quantity
@@ -39,7 +39,7 @@ class CarTest {
             brand = car.brand,
             model = car.model,
             generation = car.generation,
-            year = car.year,
+            productionYear = car.productionYear,
             color = car.color,
             pricePerDay = BigDecimal(99),
             quantity = car.quantity

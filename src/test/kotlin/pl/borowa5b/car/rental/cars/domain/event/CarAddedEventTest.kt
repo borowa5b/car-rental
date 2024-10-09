@@ -19,7 +19,7 @@ class CarAddedEventTest {
         assertThat(result.brand).isEqualTo(car.brand.name)
         assertThat(result.model).isEqualTo(car.model)
         assertThat(result.generation).isEqualTo(car.generation)
-        assertThat(result.year).isEqualTo(car.year)
+        assertThat(result.productionYear).isEqualTo(car.productionYear)
         assertThat(result.color).isEqualTo(car.color)
         assertThat(result.pricePerDay).isEqualTo(car.pricePerDay)
         assertThat(result.quantity).isEqualTo(car.quantity)

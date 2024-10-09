@@ -33,7 +33,7 @@ class EditCarRequestTest {
             brand = "",
             model = "",
             generation = "",
-            year = 1200,
+            productionYear = 1200,
             color = "",
             pricePerDay = BigDecimal.ZERO,
             quantity = -1
@@ -54,7 +54,7 @@ class EditCarRequestTest {
             brand = Brand.TOYOTA.name,
             model = "Corolla",
             generation = "3",
-            year = 2001,
+            productionYear = 2001,
             color = "sky blue",
             pricePerDay = BigDecimal.TEN,
             quantity = 10
@@ -67,10 +67,10 @@ class EditCarRequestTest {
         assertThat(result).isExactlyInstanceOf(EditCarCommand::class.java)
         assertThat(result.carId.value).isEqualTo(request.carId)
         assertThat(result.brand!!.name).isEqualTo(request.brand)
-        assertThat(result.model).isEqualTo(request.model!!.lowercase())
-        assertThat(result.generation).isEqualTo(request.generation!!.lowercase())
-        assertThat(result.year).isEqualTo(request.year)
-        assertThat(result.color).isEqualTo(request.color!!.lowercase())
+        assertThat(result.getModel()).isEqualTo(request.model!!.lowercase())
+        assertThat(result.getGeneration()).isEqualTo(request.generation!!.lowercase())
+        assertThat(result.productionYear).isEqualTo(request.productionYear)
+        assertThat(result.getColor()).isEqualTo(request.color!!.lowercase())
         assertThat(result.pricePerDay).isEqualTo(request.pricePerDay)
         assertThat(result.quantity).isEqualTo(request.quantity)
     }

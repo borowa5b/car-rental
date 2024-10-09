@@ -43,7 +43,7 @@ class AddCarEndpointIT {
         assertThat(addedCar.brand.name).isEqualTo(request.brand)
         assertThat(addedCar.model).isEqualTo(request.model!!.lowercase())
         assertThat(addedCar.generation).isEqualTo(request.generation!!.lowercase())
-        assertThat(addedCar.year).isEqualTo(request.year)
+        assertThat(addedCar.productionYear).isEqualTo(request.productionYear)
         assertThat(addedCar.color).isEqualTo(request.color!!.lowercase())
         assertThat(addedCar.pricePerDay.intValueExact()).isEqualTo(request.pricePerDay!!.intValueExact())
         assertThat(addedCar.quantity).isEqualTo(request.quantity)

@@ -5,10 +5,15 @@ import java.math.BigDecimal
 
 data class AddCarCommand(
     val brand: Brand,
-    val model: String,
-    val generation: String,
-    val year: Int,
-    val color: String,
+    private val model: String,
+    private val generation: String,
+    val productionYear: Int,
+    private val color: String,
     val pricePerDay: BigDecimal,
     val quantity: Int
-)
+) {
+
+    fun getModel(): String = model.lowercase()
+    fun getGeneration(): String = generation.lowercase()
+    fun getColor(): String = color.lowercase()
+}

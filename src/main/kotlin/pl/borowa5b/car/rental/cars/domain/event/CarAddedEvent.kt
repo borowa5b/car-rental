@@ -9,7 +9,7 @@ class CarAddedEvent(
     val brand: String,
     val model: String,
     val generation: String,
-    val year: Int,
+    val productionYear: Int,
     val color: String,
     val pricePerDay: BigDecimal,
     val quantity: Int
@@ -20,7 +20,7 @@ class CarAddedEvent(
         car.brand.name,
         car.model,
         car.generation,
-        car.year,
+        car.productionYear,
         car.color,
         car.pricePerDay,
         car.quantity

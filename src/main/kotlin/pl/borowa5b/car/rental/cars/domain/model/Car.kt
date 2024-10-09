@@ -10,7 +10,7 @@ data class Car(
     var brand: Brand,
     var model: String,
     var generation: String,
-    var year: Int,
+    var productionYear: Int,
     var color: String,
     var pricePerDay: BigDecimal,
     var quantity: Int,
@@ -20,10 +20,10 @@ data class Car(
     fun edit(command: EditCarCommand): Boolean {
         val edited = ArrayList<Boolean>()
         command.brand?.let { edited.add(update(brand, it) { brand = it }) }
-        command.model?.let { edited.add(update(model, it) { model = it }) }
-        command.generation?.let { edited.add(update(generation, it) { generation = it }) }
-        command.year?.let { edited.add(update(year, it) { year = it }) }
-        command.color?.let { edited.add(update(color, it) { color = it }) }
+        command.getModel()?.let { edited.add(update(model, it) { model = it }) }
+        command.getGeneration()?.let { edited.add(update(generation, it) { generation = it }) }
+        command.productionYear?.let { edited.add(update(productionYear, it) { productionYear = it }) }
+        command.getColor()?.let { edited.add(update(color, it) { color = it }) }
         command.pricePerDay?.let { edited.add(update(pricePerDay, it) { pricePerDay = it }) }
         command.quantity?.let { edited.add(update(quantity, it) { quantity = it }) }
         return edited.any { it }

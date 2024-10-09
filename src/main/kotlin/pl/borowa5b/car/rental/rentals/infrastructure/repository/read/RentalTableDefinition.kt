@@ -12,8 +12,8 @@ object RentalTableDefinition {
         const val PRICE = "price"
         const val START_DATE = "start_date"
         const val END_DATE = "end_date"
-        const val CREATION_DATE = "CREATION_DATE"
-        const val MODIFICATION_DATE = "MODIFICATION_DATE"
-        const val ENTITY_VERSION = "ENTITY_VERSION"
+        const val CREATION_DATE = "creation_date"
+        const val MODIFICATION_DATE = "modification_date"
+        const val ENTITY_VERSION = "entity_version"
     }
 }

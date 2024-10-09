@@ -11,7 +11,7 @@ object EntityObjects {
         brand: Brand = Brand.TOYOTA,
         model: String = "Corolla",
         generation: String = "LE",
-        year: Int = 2022,
+        productionYear: Int = 2022,
         color: String = "Blue",
         pricePerDay: BigDecimal = BigDecimal("200"),
         quantity: Int = 5
@@ -20,7 +20,7 @@ object EntityObjects {
         brand = brand,
         model = model,
         generation = generation,
-        year = year,
+        productionYear = productionYear,
         color = color,
         pricePerDay = pricePerDay,
         quantity = quantity,
