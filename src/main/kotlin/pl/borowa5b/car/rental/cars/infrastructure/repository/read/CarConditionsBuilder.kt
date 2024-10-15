@@ -16,7 +16,7 @@ object CarConditionsBuilder {
                 conditions.add(field(Column.ID).eq(it.value))
             }
             brand?.let {
-                conditions.add(field(Column.BRAND).eq(it))
+                conditions.add(field(Column.BRAND).eq(it.name))
             }
             model?.let {
                 conditions.add(field(Column.MODEL).eq(it))

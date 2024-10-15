@@ -20,6 +20,9 @@ object RentalConditionsBuilder {
             customerId?.let {
                 conditions.add(field(Column.CUSTOMER_ID).eq(it.value))
             }
+            status?.let {
+                conditions.add(field(Column.STATUS).eq(it.name))
+            }
             startDateFrom?.let {
                 conditions.add(field(Column.START_DATE).greaterOrEqual(it))
             }
