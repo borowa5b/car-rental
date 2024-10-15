@@ -28,7 +28,7 @@ class CarConditionsBuilderTest {
     fun `should build brand condition`() {
         // given
         val query = carQuery(brand = Brand.TESLA)
-        val expectedCondition = field(Column.BRAND).eq(query.brand)
+        val expectedCondition = field(Column.BRAND).eq(query.brand?.name)
 
         // when
         val result = CarConditionsBuilder.build(query)

@@ -59,6 +59,9 @@ class RentalFinderTest {
                 query.carId?.let {
                     condition = condition && it.value == rental.carId
                 }
+                query.status?.let {
+                    condition = condition && it.name == rental.status
+                }
                 query.customerId?.let {
                     condition = condition && it.value == rental.customerId
                 }
