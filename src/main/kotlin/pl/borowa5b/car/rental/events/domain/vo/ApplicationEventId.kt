@@ -25,7 +25,8 @@ data class ApplicationEventId(val value: String) {
                     ValidationErrorException(
                         ValidationError(
                             "Field has invalid value",
-                            "Field `$fieldName` must start with `$PREFIX`"
+                            "Field `$fieldName` must start with `$PREFIX`",
+                            fieldName
                         )
                     )
                 )

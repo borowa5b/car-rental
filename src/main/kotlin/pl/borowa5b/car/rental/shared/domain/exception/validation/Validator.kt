@@ -18,7 +18,8 @@ object Validator {
                 ValidationErrorException(
                     ValidationError(
                         "Field is null",
-                        "Field $fieldName cannot be null"
+                        "Field $fieldName cannot be null",
+                        fieldName
                     )
                 )
             )
@@ -35,7 +36,8 @@ object Validator {
                 ValidationErrorException(
                     ValidationError(
                         "Field is null or blank",
-                        "Field $fieldName cannot be null or blank"
+                        "Field $fieldName cannot be null or blank",
+                        fieldName
                     )
                 )
             )
@@ -52,7 +54,8 @@ object Validator {
                 ValidationErrorException(
                     ValidationError(
                         "Field is blank",
-                        "Field $fieldName cannot be blank"
+                        "Field $fieldName cannot be blank",
+                        fieldName
                     )
                 )
             )
@@ -75,7 +78,8 @@ object Validator {
                     ValidationErrorException(
                         ValidationError(
                             "Field is before date time",
-                            "Date time $fieldName must be after $beforeDateTime"
+                            "Date time $fieldName must be after $beforeDateTime",
+                            fieldName
                         )
                     )
                 )
@@ -96,7 +100,8 @@ object Validator {
                     ValidationErrorException(
                         ValidationError(
                             "Field is before current date time",
-                            "Date time $fieldName must be in future"
+                            "Date time $fieldName must be in future",
+                            fieldName
                         )
                     )
                 )
@@ -118,12 +123,13 @@ object Validator {
 
             try {
                 OffsetDateTime.parse(value)
-            } catch (exception: DateTimeParseException) {
+            } catch (_: DateTimeParseException) {
                 validationExceptionHandler.handle(
                     ValidationErrorException(
                         ValidationError(
                             "Field has invalid value",
-                            "Field $fieldName is not correctly formatted date time"
+                            "Field $fieldName is not correctly formatted date time",
+                            fieldName
                         )
                     )
                 )
@@ -142,7 +148,8 @@ object Validator {
                 ValidationErrorException(
                     ValidationError(
                         "Field has invalid value",
-                        "Field $fieldName must be greater than $greaterThan"
+                        "Field $fieldName must be greater than $greaterThan",
+                        fieldName
                     )
                 )
             )
@@ -161,7 +168,8 @@ object Validator {
                 ValidationErrorException(
                     ValidationError(
                         "Field has invalid value",
-                        "Field $fieldName has invalid value. Allowed value ${enumEntries.joinToString(", ")}"
+                        "Field $fieldName has invalid value. Allowed value ${enumEntries.joinToString(", ")}",
+                        fieldName
                     )
                 )
             )

@@ -12,7 +12,7 @@ class AggregatingValidationExceptionHandlerTest {
     fun `should aggregate validation errors`() {
         // given
         val handler = AggregatingValidationExceptionHandler()
-        val validationError = ValidationError("test", "test")
+        val validationError = ValidationError("test", "test", "test")
         val exception = ValidationErrorException(validationError)
 
         // when

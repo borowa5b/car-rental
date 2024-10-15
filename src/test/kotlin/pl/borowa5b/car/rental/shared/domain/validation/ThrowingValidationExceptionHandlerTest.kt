@@ -13,7 +13,7 @@ class ThrowingValidationExceptionHandlerTest {
     fun `should throw exception`() {
         // given
         val handler = ThrowingValidationExceptionHandler()
-        val exception = ValidationErrorException(ValidationError("title", "message"))
+        val exception = ValidationErrorException(ValidationError("title", "message", "test"))
 
 
         // when

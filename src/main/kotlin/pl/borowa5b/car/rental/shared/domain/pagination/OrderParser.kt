@@ -27,7 +27,8 @@ object OrderParser {
                     ValidationErrorException(
                         ValidationError(
                             "Invalid page order",
-                            "Page order field `$fieldName` must be in format 'property,direction(ASC|DESC)'"
+                            "Page order field `$fieldName` must be in format 'property,direction(ASC|DESC)'",
+                            fieldName
                         )
                     )
                 )
