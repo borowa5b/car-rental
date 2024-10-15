@@ -24,7 +24,8 @@ data class Pagination(val number: Int, val size: Int, val hasNext: Boolean, val 
                         ValidationErrorException(
                             ValidationError(
                                 "Invalid page number",
-                                "Page number must be greater than 0"
+                                "Page number must be greater than 0",
+                                "number"
                             )
                         )
                     )
@@ -37,7 +38,8 @@ data class Pagination(val number: Int, val size: Int, val hasNext: Boolean, val 
                         ValidationErrorException(
                             ValidationError(
                                 "Invalid page size",
-                                "Page size must be greater than 0"
+                                "Page size must be greater than 0",
+                                "size"
                             )
                         )
                     )

@@ -25,7 +25,8 @@ data class Page(val number: Int, val size: Int, val order: Sort.Order) {
                         ValidationErrorException(
                             ValidationError(
                                 "Invalid page number",
-                                "Page number must be greater than 0"
+                                "Page number must be greater than 0",
+                                "number"
                             )
                         )
                     )
@@ -38,7 +39,8 @@ data class Page(val number: Int, val size: Int, val order: Sort.Order) {
                         ValidationErrorException(
                             ValidationError(
                                 "Invalid page size",
-                                "Page size must be greater than 0"
+                                "Page size must be greater than 0",
+                                "size"
                             )
                         )
                     )

@@ -45,6 +45,7 @@ class RestErrorHandler {
             .withTitle(error.title)
             .withDetail(error.message)
             .withStatus(Status.BAD_REQUEST)
+            .with("fieldName", error.fieldName)
             .build()
         return ResponseEntity.status(problem.status!!.statusCode).body(problem)
     }
