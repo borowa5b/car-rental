@@ -61,6 +61,12 @@ tasks.withType<KotlinCompile> {
     }
 }
 
+// Disable generating plain archive jar
+tasks.named<Jar>("jar") {
+    enabled = false
+}
+
+// Enable jUnit
 tasks.withType<Test> {
     useJUnitPlatform()
 }
