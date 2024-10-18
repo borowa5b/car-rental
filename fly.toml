@@ -1,4 +1,4 @@
-# fly.toml app configuration file generated for car-rental on 2024-10-17T21:34:46+02:00
+# fly.toml app configuration file generated for car-rental on 2024-10-19T10:39:37+02:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
@@ -7,6 +7,7 @@ app = 'car-rental'
 primary_region = 'waw'
 
 [build]
+  dockerfile = 'Dockerfile'
 
 [http_service]
   internal_port = 8080
