@@ -20,7 +20,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           java-version: '21'
-          distribution: 'temurin'
+          distribution: 'corretto'
 
       # Configure Gradle for optimal use in GiHub Actions, including caching of downloaded dependencies.
       # See: https://github.com/gradle/actions/blob/main/setup-gradle/README.md
@@ -37,7 +37,7 @@ jobs:
 
   deploy:
     needs: build
-#    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
 
     steps:
@@ -46,7 +46,7 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: car-rental-artifact
-          path: build/libs/*.jar
+          path: build/libs
       - run: flyctl deploy --remote-only
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
