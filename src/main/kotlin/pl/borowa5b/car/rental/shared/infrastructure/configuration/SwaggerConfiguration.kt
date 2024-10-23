@@ -5,6 +5,7 @@ import io.swagger.v3.oas.models.OpenAPI
 import io.swagger.v3.oas.models.info.Info
 import io.swagger.v3.oas.models.security.SecurityRequirement
 import io.swagger.v3.oas.models.security.SecurityScheme
+import io.swagger.v3.oas.models.servers.Server
 import jakarta.annotation.security.RolesAllowed
 import org.springdoc.core.models.GroupedOpenApi
 import org.springframework.context.annotation.Bean
@@ -17,6 +18,7 @@ class SwaggerConfiguration {
     @Bean
     fun openApi(): OpenAPI = OpenAPI()
         .info(Info().title("Car rentals API").version("v1"))
+        .servers(listOf(Server().apply { url = "/" }))
         .security(
             listOf(
                 SecurityRequirement().addList("Api key header"),
