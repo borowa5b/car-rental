@@ -15,7 +15,9 @@ jobs:
       contents: read
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
+
       - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
@@ -30,23 +32,29 @@ jobs:
       - name: Build with Gradle Wrapper
         run: ./gradlew build
 
-      - uses: actions/upload-artifact@v4
-        with:
-          name: car-rental-artifact
-          path: build/libs/*.jar
-
   deploy:
     needs: build
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
-      - uses: superfly/flyctl-actions/setup-flyctl@master
-      - uses: actions/download-artifact@v4
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
         with:
-          name: car-rental-artifact
-          path: build/libs
-      - run: flyctl deploy --remote-only
+          python-version: '3.10'
+
+      - name: Substitute variables
+        run: python3 .github/copy_secrets.py
+        env:
+          SECRETS: ${{ toJSON(secrets) }}
+
+      - name: Setup Fly.io ctl
+        uses: superfly/flyctl-actions/setup-flyctl@master
+
+      - name: Deploy application
+        run: flyctl deploy --remote-only
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
