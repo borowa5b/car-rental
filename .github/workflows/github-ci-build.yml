@@ -27,6 +27,16 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@417ae3ccd767c252f5661f1ace9f835f9654f2b5 # v3.1.0
 
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Set up secrets
+        env:
+          SECRETS: ${{ toJSON(secrets) }}
+        run: cd .github && chmod +x copy_secrets.py && python copy_secrets.py
+
       - name: Build with Gradle Wrapper
         run: ./gradlew build
 
@@ -37,16 +47,17 @@ jobs:
 
   deploy:
     needs: build
-    if: github.ref == 'refs/heads/main'
+#    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
       - uses: superfly/flyctl-actions/setup-flyctl@master
-      - uses: actions/download-artifact@v4
-        with:
-          name: car-rental-artifact
-          path: build/libs
+#      - uses: actions/download-artifact@v4
+#        with:
+#          name: car-rental-artifact
+#          path: build/libs
       - run: flyctl deploy --remote-only
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+          SECRETS: ${{ toJSON(secrets) }}
