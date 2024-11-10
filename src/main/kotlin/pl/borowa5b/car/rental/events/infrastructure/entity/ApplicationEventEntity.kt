@@ -1,6 +1,8 @@
 package pl.borowa5b.car.rental.events.infrastructure.entity
 
 import jakarta.persistence.*
+import org.hibernate.annotations.JdbcTypeCode
+import org.hibernate.type.SqlTypes
 import pl.borowa5b.car.rental.events.domain.model.ApplicationEvent
 import pl.borowa5b.car.rental.events.domain.vo.ApplicationEventId
 import pl.borowa5b.car.rental.events.domain.vo.ApplicationEventStatus
@@ -15,7 +17,7 @@ data class ApplicationEventEntity(
     val version: String,
     @Enumerated(EnumType.STRING)
     val status: ApplicationEventStatus,
-    @Column(length = 1024)
+    @JdbcTypeCode(SqlTypes.JSON)
     val payload: String?,
     val publishedOnDate: OffsetDateTime? = null,
 
@@ -24,6 +26,12 @@ data class ApplicationEventEntity(
 ) {
 
     val creationDate: OffsetDateTime = OffsetDateTime.now(ZoneOffset.UTC)
+    var modificationDate: OffsetDateTime = OffsetDateTime.now(ZoneOffset.UTC)
+
+    @PreUpdate
+    fun preUpdate() {
+        modificationDate = OffsetDateTime.now(ZoneOffset.UTC)
+    }
 
     fun toDomain(): ApplicationEvent = ApplicationEvent(
         ApplicationEventId(id),

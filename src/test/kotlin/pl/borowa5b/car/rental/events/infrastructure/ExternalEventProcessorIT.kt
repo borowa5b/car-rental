@@ -2,13 +2,11 @@ package pl.borowa5b.car.rental.events.infrastructure
 
 import nl.altindag.log.LogCaptor
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import pl.borowa5b.car.rental.events.domain.model.DomainObjects.externalEvent
 import pl.borowa5b.car.rental.events.domain.vo.ExternalEventStatus
 import pl.borowa5b.car.rental.events.infrastructure.entity.ExternalEventEntity
-import pl.borowa5b.car.rental.shared.helper.Database
 import pl.borowa5b.car.rental.shared.helper.IntegrationTest
 import pl.borowa5b.car.rental.shared.helper.TestSpringExternalEventRepository
 
@@ -16,18 +14,10 @@ import pl.borowa5b.car.rental.shared.helper.TestSpringExternalEventRepository
 class ExternalEventProcessorIT {
 
     @Autowired
-    private lateinit var database: Database
-
-    @Autowired
     private lateinit var processor: ExternalEventProcessor
 
     @Autowired
     private lateinit var externalEventRepository: TestSpringExternalEventRepository
-
-    @BeforeEach
-    fun `before each`() {
-        database.prepare()
-    }
 
     @Test
     fun `should process new event`() {

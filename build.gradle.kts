@@ -1,13 +1,19 @@
+import org.flywaydb.gradle.task.AbstractFlywayTask
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.springframework.boot.gradle.tasks.run.BootRun
+import java.util.Properties
+
+val flywayVersion = rootProject.extra["flywayVersion"]
 
 plugins {
     id("org.springframework.boot") version "3.2.5"
     id("io.spring.dependency-management") version "1.1.4"
     id("org.graalvm.buildtools.native") version "0.9.28"
     id("org.jetbrains.kotlin.plugin.jpa") version "2.0.0"
-    kotlin("jvm") version "1.9.23"
-    kotlin("plugin.spring") version "1.9.23"
+    id("org.flywaydb.flyway") version "10.20.1"
+    kotlin("jvm") version "1.9.24"
+    kotlin("plugin.spring") version "1.9.24"
 }
 
 group = "pl.borowa5b"
@@ -15,6 +21,15 @@ version = "0.0.1-SNAPSHOT"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_21
+}
+
+buildscript {
+    extra.set("flywayVersion", "10.20.1")
+
+    dependencies {
+        val flywayVersion = rootProject.extra.get("flywayVersion")
+        classpath("org.flywaydb:flyway-database-postgresql:$flywayVersion")
+    }
 }
 
 repositories {
@@ -39,7 +54,9 @@ dependencies {
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0")
 
     // DB
-    implementation("com.h2database:h2:2.2.224")
+    implementation("org.postgresql:postgresql:42.7.4")
+    implementation("org.flywaydb:flyway-core:$flywayVersion")
+    implementation("org.flywaydb:flyway-database-postgresql:$flywayVersion")
 
     // OTHERS
     implementation("org.jetbrains.kotlin:kotlin-reflect")
@@ -51,6 +68,7 @@ dependencies {
     testImplementation("org.mockito.kotlin:mockito-kotlin:5.3.1")
     testImplementation("com.tngtech.archunit:archunit-junit5:1.3.0")
     testImplementation("io.github.hakky54:logcaptor:2.9.2")
+    testImplementation("org.testcontainers:postgresql:1.20.3")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
@@ -69,4 +87,28 @@ tasks.named<Jar>("jar") {
 // Enable jUnit
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+// Run application with dev profile on local machine
+tasks.named<BootRun>("bootRun") {
+    if (System.getProperty("spring.profiles.active") == null) {
+        systemProperty("spring.profiles.active", "dev")
+    }
+}
+
+// Add dependency to process resources before running flyway task so flyway recognizes changes in migration files
+tasks.withType<AbstractFlywayTask> {
+    dependsOn("processResources")
+}
+
+flyway {
+    val applicationProperties = Properties().apply {
+        load(file("src/main/resources/application-dev.properties").inputStream())
+    }
+
+    url = applicationProperties.getProperty("spring.datasource.url")
+    user = applicationProperties.getProperty("spring.datasource.username")
+    password = applicationProperties.getProperty("spring.datasource.password")
+    locations = arrayOf("classpath:changesets")
+    cleanDisabled = false
 }

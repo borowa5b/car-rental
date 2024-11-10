@@ -1,7 +1,6 @@
 package pl.borowa5b.car.rental.cars.application.endpoint
 
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -10,7 +9,6 @@ import pl.borowa5b.car.rental.cars.application.request.RequestObjects.editCarReq
 import pl.borowa5b.car.rental.cars.domain.vo.Brand
 import pl.borowa5b.car.rental.cars.infrastructure.entity.EntityObjects.carEntity
 import pl.borowa5b.car.rental.shared.domain.vo.Role
-import pl.borowa5b.car.rental.shared.helper.Database
 import pl.borowa5b.car.rental.shared.helper.IntegrationTest
 import pl.borowa5b.car.rental.shared.helper.TestSpringCarRepository
 import java.math.BigDecimal
@@ -19,18 +17,10 @@ import java.math.BigDecimal
 class EditCarEndpointIT {
 
     @Autowired
-    private lateinit var database: Database
-
-    @Autowired
     private lateinit var editCarEndpoint: EditCarEndpoint
 
     @Autowired
     private lateinit var carRepository: TestSpringCarRepository
-
-    @BeforeEach
-    fun `before each`() {
-        database.prepare()
-    }
 
     @Test
     @WithMockUser(roles = [Role.ADMIN])
