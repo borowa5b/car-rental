@@ -15,7 +15,6 @@ object EntityObjects {
         status: ExternalEventStatus = ExternalEventStatus.NEW,
         payload: String = "{}",
         errorMessage: String? = null,
-        creationDate: OffsetDateTime = OffsetDateTime.parse("2022-01-01T12:00:00Z"),
         processedOnDate: OffsetDateTime? = null
     ): ExternalEventEntity = ExternalEventEntity(
         id = id,
@@ -24,7 +23,6 @@ object EntityObjects {
         status = status,
         payload = payload,
         errorMessage = errorMessage,
-        creationDate = creationDate,
         processedOnDate = processedOnDate,
         entityVersion = 0
     )

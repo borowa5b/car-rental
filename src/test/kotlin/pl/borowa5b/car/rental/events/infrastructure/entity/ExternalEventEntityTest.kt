@@ -22,7 +22,6 @@ class ExternalEventEntityTest {
         assertThat(result.status).isEqualTo(externalEvent.status)
         assertThat(result.payload).isEqualTo(externalEvent.payload)
         assertThat(result.errorMessage).isEqualTo(externalEvent.errorMessage)
-        assertThat(result.creationDate).isEqualTo(externalEvent.creationDate)
         assertThat(result.processedOnDate).isEqualTo(externalEvent.processedOnDate)
         assertThat(result.entityVersion).isEqualTo(externalEvent.entityVersion)
     }
@@ -42,7 +41,6 @@ class ExternalEventEntityTest {
         assertThat(result.status).isEqualTo(externalEventEntity.status)
         assertThat(result.payload).isEqualTo(externalEventEntity.payload)
         assertThat(result.errorMessage).isEqualTo(externalEventEntity.errorMessage)
-        assertThat(result.creationDate).isEqualTo(externalEventEntity.creationDate)
         assertThat(result.processedOnDate).isEqualTo(externalEventEntity.processedOnDate)
         assertThat(result.entityVersion).isEqualTo(externalEventEntity.entityVersion)
     }

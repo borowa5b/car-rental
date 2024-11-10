@@ -11,9 +11,8 @@ data class ExternalEvent(
     val type: String,
     val version: String,
     var status: ExternalEventStatus,
-    val payload: String,
+    var payload: String,
     var errorMessage: String?,
-    val creationDate: OffsetDateTime,
     var processedOnDate: OffsetDateTime?,
     val entityVersion: Long,
 ) {
@@ -26,7 +25,6 @@ data class ExternalEvent(
         ExternalEventStatus.NEW,
         payload,
         null,
-        creationDate,
         OffsetDateTime.now(ZoneOffset.UTC),
         0
     )
@@ -50,6 +48,7 @@ data class ExternalEvent(
         if (status !== ExternalEventStatus.PROCESSING) {
             throw IllegalStateException("Cannot mark event as failed, because it is not in PROCESSING state")
         }
+        this.payload = "{}"
         this.errorMessage = errorMessage
         this.status = ExternalEventStatus.FAILED
     }

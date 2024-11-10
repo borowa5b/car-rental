@@ -2,7 +2,6 @@ package pl.borowa5b.car.rental.cars.application.endpoint
 
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.catchThrowable
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.test.context.support.WithMockUser
@@ -11,7 +10,6 @@ import pl.borowa5b.car.rental.cars.domain.shared.vo.ValueObjects.carId
 import pl.borowa5b.car.rental.cars.infrastructure.entity.EntityObjects.carEntity
 import pl.borowa5b.car.rental.cars.infrastructure.repository.SpringJpaCarRepository
 import pl.borowa5b.car.rental.shared.domain.vo.Role
-import pl.borowa5b.car.rental.shared.helper.Database
 import pl.borowa5b.car.rental.shared.helper.IntegrationTest
 import java.time.temporal.ChronoUnit
 
@@ -19,18 +17,10 @@ import java.time.temporal.ChronoUnit
 class GetCarEndpointIT {
 
     @Autowired
-    private lateinit var database: Database
-
-    @Autowired
     private lateinit var carRepository: SpringJpaCarRepository
 
     @Autowired
     private lateinit var endpoint: GetCarEndpoint
-
-    @BeforeEach
-    fun `before each`() {
-        database.prepare()
-    }
 
     @Test
     @WithMockUser(roles = [Role.USER])

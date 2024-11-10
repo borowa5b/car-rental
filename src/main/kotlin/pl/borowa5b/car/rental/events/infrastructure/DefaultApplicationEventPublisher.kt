@@ -37,7 +37,7 @@ class DefaultApplicationEventPublisher(
 
     private fun convertToPayload(event: DomainEvent): String? = try {
         objectMapper.writeValueAsString(event)
-    } catch (exception: JsonProcessingException) {
+    } catch (_: JsonProcessingException) {
         LOGGER.warning(
             "Could not process application with type ${event.getType()} " +
                     "and version ${event.getVersion()} because it has invalid payload"

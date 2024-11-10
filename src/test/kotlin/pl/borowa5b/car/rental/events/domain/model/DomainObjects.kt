@@ -17,7 +17,6 @@ object DomainObjects {
         status: ExternalEventStatus = ExternalEventStatus.NEW,
         payload: String = "{\"id\": \"CTR543654233453453\", \"name\": \"John\", \"surname\": \"Doe\", \"email\": \"john.doe@gmail.com\", \"phone\": \"123456789\", \"address\": \"Zielona Góra, Podgórna 1z/3\", \"documentNumber\": \"ABC123456\"}",
         errorMessage: String? = null,
-        creationDate: OffsetDateTime = OffsetDateTime.parse("2022-01-01T12:00:00Z"),
         processedOnDate: OffsetDateTime? = null
     ): ExternalEvent = ExternalEvent(
         id = ExternalEventId(id),
@@ -26,7 +25,6 @@ object DomainObjects {
         status = status,
         payload = payload,
         errorMessage = errorMessage,
-        creationDate = creationDate,
         processedOnDate = processedOnDate,
         entityVersion = 0
     )
