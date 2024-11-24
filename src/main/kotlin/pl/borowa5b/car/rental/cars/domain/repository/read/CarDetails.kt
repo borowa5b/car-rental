@@ -13,6 +13,6 @@ data class CarDetails(
     var pricePerDay: BigDecimal,
     val quantity: Int,
     val creationDate: OffsetDateTime,
-    val modificationDate: OffsetDateTime,
+    val modificationDate: OffsetDateTime?,
     val entityVersion: Int
 )

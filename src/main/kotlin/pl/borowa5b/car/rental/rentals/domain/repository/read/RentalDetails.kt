@@ -12,6 +12,6 @@ data class RentalDetails(
     val startDate: OffsetDateTime,
     val endDate: OffsetDateTime,
     val creationDate: OffsetDateTime,
-    val modificationDate: OffsetDateTime,
+    val modificationDate: OffsetDateTime?,
     val entityVersion: Int
 )

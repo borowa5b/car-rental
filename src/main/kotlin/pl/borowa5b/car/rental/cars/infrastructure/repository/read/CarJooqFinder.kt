@@ -1,6 +1,7 @@
 package pl.borowa5b.car.rental.cars.infrastructure.repository.read
 
 import org.jooq.DSLContext
+import org.jooq.Field
 import org.jooq.impl.DSL.field
 import org.jooq.impl.SQLDataType
 import org.springframework.stereotype.Repository
@@ -38,7 +39,7 @@ class CarJooqFinder(private val dslContext: DSLContext) : CarFinder {
             .fetchOne()
             ?.into(CarDetails::class.java) ?: throw CarNotFoundException(carId)
 
-    fun allFields(): List<org.jooq.Field<*>> = listOf(
+    fun allFields(): List<Field<*>> = listOf(
         field(Column.ID, SQLDataType.VARCHAR),
         field(Column.BRAND, SQLDataType.VARCHAR),
         field(Column.MODEL, SQLDataType.VARCHAR),
