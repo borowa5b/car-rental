@@ -71,7 +71,7 @@ class CarRentalsArchitectureTest {
         .that()
         .resideInAPackage(SHARED_DOMAIN_PACKAGE)
         .and()
-        .resideOutsideOfPackage("$APP_PACKAGE.shared.helper..")
+        .resideOutsideOfPackages("$APP_PACKAGE.shared.helper..", "$APP_PACKAGE.shared.domain.dictionaries..")
         .should()
         .onlyAccessClassesThat()
         .resideInAnyPackage(SHARED_DOMAIN_PACKAGE, LIBRARY_PACKAGES)
