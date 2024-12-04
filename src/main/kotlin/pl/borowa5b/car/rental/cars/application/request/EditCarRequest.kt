@@ -52,7 +52,8 @@ data class EditCarRequest(
         }
 
         productionYear?.let {
-            Validator.isGreaterThan(it, 1900, "productionYear", validationExceptionHandler)
+            Validator.isGreaterThan(it, 1899, "productionYear", validationExceptionHandler)
+            Validator.isSmallerThan(it, 3001, "productionYear", validationExceptionHandler)
         }
 
         color?.let {
@@ -60,11 +61,11 @@ data class EditCarRequest(
         }
 
         pricePerDay?.let {
-            Validator.isGreaterThan(it, BigDecimal.ZERO, "pricePerDay", validationExceptionHandler)
+            Validator.isGreaterThan(it, 0, "pricePerDay", validationExceptionHandler)
         }
 
         quantity?.let {
-            Validator.isGreaterThan(it, -1, "quantity", validationExceptionHandler)
+            Validator.isGreaterThan(it, 0, "quantity", validationExceptionHandler)
         }
     }
 

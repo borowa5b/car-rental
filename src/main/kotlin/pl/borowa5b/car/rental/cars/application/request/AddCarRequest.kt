@@ -37,8 +37,17 @@ data class AddCarRequest(
             Validator.isValidEnumValue<Brand>(it, "brand", validationExceptionHandler)
         }
 
+        productionYear?.let {
+            Validator.isGreaterThan(it, 1899, "productionYear", validationExceptionHandler)
+            Validator.isSmallerThan(it, 3001, "productionYear", validationExceptionHandler)
+        }
+
+        pricePerDay?.let {
+            Validator.isGreaterThan(it, 0, "pricePerDay", validationExceptionHandler)
+        }
+
         quantity?.let {
-            Validator.isGreaterThan(it, 1, "quantity", validationExceptionHandler)
+            Validator.isGreaterThan(it, 0, "quantity", validationExceptionHandler)
         }
     }
 

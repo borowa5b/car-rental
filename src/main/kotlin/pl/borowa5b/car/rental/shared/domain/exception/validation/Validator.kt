@@ -156,6 +156,25 @@ object Validator {
         }
     }
 
+    fun isSmallerThan(
+        value: Number,
+        smallerThan: Number,
+        fieldName: String,
+        validationExceptionHandler: ValidationExceptionHandler = ThrowingValidationExceptionHandler()
+    ) {
+        if (value.toDouble() >= smallerThan.toDouble()) {
+            validationExceptionHandler.handle(
+                ValidationErrorException(
+                    ValidationError(
+                        "Field has invalid value",
+                        "Field $fieldName must be smaller than $smallerThan",
+                        fieldName
+                    )
+                )
+            )
+        }
+    }
+
     inline fun <reified E : Enum<E>> isValidEnumValue(
         value: String,
         fieldName: String,

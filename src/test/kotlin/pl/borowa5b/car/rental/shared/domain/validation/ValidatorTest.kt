@@ -102,6 +102,20 @@ class ValidatorTest {
     }
 
     @Test
+    fun `should not validate if number is not smaller than`() {
+        // given
+        val value = 3.50
+        val smallerThan = 2.50
+        val fieldName = "fieldName"
+
+        // when
+        val result = catchThrowable { Validator.isSmallerThan(value, smallerThan, fieldName) }
+
+        // then
+        assertThat(result).isExactlyInstanceOf(ValidationErrorException::class.java)
+    }
+
+    @Test
     fun `should not validate if value is not from enum`() {
         // given
         val value = "value"
