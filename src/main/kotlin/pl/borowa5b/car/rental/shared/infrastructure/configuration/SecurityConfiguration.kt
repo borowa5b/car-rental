@@ -23,6 +23,7 @@ class SecurityConfiguration(
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
         return http
             .addFilterBefore(authorizationFilter, UsernamePasswordAuthenticationFilter::class.java)
+            .csrf { it.disable() }
             .authorizeHttpRequests { httpsRequests ->
                 httpsRequests
                     .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
