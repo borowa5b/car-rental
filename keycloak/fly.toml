@@ -1,0 +1,36 @@
+# Deploy with flyctl deploy --ha=false in order to deploy to one machine only
+
+app = 'car-rental-keycloak'
+primary_region = 'waw'
+
+[build]
+    dockerfile = 'Dockerfile'
+
+[env]
+    KC_BOOTSTRAP_ADMIN_USERNAME = 'admin'
+    KC_BOOTSTRAP_ADMIN_PASSWORD = "admin"
+    KC_HTTP_ENABLED = 'true'
+    KC_HOSTNAME_STRICT = 'false'
+    KC_PROXY_HEADERS = 'xforwarded'
+    KC_DB = 'postgres'
+    KC_DB_URL = 'jdbc:postgresql://car-rental-keycloak-db.flycast:5432/keycloak?sslmode=disable'
+    KC_DB_USERNAME = 'xxx'
+    KC_DB_PASSWORD = 'xxx'
+
+[http_service]
+    internal_port = 8080
+    force_https = false
+    auto_stop_machines = 'stop'
+    auto_start_machines = true
+    min_machines_running = 0
+    processes = ['app']
+
+    [http_service.concurrency]
+        type = 'connections'
+        soft_limit = 20
+        hard_limit = 25
+
+[[vm]]
+    memory = '1gb'
+    cpu_kind = 'shared'
+    cpus = 1

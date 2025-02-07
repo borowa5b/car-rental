@@ -21,7 +21,7 @@ class GetCarsEndpointIT {
     private lateinit var carRepository: TestSpringCarRepository
 
     @Test
-    @WithMockUser(roles = [Role.USER])
+    @WithMockUser(roles = [Role.CARS])
     fun `should get cars`() {
         // given
         val carEntity1 = carEntity()

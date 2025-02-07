@@ -28,7 +28,7 @@ class GetDictionariesEndpointTest {
     }
 
     @Test
-    @WithMockUser(roles = [Role.USER])
+    @WithMockUser(roles = [Role.CARS])
     fun `should not get dictionaries when using invalid role`() {
         // given
 

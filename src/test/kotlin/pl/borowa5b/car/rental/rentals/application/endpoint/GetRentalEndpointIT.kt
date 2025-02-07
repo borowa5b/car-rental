@@ -23,7 +23,7 @@ class GetRentalEndpointIT {
     private lateinit var endpoint: GetRentalEndpoint
 
     @Test
-    @WithMockUser(roles = [Role.USER])
+    @WithMockUser(roles = [Role.RENTALS])
     fun `should get rental`() {
         // given
         val rentalEntity = rentalEntity()
@@ -44,7 +44,7 @@ class GetRentalEndpointIT {
     }
 
     @Test
-    @WithMockUser(roles = [Role.USER])
+    @WithMockUser(roles = [Role.RENTALS])
     fun `should throw exception when rental not found`() {
         // given
         val rentalId = rentalId()
