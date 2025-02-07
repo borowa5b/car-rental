@@ -20,7 +20,7 @@ import pl.borowa5b.car.rental.shared.domain.vo.Role
 @RentalsEndpoint
 class CalculateRentalEndpoint(private val rentalPriceCalculator: RentalPriceCalculator) {
 
-    @RolesAllowed(Role.USER)
+    @RolesAllowed(value = [Role.ADMIN, Role.RENTALS])
     @Operation(summary = "Calculates rental price")
     @ApiResponses(
         ApiResponse(

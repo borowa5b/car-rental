@@ -44,7 +44,7 @@ class GetCustomersEndpointIT {
     }
 
     @Test
-    @WithMockUser(roles = [Role.USER])
+    @WithMockUser(roles = [Role.CARS])
     fun `should throw access denied exception when invoked with wrong role`() {
         // given
         val filter = getCustomersFilter()

@@ -19,24 +19,17 @@ class SwaggerConfiguration {
     fun openApi(): OpenAPI = OpenAPI()
         .info(Info().title("Car rentals API").version("v1"))
         .servers(listOf(Server().apply { url = "/" }))
-        .security(
-            listOf(
-                SecurityRequirement().addList("Api key header"),
-                SecurityRequirement().addList("Role header")
-            )
-        )
+        .security(listOf(SecurityRequirement().addList("Authorization header")))
         .components(
             Components()
                 .securitySchemes(
                     mapOf(
-                        "Api key header" to SecurityScheme()
-                            .name("Authorization")
-                            .type(SecurityScheme.Type.APIKEY)
+                        "Authorization header" to SecurityScheme()
+                            .name("Bearer token")
+                            .type(SecurityScheme.Type.HTTP)
+                            .scheme("bearer")
+                            .bearerFormat("JWT")
                             .`in`(SecurityScheme.In.HEADER),
-                        "Role header" to SecurityScheme()
-                            .name("Role")
-                            .type(SecurityScheme.Type.APIKEY)
-                            .`in`(SecurityScheme.In.HEADER)
                     )
                 )
         )
@@ -59,12 +52,22 @@ class SwaggerConfiguration {
         .build()
 
     @Bean
-    fun userGroupApi(): GroupedOpenApi = GroupedOpenApi
+    fun carsGroupApi(): GroupedOpenApi = GroupedOpenApi
         .builder()
-        .group(Role.ROLE_USER)
+        .group(Role.ROLE_CARS)
         .addOpenApiMethodFilter {
             val rolesAllowedAnnotation = it.annotations.firstOrNull { annotation -> annotation is RolesAllowed }
-            rolesAllowedAnnotation != null && (rolesAllowedAnnotation as RolesAllowed).value.contains(Role.USER)
+            rolesAllowedAnnotation != null && (rolesAllowedAnnotation as RolesAllowed).value.contains(Role.CARS)
+        }
+        .build()
+
+    @Bean
+    fun rentalsGroupApi(): GroupedOpenApi = GroupedOpenApi
+        .builder()
+        .group(Role.ROLE_RENTALS)
+        .addOpenApiMethodFilter {
+            val rolesAllowedAnnotation = it.annotations.firstOrNull { annotation -> annotation is RolesAllowed }
+            rolesAllowedAnnotation != null && (rolesAllowedAnnotation as RolesAllowed).value.contains(Role.RENTALS)
         }
         .build()
 }

@@ -22,7 +22,7 @@ class CalculateRentalEndpointIT {
     private lateinit var endpoint: CalculateRentalEndpoint
 
     @Test
-    @WithMockUser(roles = [Role.USER])
+    @WithMockUser(roles = [Role.RENTALS])
     fun `should calculate rental price`() {
         // given
         val request = calculateRentalRequest(

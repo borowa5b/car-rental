@@ -26,7 +26,7 @@ class MakeRentalEndpointIT {
     private lateinit var rentalRepository: TestSpringRentalRepository
 
     @Test
-    @WithMockUser(roles = [Role.USER])
+    @WithMockUser(roles = [Role.RENTALS])
     fun `should make rental`() {
         // given
         val request = makeRentalRequest()

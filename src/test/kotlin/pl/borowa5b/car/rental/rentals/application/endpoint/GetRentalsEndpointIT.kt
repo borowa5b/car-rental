@@ -22,7 +22,7 @@ class GetRentalsEndpointIT {
     private lateinit var endpoint: GetRentalsEndpoint
 
     @Test
-    @WithMockUser(roles = [Role.USER])
+    @WithMockUser(roles = [Role.RENTALS])
     fun `should get rentals`() {
         // given
         val customerId = customerId().value
@@ -46,7 +46,7 @@ class GetRentalsEndpointIT {
     }
 
     @Test
-    @WithMockUser(roles = [Role.USER])
+    @WithMockUser(roles = [Role.RENTALS])
     fun `should get rentals another page`() {
         // given
         val customerId = customerId().value

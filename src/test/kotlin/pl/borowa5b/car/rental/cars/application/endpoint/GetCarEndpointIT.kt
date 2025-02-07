@@ -23,8 +23,8 @@ class GetCarEndpointIT {
     private lateinit var endpoint: GetCarEndpoint
 
     @Test
-    @WithMockUser(roles = [Role.USER])
-    fun `should get rental`() {
+    @WithMockUser(roles = [Role.CARS])
+    fun `should get car`() {
         // given
         val carEntity = carEntity()
         carRepository.save(carEntity)
@@ -45,8 +45,8 @@ class GetCarEndpointIT {
     }
 
     @Test
-    @WithMockUser(roles = [Role.USER])
-    fun `should throw exception when rental not found`() {
+    @WithMockUser(roles = [Role.CARS])
+    fun `should throw exception when car not found`() {
         // given
         val carId = carId()
 

@@ -28,10 +28,10 @@ class DefaultRentalRepository(private val repository: SpringJpaRentalRepository)
         repository.existsByCarIdAndNotInStatus(carId.value, RentalStatus.ENDED)
 
     override fun findToStart(currentDate: OffsetDateTime): RentalId? =
-        repository.findByStartDateGreaterThanEqualAndStatus(currentDate, RentalStatus.NEW).first()
+        repository.findByStartDateGreaterThanEqualAndStatus(currentDate, RentalStatus.NEW).firstOrNull()
 
     override fun findToEnd(currentDate: OffsetDateTime): RentalId? =
-        repository.findByEndDateGreaterThanEqualAndStatus(currentDate, RentalStatus.STARTED).first()
+        repository.findByEndDateGreaterThanEqualAndStatus(currentDate, RentalStatus.STARTED).firstOrNull()
 }
 
 @Repository

@@ -7,29 +7,31 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.web.SecurityFilterChain
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
-import pl.borowa5b.car.rental.shared.infrastructure.auth.ApiKeyAuthenticationEntryPoint
-import pl.borowa5b.car.rental.shared.infrastructure.filter.AuthorizationFilter
+import pl.borowa5b.car.rental.shared.infrastructure.auth.KeycloakJwtAuthenticationConverter
 
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(jsr250Enabled = true)
-class SecurityConfiguration(
-    private val authorizationFilter: AuthorizationFilter,
-    private val apiKeyAuthenticationEntryPoint: ApiKeyAuthenticationEntryPoint
-) {
+class SecurityConfiguration(private val keycloakConfiguration: KeycloakConfiguration) {
 
     @Bean
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
         return http
-            .addFilterBefore(authorizationFilter, UsernamePasswordAuthenticationFilter::class.java)
             .csrf { it.disable() }
             .authorizeHttpRequests { httpsRequests ->
                 httpsRequests
                     .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                     .anyRequest().authenticated()
             }
-            .exceptionHandling { it.authenticationEntryPoint(apiKeyAuthenticationEntryPoint) }
+            .oauth2ResourceServer {
+                it.jwt { jwt ->
+                    jwt.jwtAuthenticationConverter(
+                        KeycloakJwtAuthenticationConverter(
+                            keycloakConfiguration
+                        )
+                    )
+                }
+            }
             .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
             .build()
     }
