@@ -194,7 +194,7 @@ variable "keycloak_url" {
 
 variable "keycloak_realm" {
   type        = string
-  description = "The Keycloak realm to connect to (usually 'master')"
+  description = "The Keycloak realm to connect to"
   default     = "master"
 }
 
