@@ -50,6 +50,7 @@ jobs:
         run: python3 .github/copy_secrets.py
         env:
           SECRETS: ${{ toJSON(secrets) }}
+          VARS: ${{ toJSON(vars) }}
 
       - name: Setup Fly.io ctl
         uses: superfly/flyctl-actions/setup-flyctl@master
