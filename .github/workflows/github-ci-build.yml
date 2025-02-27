@@ -96,7 +96,14 @@ jobs:
 
       - name: Terraform Init & plan & apply
         if: contains(steps.changed-files.outputs.modified_files, 'terraform.tf')
+        env:
+          MINIO_ACCESS_KEY: ${{ secrets.MINIO_ACCESS_KEY }}
+          MINIO_SECRET_KEY: ${{ secrets.MINIO_SECRET_KEY }}
+          MINIO_ENDPOINT_URL: ${{ vars.MINIO_ENDPOINT_URL }}
         run: |
-          terraform init
+          terraform init \
+            -backend-config="access_key=$MINIO_ACCESS_KEY" \
+            -backend-config="secret_key=$MINIO_SECRET_KEY" \
+            -backend-config="endpoint=$MINIO_ENDPOINT_URL"
           terraform plan -no-color -input=false
           terraform apply -auto-approve
