@@ -2,7 +2,9 @@ import os
 import json
 
 secrets = os.getenv('SECRETS')
+vars = os.getenv('VARS')
 jsonData = json.loads(secrets)
+jsonData.update(json.loads(vars))
 
 for key in jsonData:
     valueToReplace = f'#{{{key}}}'
