@@ -72,34 +72,29 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v34
+
       - name: Set up Terraform
+        if: contains(steps.changed-files.outputs.modified_files, 'terraform.tf')
         uses: hashicorp/setup-terraform@v3
 
       - name: Set up Python
+        if: contains(steps.changed-files.outputs.modified_files, 'terraform.tf')
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
 
       - name: Substitute variables
+        if: contains(steps.changed-files.outputs.modified_files, 'terraform.tf')
         run: python3 prepare_secrets.py
         env:
           SECRETS: ${{ toJSON(secrets) }}
           VARS: ${{ toJSON(vars) }}
 
-      - name: Check if keycloak configuration changed
-        id: check_keycloak_configuration_changes
-        run: |
-          KEYCLOAK_CONFIGURATION_CHANGED=$(git diff origin/main -- terraform.tf)
-          if [[ -n "$KEYCLOAK_CONFIGURATION_CHANGED" ]]; then
-            echo "Configuration change detected."
-            echo "keycloak_configuration_changed=true" >> $GITHUB_OUTPUT
-          else
-            echo "No configuration change detected."
-            echo "keycloak_configuration_changed=false" >> $GITHUB_OUTPUT
-          fi
-
       - name: Terraform Init & plan & apply
-        if: steps.check_keycloak_configuration_changes.outputs.keycloak_configuration_changed == 'true'
+        if: contains(steps.changed-files.outputs.modified_files, 'terraform.tf')
         run: |
           terraform init
           terraform plan -no-color -input=false
