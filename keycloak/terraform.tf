@@ -5,6 +5,24 @@ terraform {
       version = "~> 5.1.1"
     }
   }
+
+  # Terraform state configuration on minIO storage
+  backend "s3" {
+    bucket = "terraform-state-bucket"
+    key    = "terraform.tfstate"
+    endpoints = {
+      s3 = var.minio_endpoint_url
+    }
+    access_key = var.minio_access_key
+    secret_key = var.minio_secret_key
+
+    region                      = "main"
+    skip_requesting_account_id  = true
+    skip_credentials_validation = true
+    skip_metadata_api_check     = true
+    skip_region_validation      = true
+    use_path_style              = true
+  }
 }
 
 provider "keycloak" {
@@ -186,7 +204,10 @@ resource "keycloak_role" "car_rental_cars_role" {
   client_id = keycloak_openid_client.car_rental.id
 }
 
+################################
 # Variables
+################################
+# Keycloak variables
 variable "keycloak_url" {
   type        = string
   description = "URL of your Keycloak instance"
@@ -235,4 +256,22 @@ variable "keycloak_car_rental_valid_redirect_uris" {
 variable "keycloak_car_rental_web_origins" {
   type = list(string)
   description = "List of web origins for car-rental client"
+}
+
+# MinIO variables
+variable "minio_access_key" {
+  type        = string
+  description = "MinIO access key"
+  sensitive   = true
+}
+
+variable "minio_secret_key" {
+  type        = string
+  description = "MinIO secret key"
+  sensitive   = true
+}
+
+variable "minio_endpoint_url" {
+  type        = string
+  description = "MinIO endpoint URL"
 }
