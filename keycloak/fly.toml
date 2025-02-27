@@ -7,8 +7,8 @@ primary_region = 'waw'
     dockerfile = 'Dockerfile'
 
 [env]
-    KC_BOOTSTRAP_ADMIN_USERNAME = 'admin'
-    KC_BOOTSTRAP_ADMIN_PASSWORD = "admin"
+    KC_BOOTSTRAP_ADMIN_USERNAME = 'xxx'
+    KC_BOOTSTRAP_ADMIN_PASSWORD = 'xxx'
     KC_HTTP_ENABLED = 'true'
     KC_HOSTNAME_STRICT = 'false'
     KC_PROXY_HEADERS = 'xforwarded'
@@ -20,7 +20,7 @@ primary_region = 'waw'
 [http_service]
     internal_port = 8080
     force_https = false
-    auto_stop_machines = 'stop'
+    auto_stop_machines = 'off'
     auto_start_machines = true
     min_machines_running = 0
     processes = ['app']
