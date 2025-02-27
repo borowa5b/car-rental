@@ -74,7 +74,7 @@ jobs:
 
       - name: Get changed files
         id: changed-files
-        uses: tj-actions/changed-files@v34
+        uses: tj-actions/changed-files@v45
 
       - name: Set up Terraform
         if: contains(steps.changed-files.outputs.modified_files, 'terraform.tf')
