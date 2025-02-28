@@ -1,0 +1,20 @@
+version: 2
+updates:
+  - package-ecosystem: "gradle"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "[FIX]"
+  - package-ecosystem: "terraform"
+    directory: "/keycloak"
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "[FIX]"
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    commit-message:
+      prefix: "[FIX]"
