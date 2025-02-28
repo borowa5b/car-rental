@@ -10,7 +10,7 @@ plugins {
     id("org.springframework.boot") version "3.2.5"
     id("io.spring.dependency-management") version "1.1.7"
     id("org.graalvm.buildtools.native") version "0.9.28"
-    id("org.jetbrains.kotlin.plugin.jpa") version "2.0.0"
+    id("org.jetbrains.kotlin.plugin.jpa") version "2.1.10"
     id("org.flywaydb.flyway") version "10.20.1"
     kotlin("jvm") version "1.9.24"
     kotlin("plugin.spring") version "1.9.24"
