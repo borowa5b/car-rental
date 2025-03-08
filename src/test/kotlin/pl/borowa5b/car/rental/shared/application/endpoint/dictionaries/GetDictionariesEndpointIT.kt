@@ -36,6 +36,8 @@ class GetDictionariesEndpointTest {
         val result = catchThrowable { getDictionariesEndpoint.getDictionaries() }
 
         // then
-        assertThat(result).isExactlyInstanceOf(AccessDeniedException::class.java)
+        assertThat(result)
+            .isInstanceOf(AccessDeniedException::class.java)
+            .hasMessage("Access Denied")
     }
 }
