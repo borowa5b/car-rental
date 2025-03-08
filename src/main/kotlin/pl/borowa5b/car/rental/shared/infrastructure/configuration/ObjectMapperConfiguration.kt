@@ -1,5 +1,6 @@
 package pl.borowa5b.car.rental.shared.infrastructure.configuration
 
+import com.fasterxml.jackson.core.StreamReadFeature
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
@@ -17,6 +18,8 @@ class ObjectMapperConfiguration {
             KotlinModule.Builder().build(),
             JavaTimeModule(),
             ProblemModule()
-        ).configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
+        )
+            .enable(StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION.mappedFeature())
+            .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
     }
 }
