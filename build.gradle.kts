@@ -13,7 +13,7 @@ plugins {
     id("org.jetbrains.kotlin.plugin.jpa") version "2.1.10"
     id("org.flywaydb.flyway") version "10.20.1"
     kotlin("jvm") version "2.1.10"
-    kotlin("plugin.spring") version "1.9.24"
+    kotlin("plugin.spring") version "2.1.10"
 }
 
 group = "pl.borowa5b"
