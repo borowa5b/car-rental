@@ -9,7 +9,7 @@ val flywayVersion = rootProject.extra["flywayVersion"]
 plugins {
     id("org.springframework.boot") version "3.4.3"
     id("io.spring.dependency-management") version "1.1.7"
-    id("org.graalvm.buildtools.native") version "0.9.28"
+    id("org.graalvm.buildtools.native") version "0.10.5"
     id("org.jetbrains.kotlin.plugin.jpa") version "2.1.10"
     id("org.flywaydb.flyway") version "10.20.1"
     kotlin("jvm") version "2.1.10"
