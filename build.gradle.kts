@@ -24,7 +24,7 @@ java {
 }
 
 buildscript {
-    extra.set("flywayVersion", "11.3.4")
+    extra.set("flywayVersion", "11.4.0")
 
     dependencies {
         val flywayVersion = rootProject.extra.get("flywayVersion")
