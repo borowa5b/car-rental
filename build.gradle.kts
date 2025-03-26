@@ -52,7 +52,7 @@ dependencies {
     implementation("org.zalando:jackson-datatype-problem:0.27.1")
 
     // SWAGGER
-    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.5")
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.6")
 
     // DB
     implementation("org.postgresql:postgresql:42.7.5")
