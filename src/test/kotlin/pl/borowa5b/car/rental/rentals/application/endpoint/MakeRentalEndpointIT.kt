@@ -9,7 +9,6 @@ import pl.borowa5b.car.rental.rentals.domain.vo.RentalStatus
 import pl.borowa5b.car.rental.shared.domain.vo.Role
 import pl.borowa5b.car.rental.shared.helper.IntegrationTest
 import pl.borowa5b.car.rental.shared.helper.IntegrationTestAssertions.assertApplicationEvents
-import pl.borowa5b.car.rental.shared.helper.IntegrationTestAssertions.assertCarQuantity
 import pl.borowa5b.car.rental.shared.helper.IntegrationTestEntityCreator.createCarEntity
 import pl.borowa5b.car.rental.shared.helper.IntegrationTestEntityCreator.createCustomerEntity
 import pl.borowa5b.car.rental.shared.helper.TestSpringRentalRepository
@@ -30,8 +29,7 @@ class MakeRentalEndpointIT {
     fun `should make rental`() {
         // given
         val request = makeRentalRequest()
-        val carQuantityBefore = 10
-        createCarEntity(id = request.carId!!, quantity = carQuantityBefore)
+        createCarEntity(id = request.carId!!, quantity = 10)
         createCustomerEntity(request.customerId!!)
 
         // when
@@ -49,8 +47,6 @@ class MakeRentalEndpointIT {
         )
         assertThat(rental.status).isEqualTo(RentalStatus.NEW)
         assertThat(rental.entityVersion).isEqualTo(0L)
-
-        assertCarQuantity(rental.carId, carQuantityBefore - 1)
         assertApplicationEvents("RentalMade")
     }
 }

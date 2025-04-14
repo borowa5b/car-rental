@@ -7,6 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import org.testcontainers.containers.PostgreSQLContainer
+import org.testcontainers.containers.RabbitMQContainer
 import pl.borowa5b.car.rental.CarRentalApplication
 
 @ActiveProfiles("test")
@@ -19,8 +20,7 @@ class IntegrationTestLifecycleManager : SpringExtension(), CloseableResource {
 
     companion object {
 
-        private var hasDatabaseStarted = false
-        private var hasDatabaseStopped = false
+        private var areContainersRunning = false
     }
 
     private val postgresContainer: PostgreSQLContainer<*> = PostgreSQLContainer("postgres:16-alpine")
@@ -28,10 +28,15 @@ class IntegrationTestLifecycleManager : SpringExtension(), CloseableResource {
         .withUsername("postgres")
         .withPassword("postgres")
 
+    private val rabbitMqContainer: RabbitMQContainer = RabbitMQContainer("rabbitmq")
+        .withAdminUser("it")
+        .withAdminPassword("it")
+
     override fun beforeAll(context: ExtensionContext) {
-        if (!hasDatabaseStarted) {
-            hasDatabaseStarted = true
+        if (!areContainersRunning) {
+            areContainersRunning = true
             postgresContainer.start()
+            rabbitMqContainer.start()
             setProperties()
         }
     }
@@ -41,15 +46,26 @@ class IntegrationTestLifecycleManager : SpringExtension(), CloseableResource {
 
 
     override fun close() {
-        if (!hasDatabaseStopped) {
-            hasDatabaseStopped = true
+        if (areContainersRunning) {
+            areContainersRunning = false
             postgresContainer.stop()
+            rabbitMqContainer.stop()
         }
     }
 
     private fun setProperties() {
+        setPostgresContainerProperties()
+        setRabbitMqContainerProperties()
+    }
+
+    private fun setPostgresContainerProperties() {
         System.setProperty("spring.datasource.url", postgresContainer.jdbcUrl)
         System.setProperty("spring.datasource.username", postgresContainer.username)
         System.setProperty("spring.datasource.password", postgresContainer.password)
+    }
+
+    private fun setRabbitMqContainerProperties() {
+        System.setProperty("spring.rabbitmq.host", rabbitMqContainer.host)
+        System.setProperty("spring.rabbitmq.port", rabbitMqContainer.getMappedPort(5672).toString())
     }
 }

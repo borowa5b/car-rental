@@ -5,7 +5,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import pl.borowa5b.car.rental.events.domain.model.DomainObjects.externalEvent
 import pl.borowa5b.car.rental.events.domain.model.ExternalEvent
-import pl.borowa5b.car.rental.events.domain.vo.ExternalEventId
+import pl.borowa5b.car.rental.events.domain.vo.EventId
 import pl.borowa5b.car.rental.events.domain.vo.ExternalEventStatus
 
 class ExternalEventRepositoryTest {
@@ -50,7 +50,7 @@ class ExternalEventRepositoryTest {
             return externalEvent
         }
 
-        override fun existsInStatus(id: ExternalEventId, status: ExternalEventStatus): Boolean =
+        override fun existsInStatus(id: EventId, status: ExternalEventStatus): Boolean =
             externalEvents.any { it.id == id && it.status == status }
 
         fun deleteAll() = externalEvents.clear()

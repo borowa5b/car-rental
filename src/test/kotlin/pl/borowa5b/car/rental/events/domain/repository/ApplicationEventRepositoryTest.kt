@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import pl.borowa5b.car.rental.events.domain.model.ApplicationEvent
 import pl.borowa5b.car.rental.events.domain.model.DomainObjects.applicationEvent
+import java.time.OffsetDateTime
 
 class ApplicationEventRepositoryTest {
 
@@ -27,6 +28,36 @@ class ApplicationEventRepositoryTest {
         assertThat(result.id).isEqualTo(applicationEvent.id)
     }
 
+    @Test
+    fun `should find all application events`() {
+        // given
+        val applicationEvent1 = applicationEvent()
+        val applicationEvent2 = applicationEvent()
+        applicationEventRepository.save(applicationEvent1)
+        applicationEventRepository.save(applicationEvent2)
+
+        // when
+        val result = applicationEventRepository.findAll()
+
+        // then
+        assertThat(result).containsExactly(applicationEvent1, applicationEvent2)
+    }
+
+    @Test
+    fun `should find all to publish`() {
+        // given
+        val applicationEvent1 = applicationEvent().apply { publishedOnDate = null }
+        val applicationEvent2 = applicationEvent().apply { publishedOnDate = OffsetDateTime.now() }
+        applicationEventRepository.save(applicationEvent1)
+        applicationEventRepository.save(applicationEvent2)
+
+        // when
+        val result = applicationEventRepository.findToPublish()
+
+        // then
+        assertThat(result).containsExactly(applicationEvent1)
+    }
+
     private class TestApplicationEventRepository(private val applicationEvents: ArrayList<ApplicationEvent> = ArrayList()) :
         ApplicationEventRepository {
 
@@ -37,6 +68,8 @@ class ApplicationEventRepositoryTest {
 
         override fun findAll(): List<ApplicationEvent> = applicationEvents
 
-        fun deleteAll() = applicationEvents.clear();
+        override fun findToPublish(): List<ApplicationEvent> = applicationEvents.filter { it.publishedOnDate == null }
+
+        fun deleteAll() = applicationEvents.clear()
     }
 }

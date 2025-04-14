@@ -10,29 +10,37 @@ import jakarta.annotation.security.RolesAllowed
 import org.springdoc.core.models.GroupedOpenApi
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.core.env.Environment
+import org.springframework.core.env.Profiles
 import pl.borowa5b.car.rental.shared.domain.vo.Role
 
 @Configuration
-class SwaggerConfiguration {
+class SwaggerConfiguration(private val environment: Environment) {
 
     @Bean
-    fun openApi(): OpenAPI = OpenAPI()
-        .info(Info().title("Car rentals API").version("v1"))
-        .servers(listOf(Server().apply { url = "/" }))
-        .security(listOf(SecurityRequirement().addList("Authorization header")))
-        .components(
-            Components()
-                .securitySchemes(
-                    mapOf(
-                        "Authorization header" to SecurityScheme()
-                            .name("Bearer token")
-                            .type(SecurityScheme.Type.HTTP)
-                            .scheme("bearer")
-                            .bearerFormat("JWT")
-                            .`in`(SecurityScheme.In.HEADER),
-                    )
+    fun openApi(): OpenAPI {
+        val openApi = OpenAPI()
+        if (!environment.acceptsProfiles(Profiles.of("dev"))) {
+            openApi
+                .security(listOf(SecurityRequirement().addList("Authorization header")))
+                .components(
+                    Components()
+                        .securitySchemes(
+                            mapOf(
+                                "Authorization header" to SecurityScheme()
+                                    .name("Bearer token")
+                                    .type(SecurityScheme.Type.HTTP)
+                                    .scheme("bearer")
+                                    .bearerFormat("JWT")
+                                    .`in`(SecurityScheme.In.HEADER),
+                            )
+                        )
                 )
-        )
+        }
+        return openApi
+            .info(Info().title("Car rentals API").version("v1"))
+            .servers(listOf(Server().apply { url = "/" }))
+    }
 
     @Bean
     fun allGroupApi(): GroupedOpenApi = GroupedOpenApi

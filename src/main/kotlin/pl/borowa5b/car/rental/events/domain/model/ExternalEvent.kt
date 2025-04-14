@@ -1,15 +1,19 @@
 package pl.borowa5b.car.rental.events.domain.model
 
 import com.fasterxml.jackson.annotation.JsonCreator
-import pl.borowa5b.car.rental.events.domain.vo.ExternalEventId
+import com.fasterxml.jackson.annotation.JsonIgnore
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import pl.borowa5b.car.rental.events.domain.vo.EventId
 import pl.borowa5b.car.rental.events.domain.vo.ExternalEventStatus
 import java.time.OffsetDateTime
 import java.time.ZoneOffset
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class ExternalEvent(
-    val id: ExternalEventId,
+    val id: EventId,
     val type: String,
     val version: String,
+    @JsonIgnore
     var status: ExternalEventStatus,
     var payload: String,
     var errorMessage: String?,
@@ -18,8 +22,8 @@ data class ExternalEvent(
 ) {
 
     @JsonCreator
-    constructor(id: String, type: String, version: String, payload: String, creationDate: OffsetDateTime) : this(
-        ExternalEventId(id),
+    constructor(id: String, type: String, version: String, payload: String) : this(
+        EventId(id),
         type,
         version,
         ExternalEventStatus.NEW,

@@ -4,9 +4,5 @@ import kotlin.random.Random
 
 object ValueObjects {
 
-    fun externalEventId(): ExternalEventId =
-        ExternalEventId("${ExternalEventId.PREFIX}${Random.nextInt(1000000, 9999999)}")
-
-    fun applicationEventId(): ApplicationEventId =
-        ApplicationEventId("${ApplicationEventId.PREFIX}${Random.nextInt(1000000, 9999999)}")
+    fun eventId(): EventId = EventId("${EventId.PREFIX}${Random.nextInt(1000000, 9999999)}")
 }

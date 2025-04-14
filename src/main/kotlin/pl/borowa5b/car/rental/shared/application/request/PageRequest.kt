@@ -9,7 +9,7 @@ import pl.borowa5b.car.rental.shared.domain.pagination.Page
 
 @ParameterObject
 data class PageRequest(
-    @Parameter(description = "Page number (default: 1", example = "1")
+    @Parameter(description = "Page number (default: 1)", example = "1")
     val pageNumber: Int? = 1,
 
     @Parameter(description = "Page size (default: 100)", example = "100")

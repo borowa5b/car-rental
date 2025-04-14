@@ -2,14 +2,13 @@ import org.flywaydb.gradle.task.AbstractFlywayTask
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.springframework.boot.gradle.tasks.run.BootRun
-import java.util.Properties
+import java.util.*
 
 val flywayVersion = rootProject.extra["flywayVersion"]
 
 plugins {
     id("org.springframework.boot") version "3.4.4"
     id("io.spring.dependency-management") version "1.1.7"
-    id("org.graalvm.buildtools.native") version "0.10.6"
     id("org.jetbrains.kotlin.plugin.jpa") version "2.1.20"
     id("org.flywaydb.flyway") version "11.4.0"
     kotlin("jvm") version "2.1.20"
@@ -58,6 +57,11 @@ dependencies {
     implementation("org.postgresql:postgresql:42.7.5")
     implementation("org.flywaydb:flyway-core:$flywayVersion")
     implementation("org.flywaydb:flyway-database-postgresql:$flywayVersion")
+    implementation("org.hibernate.validator:hibernate-validator:8.0.2.Final")
+
+    // QUEUE
+    implementation("org.springframework.integration:spring-integration-amqp:6.4.3")
+    implementation("org.springframework.kafka:spring-kafka")
 
     // OTHERS
     implementation("org.jetbrains.kotlin:kotlin-reflect")
@@ -69,7 +73,10 @@ dependencies {
     testImplementation("org.mockito.kotlin:mockito-kotlin:5.4.0")
     testImplementation("com.tngtech.archunit:archunit-junit5:1.4.0")
     testImplementation("io.github.hakky54:logcaptor:2.10.1")
-    testImplementation("org.testcontainers:postgresql:1.20.6")
+    testImplementation("org.testcontainers:postgresql")
+    testImplementation("org.testcontainers:rabbitmq")
+    testImplementation("org.springframework.amqp:spring-rabbit-test:3.2.4")
+    testImplementation("org.springframework.kafka:spring-kafka-test")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
