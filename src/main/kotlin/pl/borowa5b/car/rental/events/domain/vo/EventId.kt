@@ -1,11 +1,15 @@
 package pl.borowa5b.car.rental.events.domain.vo
 
+import com.fasterxml.jackson.annotation.JsonProperty
 import pl.borowa5b.car.rental.shared.domain.exception.ValidationErrorException
 import pl.borowa5b.car.rental.shared.domain.exception.validation.ThrowingValidationExceptionHandler
 import pl.borowa5b.car.rental.shared.domain.exception.validation.ValidationError
 import pl.borowa5b.car.rental.shared.domain.exception.validation.ValidationExceptionHandler
 
-data class ExternalEventId(val value: String) {
+data class EventId(
+    @JsonProperty("id")
+    val value: String
+) {
 
     init {
         validate(value)
@@ -13,11 +17,11 @@ data class ExternalEventId(val value: String) {
 
     companion object {
 
-        const val PREFIX: String = "EXT"
+        const val PREFIX: String = "EVT"
 
         fun validate(
             value: String,
-            fieldName: String = "externalEventId",
+            fieldName: String = "eventId",
             validationExceptionHandler: ValidationExceptionHandler = ThrowingValidationExceptionHandler()
         ) {
             if (!value.startsWith(PREFIX)) {

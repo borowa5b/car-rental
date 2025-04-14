@@ -5,14 +5,14 @@ import org.assertj.core.api.Assertions.catchThrowable
 import org.junit.jupiter.api.Test
 import pl.borowa5b.car.rental.shared.domain.exception.ValidationErrorException
 
-class ExternalEventIdTest {
+class EventIdTest {
 
     @Test
     fun `should validate application event id`() {
         // given
 
         // when
-        val result = ExternalEventId("EXT123")
+        val result = EventId("EVT123")
 
         // then
         assertThat(result).isNotNull()
@@ -23,7 +23,7 @@ class ExternalEventIdTest {
         // given
 
         // when
-        val result = catchThrowable { ExternalEventId("123") }
+        val result = catchThrowable { EventId("123") }
 
         // then
         assertThat(result).isExactlyInstanceOf(ValidationErrorException::class.java)

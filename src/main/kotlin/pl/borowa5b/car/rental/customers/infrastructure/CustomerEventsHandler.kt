@@ -8,7 +8,7 @@ import pl.borowa5b.car.rental.customers.infrastructure.event.pull.CustomerCreate
 @Component
 class CustomerEventsHandler(private val customerSaver: CustomerSaver) {
 
-    @EventListener(value = [CustomerCreatedEvent::class])
+    @EventListener
     fun handle(event: CustomerCreatedEvent) {
         customerSaver.save(event.toCommand())
     }

@@ -4,5 +4,6 @@ enum class ApplicationEventStatus {
 
     NEW,
     PUBLISHING,
-    PUBLISHED
+    PUBLISHED,
+    FAILED
 }

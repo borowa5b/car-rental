@@ -2,14 +2,13 @@ package pl.borowa5b.car.rental.events.infrastructure.entity
 
 import pl.borowa5b.car.rental.events.domain.vo.ApplicationEventStatus
 import pl.borowa5b.car.rental.events.domain.vo.ExternalEventStatus
-import pl.borowa5b.car.rental.events.domain.vo.ValueObjects.applicationEventId
-import pl.borowa5b.car.rental.events.domain.vo.ValueObjects.externalEventId
+import pl.borowa5b.car.rental.events.domain.vo.ValueObjects.eventId
 import java.time.OffsetDateTime
 
 object EntityObjects {
 
     fun externalEventEntity(
-        id: String = externalEventId().value,
+        id: String = eventId().value,
         type: String = "CustomerCreated",
         version: String = "1.0",
         status: ExternalEventStatus = ExternalEventStatus.NEW,
@@ -28,7 +27,7 @@ object EntityObjects {
     )
 
     fun applicationEventEntity(
-        id: String = applicationEventId().value,
+        id: String = eventId().value,
         type: String = "RentalMade",
         version: String = "1.0",
         status: ApplicationEventStatus = ApplicationEventStatus.NEW,

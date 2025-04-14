@@ -7,4 +7,6 @@ interface ApplicationEventRepository {
     fun save(applicationEvent: ApplicationEvent): ApplicationEvent
 
     fun findAll(): List<ApplicationEvent>
+
+    fun findToPublish(): List<ApplicationEvent>
 }

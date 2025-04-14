@@ -85,6 +85,31 @@ class CarRepositoryTest {
         assertThat(result).isEqualTo(car)
     }
 
+    @Test
+    fun `should not find car by id when car does not exist`() {
+        // given
+        val carId = CarId("CAR1")
+
+        // when
+        val result = carRepository.findBy(carId)
+
+        // then
+        assertThat(result).isNull()
+    }
+
+    @Test
+    fun `should check if car is available`() {
+        // given
+        val car = car(quantity = 1)
+        carRepository.save(car)
+
+        // when
+        val result = carRepository.isAvailable(car.id)
+
+        // then
+        assertThat(result).isTrue()
+    }
+
     private class TestCarRepository(private val cars: ArrayList<Car> = ArrayList()) : CarRepository {
 
         override fun existsBy(carId: CarId): Boolean = cars.any { it.id == carId }
@@ -97,6 +122,9 @@ class CarRepositoryTest {
             color: String
         ): Boolean =
             cars.any { it.brand == brand && it.model == model && it.productionYear == productionYear && it.generation == generation && it.color == color }
+
+        override fun isAvailable(carId: CarId): Boolean =
+            cars.firstOrNull { it.id == carId && it.quantity >= 1 } != null
 
         override fun save(car: Car): Car {
             cars.add(car)

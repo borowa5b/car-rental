@@ -4,7 +4,7 @@ import jakarta.persistence.*
 import org.hibernate.annotations.JdbcTypeCode
 import org.hibernate.type.SqlTypes
 import pl.borowa5b.car.rental.events.domain.model.ExternalEvent
-import pl.borowa5b.car.rental.events.domain.vo.ExternalEventId
+import pl.borowa5b.car.rental.events.domain.vo.EventId
 import pl.borowa5b.car.rental.events.domain.vo.ExternalEventStatus
 import java.time.OffsetDateTime
 import java.time.ZoneOffset
@@ -35,7 +35,7 @@ data class ExternalEventEntity(
     }
 
     fun toDomain(): ExternalEvent = ExternalEvent(
-        ExternalEventId(id),
+        EventId(id),
         type,
         version,
         status,

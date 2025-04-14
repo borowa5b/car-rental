@@ -15,7 +15,13 @@ class DefaultApplicationEventRepository(private val repository: SpringJpaApplica
         repository.save(ApplicationEventEntity.fromDomain(applicationEvent)).toDomain()
 
     override fun findAll(): List<ApplicationEvent> = repository.findAll().map { it.toDomain() }
+
+    override fun findToPublish(): List<ApplicationEvent> =
+        repository.findByPublishedOnDateIsNull().map { it.toDomain() }
 }
 
 @Repository
-interface SpringJpaApplicationEventRepository : JpaRepository<ApplicationEventEntity, String>
+interface SpringJpaApplicationEventRepository : JpaRepository<ApplicationEventEntity, String> {
+
+    fun findByPublishedOnDateIsNull(): List<ApplicationEventEntity>
+}

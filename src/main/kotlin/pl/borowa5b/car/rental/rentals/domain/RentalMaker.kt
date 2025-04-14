@@ -2,7 +2,7 @@ package pl.borowa5b.car.rental.rentals.domain
 
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
-import pl.borowa5b.car.rental.cars.domain.shared.CarQuantityUpdater
+import pl.borowa5b.car.rental.cars.domain.shared.exception.CarNotAvailableException
 import pl.borowa5b.car.rental.cars.domain.shared.exception.CarNotFoundException
 import pl.borowa5b.car.rental.cars.domain.shared.repository.CarRepository
 import pl.borowa5b.car.rental.customers.domain.shared.exception.CustomerNotFoundException
@@ -25,7 +25,6 @@ class RentalMaker(
     private val rentalRepository: RentalRepository,
     private val carRepository: CarRepository,
     private val customerRepository: CustomerRepository,
-    private val carQuantityUpdater: CarQuantityUpdater,
     private val applicationEventPublisher: ApplicationEventPublisher
 ) {
 
@@ -46,7 +45,6 @@ class RentalMaker(
             price = rentalPrice,
             status = RentalStatus.NEW
         )
-        carQuantityUpdater.decrease(command.carId)
         rentalRepository.save(rental)
         applicationEventPublisher.publish(RentalMadeEvent(rental))
         return rental.id
@@ -55,6 +53,9 @@ class RentalMaker(
     private fun validate(command: MakeRentalCommand) {
         if (!carRepository.existsBy(command.carId)) {
             throw CarNotFoundException(command.carId)
+        }
+        if (!carRepository.isAvailable(command.carId)) {
+            throw CarNotAvailableException(command.carId)
         }
         if (!customerRepository.exists(command.customerId)) {
             throw CustomerNotFoundException(command.customerId)

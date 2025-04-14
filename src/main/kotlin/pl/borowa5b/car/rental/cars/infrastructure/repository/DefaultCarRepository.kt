@@ -29,6 +29,8 @@ class DefaultCarRepository(private val repository: SpringJpaCarRepository) : Car
             color
         )
 
+    override fun isAvailable(carId: CarId): Boolean = repository.existsByIdAndQuantityGreaterThanEqual(carId.value, 1)
+
     override fun save(car: Car): Car = repository.save(CarEntity.fromDomain(car)).toDomain()
 
     override fun findBy(carId: CarId): Car? = repository.findById(carId.value).map { it.toDomain() }.orElse(null)
@@ -44,4 +46,6 @@ interface SpringJpaCarRepository : JpaRepository<CarEntity, String> {
         productionYear: Int,
         color: String
     ): Boolean
+
+    fun existsByIdAndQuantityGreaterThanEqual(carId: String, quantity: Int): Boolean
 }
