@@ -60,7 +60,7 @@ dependencies {
     implementation("org.hibernate.validator:hibernate-validator:8.0.2.Final")
 
     // QUEUE
-    implementation("org.springframework.integration:spring-integration-amqp:6.4.3")
+    implementation("org.springframework.integration:spring-integration-amqp:6.4.4")
     implementation("org.springframework.kafka:spring-kafka")
 
     // OTHERS
