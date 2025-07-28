@@ -72,7 +72,7 @@ dependencies {
     testImplementation("org.springframework.security:spring-security-test")
     testImplementation("org.mockito.kotlin:mockito-kotlin:5.4.0")
     testImplementation("com.tngtech.archunit:archunit-junit5:1.4.0")
-    testImplementation("io.github.hakky54:logcaptor:2.10.2")
+    testImplementation("io.github.hakky54:logcaptor:2.12.0")
     testImplementation("org.testcontainers:postgresql")
     testImplementation("org.testcontainers:rabbitmq")
     testImplementation("org.springframework.amqp:spring-rabbit-test:3.2.4")
