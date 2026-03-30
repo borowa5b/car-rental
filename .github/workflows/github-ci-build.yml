@@ -79,7 +79,7 @@ jobs:
 
       - name: Set up Terraform
         if: contains(steps.changed-files.outputs.modified_files, 'terraform.tf')
-        uses: hashicorp/setup-terraform@v3
+        uses: hashicorp/setup-terraform@v4
 
       - name: Set up Python
         if: contains(steps.changed-files.outputs.modified_files, 'terraform.tf')
