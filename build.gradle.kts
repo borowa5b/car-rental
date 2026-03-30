@@ -75,7 +75,7 @@ dependencies {
     testImplementation("io.github.hakky54:logcaptor:2.12.1")
     testImplementation("org.testcontainers:postgresql")
     testImplementation("org.testcontainers:rabbitmq")
-    testImplementation("org.springframework.amqp:spring-rabbit-test:3.2.4")
+    testImplementation("org.springframework.amqp:spring-rabbit-test:4.0.2")
     testImplementation("org.springframework.kafka:spring-kafka-test")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
